@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###################################################
 # LOCAL import
@@ -41,6 +40,7 @@ from Plugins.Extensions.IPTVPlayer.libs.internetowa import InternetowaApi, GetCo
 from Plugins.Extensions.IPTVPlayer.libs.firstonetvnet import FirstOneTvApi, GetConfigList as FirstOneTv_GetConfigList
 from Plugins.Extensions.IPTVPlayer.libs.beinmatch import BeinmatchApi
 from Plugins.Extensions.IPTVPlayer.libs.wiz1net import Wiz1NetApi
+from Plugins.Extensions.IPTVPlayer.libs.wiziwig1 import Wiziwig1Api
 ###################################################
 
 ###################################################
@@ -128,17 +128,13 @@ def GetConfigList():
     except Exception:
         printExc()
 
-    optionList.append(getConfigListEntry("-----------------Wizja.TV------------------", config.plugins.iptvplayer.fake_separator))
-    try:
-        optionList.extend(WizjaTV_GetConfigList())
-    except Exception:
-        printExc()
+#    optionList.append(getConfigListEntry("-----------------Wizja.TV------------------", config.plugins.iptvplayer.fake_separator))
+#    try:    optionList.extend( WizjaTV_GetConfigList() )
+#    except Exception: printExc()
 
-    optionList.append(getConfigListEntry("--------------wagasworld.com---------------", config.plugins.iptvplayer.fake_separator))
-    try:
-        optionList.extend(WagasWorld_GetConfigList())
-    except Exception:
-        printExc()
+#    optionList.append(getConfigListEntry("--------------wagasworld.com---------------", config.plugins.iptvplayer.fake_separator))
+#    try:    optionList.extend( WagasWorld_GetConfigList() )
+#    except Exception: printExc()
 
     optionList.append(getConfigListEntry("----------------bilasport.pw-------------------", config.plugins.iptvplayer.fake_separator))
     try:
@@ -196,6 +192,7 @@ class HasBahCa(CBaseHostClass):
                         {'alias_id': 'canlitvlive.io', 'name': 'canlitvlive.io', 'title': 'http://canlitvlive.io/', 'url': 'http://www.canlitvlive.io/', 'icon': 'http://www.canlitvlive.io/images/footer_simge.png'}, \
                         {'alias_id': 'beinmatch.com', 'name': 'beinmatch.com', 'title': 'http://beinmatch.com/', 'url': '', 'icon': 'http://www.beinmatch.com/assets/images/bim/logo.png'}, \
                         {'alias_id': 'wiz1.net', 'name': 'wiz1.net', 'title': 'http://wiz1.net/', 'url': '', 'icon': 'http://i.imgur.com/yBX7fZA.jpg'}, \
+                        {'alias_id': 'wiziwig1.eu', 'name': 'wiziwig1.eu', 'title': 'http://wiziwig1.eu/', 'url': '', 'icon': 'http://i.imgur.com/yBX7fZA.jpg'},\
 #                        {'alias_id':'wagasworld',              'name': 'wagasworld.com',      'title': 'http://wagasworld.com/',            'url': 'http://www.wagasworld.com/channels.php',                             'icon': 'http://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Flag_of_Germany.svg/1000px-Flag_of_Germany.svg.png'}, \
                         {'alias_id': 'djing.com', 'name': 'djing.com', 'title': 'https://djing.com/', 'url': 'https://djing.com/', 'icon': 'https://www.djing.com/newimages/content/c01.jpg'}, \
                         {'alias_id': 'live_stream_tv', 'name': 'live-stream.tv', 'title': 'http://live-stream.tv/', 'url': 'http://www.live-stream.tv/', 'icon': 'http://www.live-stream.tv/images/lstv-logo.png'}, \
@@ -245,6 +242,7 @@ class HasBahCa(CBaseHostClass):
         self.FirstOneTvApi = None
         self.BeinmatchApi = None
         self.Wiz1NetApi = None
+        self.Wiziwig1Api = None
 
         self.hasbahcaiptv = {}
         self.webcameraSubCats = {}
@@ -725,6 +723,26 @@ class HasBahCa(CBaseHostClass):
     #############################################################
 
     #############################################################
+    def getWiziwig1List(self, cItem):
+        printDBG("getWiziwig1List start")
+        if None == self.Wiziwig1Api:
+            self.Wiziwig1Api = Wiziwig1Api()
+        tmpList = self.Wiziwig1Api.getList(cItem)
+        for item in tmpList:
+            if 'video' == item['type']:
+                self.addVideo(item)
+            elif 'audio' == item['type']:
+                self.addAudio(item)
+            else:
+                self.addDir(item)
+
+    def getWiziwig1Link(self, cItem):
+        printDBG("getWiziwig1Link start")
+        urlsTab = self.Wiziwig1Api.getVideoLink(cItem)
+        return urlsTab
+    #############################################################
+
+    #############################################################
     def getUstvnowList(self, cItem):
         printDBG("getUstvnowList start")
         if None == self.ustvnowApi:
@@ -1201,6 +1219,8 @@ class HasBahCa(CBaseHostClass):
             self.getBeinmatchList(self.currItem)
         elif name == 'wiz1.net':
             self.getWiz1NetList(self.currItem)
+        elif name == 'wiziwig1.eu':
+            self.getWiziwig1List(self.currItem)
         elif name == "crackstreams_streams":
             self.getCrackstreamsList(url)
         elif name == 'crackstreams.net':
@@ -1297,6 +1317,8 @@ class IPTVHost(CHostBase):
             urlList = self.host.getBeinmatchLink(cItem)
         elif name == "wiz1.net":
             urlList = self.host.getWiz1NetLink(cItem)
+        elif name == "wiziwig1.eu":
+            urlList = self.host.getWiziwig1Link(cItem)
         elif name == "crackstreams.net":
             urlList = self.host.getCrackstreamsLink(url)
 
@@ -1361,4 +1383,4 @@ class IPTVHost(CHostBase):
                 need_resolve = 0
                 retlist.append(CUrlItem(item["name"], item["url"], need_resolve))
 
-        return RetHost(RetHost.OK, value=retlist)
+        return RetHost(RetHost.OK, value=retlist
