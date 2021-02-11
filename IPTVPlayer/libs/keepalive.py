@@ -238,7 +238,7 @@ class KeepAliveHandler:
                 self._cm.add(host, h, 0)
                 self._start_transaction(h, req)
                 r = h.getresponse()
-        except (socket.error, httplib.HTTPException), err:
+        except (socket.error, httplib.HTTPException) as err:
             raise urllib2.URLError(err)
             
         if DEBUG: DEBUG.info("STATUS: %s, %s", r.status, r.reason)
@@ -323,7 +323,7 @@ class KeepAliveHandler:
                     h.putrequest('GET', req.selector)
                 else:
                     h.putrequest('GET', req.get_selector())
-        except (socket.error, httplib.HTTPException), err:
+        except (socket.error, httplib.HTTPException) as err:
             raise urllib2.URLError(err)
 
         for args in self.parent.addheaders:

@@ -65,7 +65,7 @@ class YouSeeApi(object):
             u = urllib2.urlopen(r)
             data = u.read()
             u.close()
-        except urllib2.HTTPError, error:
+        except urllib2.HTTPError as error:
             data = error.read()
         except Exception as ex:
             raise YouSeeApiException(ex)
