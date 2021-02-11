@@ -85,9 +85,9 @@ class Chomikuj(CBaseHostClass):
             v = None
         if None != v:
             try:
-                NumberTypes = (int, long, float, complex)
+                NumberTypes = (int, int, float, complex)
             except NameError:
-                NumberTypes = (int, long, float)
+                NumberTypes = (int, int, float)
                 
             if isinstance(v, NumberTypes):
                 return v

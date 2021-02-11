@@ -154,9 +154,9 @@ class TvnVod(CBaseHostClass):
         v = item.get(key, None)
         if None != v:
             try:
-                NumberTypes = (int, long, float, complex)
+                NumberTypes = (int, int, float, complex)
             except NameError:
-                NumberTypes = (int, long, float)
+                NumberTypes = (int, int, float)
                 
             if isinstance(v, NumberTypes):
                 return v
@@ -191,7 +191,7 @@ class TvnVod(CBaseHostClass):
         salt = salt.hexdigest()[:32]
         tvncrypt = aes_cbc.AES_CBC(SecretKey, base.noPadding(), keySize=32)
         key = tvncrypt.decrypt(binascii.unhexlify(KeyStr), iv=iv)[:32]
-        expire = 3600000L + long(time.time()*1000) - 946684800000L
+        expire = 3600000L + int(time.time()*1000) - 946684800000L
         unencryptedToken = "name=%s&expire=%s\0" % (url, expire)
         pkcs5_pad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
         pkcs5_unpad = lambda s : s[0:-ord(s[-1])]
