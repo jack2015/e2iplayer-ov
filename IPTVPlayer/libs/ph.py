@@ -264,7 +264,7 @@ def clean_html(str):
         except Exception:
             printExc()
 
-    if STRIP_HTML_TAGS_C and type(u' ') != type(str):
+    if STRIP_HTML_TAGS_C and not isinstance(u' ', type(str)):
         return STRIP_HTML_TAGS_C.strip_html_tags(str)
 
     str = str.replace('<', ' <')

@@ -77,9 +77,9 @@ class Ipla(CBaseHostClass):
     def getStr(self, v, default=''):
         if None == v:
             return default
-        elif type(v) == type(u''):
+        elif isinstance(v, type(u'')):
             return v.encode('utf-8')
-        elif type(v) == type(''):
+        elif isinstance(v, type('')):
             return v
 
     def __getAttribs(self, data):

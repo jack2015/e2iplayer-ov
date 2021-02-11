@@ -77,8 +77,8 @@ class SuggestionsProvider:
 
 def jstr(item, key, default=''):
     v = item.get(key, default)
-    if type(v) == type(u''): return v.encode('utf-8')
-    elif type(v) == type(''): return v
+    if isinstance(v, type(u'')): return v.encode('utf-8')
+    elif isinstance(v, type('')): return v
     else: return default
 
 class HDFull(CBaseHostClass, CaptchaHelper):

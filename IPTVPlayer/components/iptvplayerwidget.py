@@ -1513,9 +1513,9 @@ class E2iPlayerWidget(Screen):
         options = []
         for link in links:
             printDBG("selectLinkForCurrVideo: |%s| |%s|" % (link.name, link.url))
-            if type(u'') == type(link.name):
+            if isinstance(u'', type(link.name)):
                 link.name = link.name.encode('utf-8', 'ignore')
-            if type(u'') == type(link.url):
+            if isinstance(u'', type(link.url)):
                 link.url = link.url.encode('utf-8', 'ignore')
             options.append((link.name, link.url, link.urlNeedsResolve))
         

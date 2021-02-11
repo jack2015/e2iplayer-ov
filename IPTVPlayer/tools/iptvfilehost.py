@@ -38,7 +38,7 @@ class IPTVFileHost:
                     line = fp.readline()
                     if not line: break;
                     line = line.strip()
-                    if type(line) == type(u''): line = line.encode('utf-8', 'replace')
+                    if isinstance(line, type(u'')): line = line.encode('utf-8', 'replace')
                     if 0 == len(line) or '#' == line[0]: continue
                     idx1 = line.find(';')
                     if -1 < idx1:

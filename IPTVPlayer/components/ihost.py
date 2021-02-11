@@ -711,8 +711,8 @@ class CBaseHostClass:
 
     @staticmethod 
     def getStr(v, default=''):
-        if type(v) == type(u''): return v.encode('utf-8')
-        elif type(v) == type(''):  return v
+        if isinstance(v, type(u'')): return v.encode('utf-8')
+        elif isinstance(v, type('')):  return v
         return default
             
     def getCurrList(self):
@@ -772,7 +772,7 @@ class CBaseHostClass:
         for histItem in list:
             plot = ''
             try:
-                if type(histItem) == type({}):
+                if isinstance(histItem, type({})):
                     pattern     = histItem.get('pattern', '')
                     search_type = histItem.get('type', '')
                     if '' != search_type: plot = desc_base + _(search_type)
