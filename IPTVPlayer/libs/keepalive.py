@@ -108,7 +108,10 @@ EXTRA ATTRIBUTES AND METHODS
 import urllib2
 import httplib
 import socket
-import thread
+try:
+	import thread
+except:
+	import _thread as thread
 
 DEBUG = None
 
