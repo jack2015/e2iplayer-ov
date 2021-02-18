@@ -11,7 +11,7 @@ class SuggestionsProvider:
 
     def __init__(self):
         self.cm = common()
-        
+
     def getName(self):
         return _("Filmweb Suggestions")
 
@@ -26,5 +26,5 @@ class SuggestionsProvider:
                 retList.append(item[4])
                 if item[4] != item[3]:
                     retList.append(item[3])
-            return retList 
+            return retList
         return None

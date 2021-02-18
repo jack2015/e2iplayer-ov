@@ -46,7 +46,7 @@ class SingleFileDownloaderWidget(Screen):
             sz_w - 135, # size title
             (sz_h - 160) / 2, sz_w - 20, # console
             )
-    
+
     def __init__(self, session, uri, outFile, title=''):
         self.session = session
         Screen.__init__(self, session)
@@ -137,7 +137,7 @@ class SingleFileDownloaderWidget(Screen):
             for button in buttons:
                 self['icon_' + button].show()
                 self['label_' + button].show()
-        except Exception: 
+        except Exception:
             printExc()
 
     def onStart(self):

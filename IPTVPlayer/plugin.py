@@ -97,13 +97,13 @@ def startIPTVfromMenu(menuid, **kwargs):
 
 def mainSetup(session, **kwargs):
 	if config.plugins.iptvplayer.configProtectedByPin.value:
-		session.openWithCallback(boundFunction(pinCallback, session, runSetup), IPTVPinWidget, title=_("Enter pin")) 
+		session.openWithCallback(boundFunction(pinCallback, session, runSetup), IPTVPinWidget, title=_("Enter pin"))
 	else:
 		runSetup(session)
 
 
 def runSetup(session):
-	session.open(ConfigMenu) 
+	session.open(ConfigMenu)
 
 
 def main(session, **kwargs):

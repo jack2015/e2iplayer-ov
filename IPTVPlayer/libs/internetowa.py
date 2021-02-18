@@ -18,7 +18,7 @@ from Components.config import config, ConfigText, getConfigListEntry
 ############################################
 
 ###################################################
-# E2 GUI COMMPONENTS 
+# E2 GUI COMMPONENTS
 ###################################################
 from Screens.MessageBox import MessageBox
 ###################################################
@@ -35,7 +35,7 @@ def GetConfigList():
     optionList.append(getConfigListEntry('internetowa.ws ' + _("email") + ':', config.plugins.iptvplayer.internetowa_login))
     optionList.append(getConfigListEntry('internetowa.ws ' + _("password") + ':', config.plugins.iptvplayer.internetowa_password))
     return optionList
-    
+
 ###################################################
 
 
@@ -57,7 +57,7 @@ class InternetowaApi(CBaseHostClass):
 
     def tryTologin(self):
         printDBG('tryTologin start')
-        
+
         if None == self.loggedIn or self.login != config.plugins.iptvplayer.internetowa_login.value or\
             self.password != config.plugins.iptvplayer.internetowa_password.value:
 
@@ -92,13 +92,13 @@ class InternetowaApi(CBaseHostClass):
                 self.sessionEx.waitForFinishOpen(MessageBox, '\n'.join(msgTab), type=MessageBox.TYPE_ERROR, timeout=10)
                 printDBG('tryTologin failed')
         return self.loggedIn
-    
+
     def getList(self, cItem):
         printDBG("InternetowaApi.getChannelsList")
         self.tryTologin()
 
         channelsTab = []
-        
+
         if cItem.get('priv_cat') == None:
             sts, data = self.cm.getPage(self.getMainUrl(), self.http_params)
             if not sts:
@@ -143,7 +143,7 @@ class InternetowaApi(CBaseHostClass):
         else:
             channelsTab = cItem['sub_items']
         return channelsTab
-        
+
     def getVideoLink(self, cItem):
         printDBG("InternetowaApi.getVideoLink")
         urlsTab = []

@@ -67,7 +67,7 @@ class AutocompleteSearch:
                 last = self.requestStamp == self.lastStamp
                 self.run = False
                 self.event.set()
-            
+
             if last:
                 # give a chance to finish in the normal way
                 time.sleep(0.01)
@@ -148,4 +148,3 @@ class AutocompleteSearch:
 
         if retStamp != -1 and self.callback:
             self.callback(retList, retStamp)
-

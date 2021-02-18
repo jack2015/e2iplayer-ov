@@ -53,7 +53,7 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
                             winWidth - 20,
                             winWidth - 20,
                             GetIconDir("vk/vkey_text.png"))
-        
+
         Screen.__init__(self, session)
         self.keys_list = []
         self.shiftkeys_list = []
@@ -61,7 +61,7 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
         self.selectedKey = 0
         self.smsChar = None
         self.sms = NumericalTextInput(self.smsOK)
-        
+
         self.key_bg = LoadPixmap(GetIconDir("vk/vkey_bg.png"))
         self.key_sel = LoadPixmap(GetIconDir("vk/vkey_sel.png"))
         self.key_backspace = LoadPixmap(GetIconDir("vk/vkey_backspace.png"))
@@ -97,15 +97,15 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
                 "LEFT": self.key_left,
                 "RIGHT": self.key_right
             }
-            
+
         self["key_green"] = Label(_("Accept"))
         self["key_ok"] = Label(_("OK"))
         self["key_red"] = Label(_("Cancel"))
-        
+
         self["header"] = Label(title)
         self["text"] = Input(text=text.decode("utf-8", 'ignore'))
         self["list"] = VirtualKeyBoardList([])
-        
+
         self["actions"] = NumberActionMap(["OkCancelActions", "WizardActions", "ColorActions", "KeyboardInputActions", "InputBoxActions", "InputAsciiActions"],
             {
                 "gotAsciiCode": self.keyGotAscii,
@@ -139,11 +139,11 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
         self.setLang(additionalParams)
         self.onExecBegin.append(self.setKeyboardModeAscii)
         self.onLayoutFinish.append(self.buildVirtualKeyBoard)
-        
+
         self.captchaPath = additionalParams['captcha_path']
         self['captcha'] = Cover2()
         self.onShown.append(self.loadCaptcha)
-        
+
     def loadCaptcha(self):
         self.onShown.remove(self.loadCaptcha)
         self.setTitle(_('Virtual Keyboard'))
@@ -154,7 +154,7 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
             self['captcha'].updateIcon(self.captchaPath)
         except Exception:
             printExc()
-    
+
     def switchLang(self):
         pass
 
@@ -168,7 +168,7 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
                 [u"SHIFT", u"SPACE", u"OK", u"LEFT", u"RIGHT"]]
         else:
             self.keys_list = additionalParams['keys_list']
-            
+
         if 'shiftkeys_list' not in additionalParams:
             self.shiftkeys_list = [
                 [u"EXIT", u"!", u"@", u"#", u"$", u"%", u"^", u"&", u"(", u")", u"=", u"BACKSPACE"],
@@ -178,7 +178,7 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
                 [u"SHIFT", u"SPACE", u"OK", u"LEFT", u"RIGHT"]]
         else:
             self.keys_list = additionalParams['shiftkeys_list']
-            
+
         if additionalParams.get('invert_letters_case', False):
             for keys_list in [self.keys_list, self.shiftkeys_list]:
                 for row in range(len(keys_list)):
@@ -190,7 +190,7 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
                             keys_list[row][idx] = keys_list[row][idx].lower()
                         else:
                             keys_list[row][idx] = upper
-        
+
         self.max_key = 47 + len(self.keys_list[4])
 
     def virtualKeyBoardEntryComponent(self, keys):
@@ -244,25 +244,25 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
 
         if text == "EXIT":
             self.close(None)
-        
+
         elif text == "BACKSPACE":
             self["text"].deleteBackward()
-        
+
         elif text == "ALL":
             self["text"].setMarkedPos(-2)
-        
+
         elif text == "CLEAR":
             self["text"].deleteAllChars()
             self["text"].update()
 
         elif text == "SHIFT":
             self.shiftClicked()
-        
+
         elif text == "SPACE":
             self["text"].insertChar(" ".encode("UTF-8"), self["text"].currPos, False, True)
             self["text"].innerright()
             self["text"].update()
-        
+
         elif text == "OK":
             self.close(self["text"].getText().encode("UTF-8"))
 

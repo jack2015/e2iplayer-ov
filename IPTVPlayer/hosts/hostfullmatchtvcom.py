@@ -26,10 +26,10 @@ def gettytul():
 
 
 class Fullmatchtv(CBaseHostClass):
- 
+
     def __init__(self):
         CBaseHostClass.__init__(self, {'history': 'fullmatchtv.org', 'cookie': 'fullmatchtv.cookie'})
-        
+
         self.DEFAULT_ICON_URL = 'https://pbs.twimg.com/profile_images/683367328248164352/Ivn9ly9e_400x400.png'
         self.HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', 'DNT': '1', 'Accept': 'text/html'}
         self.MAIN_URL = 'https://fullmatchtv.com/'
@@ -43,9 +43,9 @@ class Fullmatchtv(CBaseHostClass):
     def getPage(self, url, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
-        
+
         return self.cm.getPage(url, addParams, post_data)
-        
+
     def listMainMenu(self, cItem):
         printDBG("fullmatchtv.listMainMenu")
         sts, data = self.getPage(self.MAIN_URL)
@@ -66,7 +66,7 @@ class Fullmatchtv(CBaseHostClass):
                 params = dict(cItem)
                 params.update({'good_for_fav': False, 'category': nextCategory, 'title': title, 'url': url})
                 self.addDir(params)
-    
+
     def listItems(self, cItem):
         printDBG("fullmatchtv.listItems")
 
@@ -109,7 +109,7 @@ class Fullmatchtv(CBaseHostClass):
     def getLinksForVideo(self, cItem):
         printDBG("fullmatchtv.getLinksForVideo [%s]" % cItem)
         urlTab = []
-        
+
         sts, data = self.getPage(cItem['url'])
         if not sts:
             return
@@ -127,11 +127,11 @@ class Fullmatchtv(CBaseHostClass):
                 urlTab.append({'name': name, 'url': self.getFullUrl(url), 'need_resolve': 1})
 
         return urlTab
-    
+
     def getVideoLinks(self, videoUrl):
         printDBG("fullmatchtv.getVideoLinks [%s]" % videoUrl)
         urlTab = []
-        if 1 == self.up.checkHostSupport(videoUrl): 
+        if 1 == self.up.checkHostSupport(videoUrl):
             urlTab = self.up.getVideoLinkExt(videoUrl)
         return urlTab
 
@@ -143,10 +143,10 @@ class Fullmatchtv(CBaseHostClass):
         name = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
         mode = self.currItem.get("mode", '')
-        
+
         printDBG("handleService: >> name[%s], category[%s] " % (name, category))
         self.currList = []
-        
+
     #MAIN MENU
         if name == None:
             self.listMainMenu({'name': 'category'})
@@ -154,7 +154,7 @@ class Fullmatchtv(CBaseHostClass):
             self.listItems(self.currItem)
         else:
             printExc()
-        
+
         CBaseHostClass.endHandleService(self, index, refresh)
 
 
@@ -162,4 +162,3 @@ class IPTVHost(CHostBase):
 
     def __init__(self):
         CHostBase.__init__(self, Fullmatchtv(), True, [])
-    

@@ -5,7 +5,7 @@
 #
 #  $Id$
 #
-# 
+#
 from Screens.Screen import Screen
 from Components.ActionMap import ActionMap
 from Components.Label import Label
@@ -13,7 +13,7 @@ from Tools.LoadPixmap import LoadPixmap
 
 from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, GetIconDir
 from cover import Cover3
-    
+
 
 #########################################################
 #                    GLOBALS
@@ -30,7 +30,7 @@ class IPTVPinWidget(Screen):
          <widget name="cover_3" zPosition="4" position="215,80" size="60,60" transparent="1" alphatest="on" />
          <ePixmap position="100,150" zPosition="4" size="100,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/IPTVPlayer/icons/Pin/lock.png" transparent="1" alphatest="on" />
         </screen>"""
-   
+
     def __init__(self, session, title=""):
         self.session = session
         Screen.__init__(self, session)
@@ -55,11 +55,11 @@ class IPTVPinWidget(Screen):
 
         self["titel"] = Label()
         self["titel"].setText(title)
-        
+
         # set icons
         self.icoDict = {}
         self.readIcons()
-        
+
         # init pin list
         self.pinList = []
         for i in range(self.PIN_LEN):
@@ -67,11 +67,11 @@ class IPTVPinWidget(Screen):
             strIndx = "cover_%d" % i
             printDBG(strIndx)
             self[strIndx] = Cover3()
-        
+
         self.selIndx = 0
         self.onLayoutFinish.append(self.updatePinDisplay)
     #end def __init__(self, session):
-    
+
     def updatePinDisplay(self):
         for i in range(len(self.pinList)):
             strIndx = "cover_%d" % i
@@ -88,23 +88,23 @@ class IPTVPinWidget(Screen):
 
     def keyNumPressed(self, number):
         printDBG("Key pressed: " + str(number))
-        
+
         self.pinList[self.selIndx] = str(number)
-        
+
         pin = ''.join(self.pinList)
         if len(pin) == self.PIN_LEN:
             self.close(pin)
         else:
             self.nextPinItem()
         return
-    
+
     def nextPinItem(self):
         self.selIndx += 1
         if self.PIN_LEN <= self.selIndx:
             self.selIndx = 0
 
         self.updatePinDisplay()
-            
+
     def keyRight(self):
         self.nextPinItem()
         return
@@ -113,7 +113,7 @@ class IPTVPinWidget(Screen):
         self.selIndx -= 1
         if self.selIndx < 0:
             self.selIndx = self.PIN_LEN - 1
-            
+
         self.updatePinDisplay()
         return
 
@@ -126,12 +126,12 @@ class IPTVPinWidget(Screen):
         if len(pin) == self.PIN_LEN:
             self.close(pin)
         return
-        
+
     def readIcons(self):
         for itF in ['n', 'y']:
             for itS in ['n', 'y']:
                 self.icoDict['F' + itF + 'S' + itS] = LoadPixmap(GetIconDir('Pin/PinF%sS%s.png' % (itF, itS)))
-                  
+
     def keyNum1(self):
         self.keyNumPressed(1)
 
@@ -164,5 +164,5 @@ class IPTVPinWidget(Screen):
 
     def Error(self, error=None):
         pass
-        
+
 #class IPTVPinWidget

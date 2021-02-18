@@ -6,12 +6,12 @@ from __future__ import print_function
 #
 #  $Id$
 #
-# 
+#
 ###################################################
 # LOCAL import
 ###################################################
 ###################################################
- 
+
 ###################################################
 # FOREIGN import
 ###################################################
@@ -97,19 +97,19 @@ def SetGraphicsHash(value):
 
 def DaysInMonth(dt):
     return (datetime.date(dt.year + (dt.month / 12), (dt.month % 12) + 1, 1) - dt).days + dt.day - 1
-    
+
 
 def NextMonth(dt):
     return (dt.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
-    
+
 
 def PrevMonth(dt):
     return (dt.replace(day=1) - datetime.timedelta(days=1)).replace(day=1)
-    
+
 
 def NextDay(dt):
     return (dt + datetime.timedelta(days=1))
-    
+
 
 def PrevDay(dt):
     return (dt - datetime.timedelta(days=1))
@@ -130,14 +130,14 @@ def GetNice(pid=None):
     except Exception:
         printExc()
     return nice
-    
+
 
 def E2PrioFix(cmd, factor=2):
     if getImageArch() != "sh4":
         return 'nice -n %d %s' % (GetNice() + factor, cmd)
     else:
         return cmd
-    
+
 
 def GetDefaultLang(full=False):
     if full:
@@ -145,7 +145,7 @@ def GetDefaultLang(full=False):
             defaultLanguage = language.getActiveLanguage()
         except Exception:
             printExc()
-            defaultLanguage = 'en_EN' 
+            defaultLanguage = 'en_EN'
     else:
         try:
             defaultLanguage = language.getActiveLanguage().split('_')[0]
@@ -153,7 +153,7 @@ def GetDefaultLang(full=False):
             printExc()
             defaultLanguage = 'en'
     return defaultLanguage
-    
+
 
 def GetPolishSubEncoding(filePath):
     encoding = 'utf-8'
@@ -181,7 +181,7 @@ def GetPolishSubEncoding(filePath):
     except Exception:
         printExc()
     return encoding
-    
+
 
 def MapUcharEncoding(encoding):
     ENCODING_MAP = {'X-MAC-CYRILLIC': "MAC-CYRILLIC", "ASCII": "UTF-8"}
@@ -205,7 +205,7 @@ class eConnectCallbackObj:
         printDBG("eConnectCallbackObj.__init__ objID[%d] OBJ_NUM[%d]" % (self.objID, eConnectCallbackObj.OBJ_NUM))
         self.connectHandler = connectHandler
         self.obj = obj
-    
+
     def __del__(self):
         eConnectCallbackObj.OBJ_NUM -= 1
         printDBG("eConnectCallbackObj.__del__ objID[%d] OBJ_NUM[%d] " % (self.objID, eConnectCallbackObj.OBJ_NUM))
@@ -236,7 +236,7 @@ def eConnectCallback(obj, callbackFun, withExcept=False):
     except Exception:
         printExc("eConnectCallback")
     return eConnectCallbackObj()
-    
+
 
 class iptv_system:
     '''
@@ -255,17 +255,17 @@ class iptv_system:
         printDBG("iptv_system.__init__ cmd [%s]" % cmd)
         self.callBackFun = callBackFun
         self.cmd = cmd
-        
+
         self.console = eConsoleAppContainer()
         if None != self.callBackFun:
             self.console_appClosed_conn = eConnectCallback(self.console.appClosed, self._cmdFinished)
             self.console_stdoutAvail_conn = eConnectCallback(self.console.stdoutAvail, self._dataAvail)
             self.outData = ""
         self.console.execute(E2PrioFix(cmd))
-        
+
     def terminate(self, doCallBackFun=False):
         self.kill(doCallBackFun)
-        
+
     def kill(self, doCallBackFun=False):
         if None != self.console:
             if None != self.callBackFun:
@@ -297,7 +297,7 @@ class iptv_system:
 
 def IsHttpsCertValidationEnabled():
     return config.plugins.iptvplayer.httpssslcertvalidation.value
-    
+
 
 def IsWebInterfaceModuleAvailable(chekInit=False):
     if chekInit:
@@ -309,7 +309,7 @@ def IsWebInterfaceModuleAvailable(chekInit=False):
         return True
     else:
         return False
-    
+
 
 def GetAvailableIconSize(checkAll=True):
     iconSizes = [config.plugins.iptvplayer.IconsSize.value]
@@ -325,7 +325,7 @@ def GetAvailableIconSize(checkAll=True):
         except Exception:
             printExc()
     return confirmedIconSize
-    
+
 #############################################################
 # returns the directory path where specified resources are
 # stored, in the future, it can be changed in the config
@@ -334,7 +334,7 @@ def GetAvailableIconSize(checkAll=True):
 
 def GetLogoDir(file=''):
     return resolveFilename(SCOPE_PLUGINS, 'Extensions/IPTVPlayer/icons/logos/') + file
-    
+
 
 def GetPyScriptCmd(name):
     cmd = ''
@@ -362,7 +362,7 @@ def GetUchardetPath():
 
 def GetCmdwrapPath():
     return '/usr/cmdwrapper'
-    
+
 
 def GetDukPath():
     return '/usr/bin/duk'
@@ -375,7 +375,7 @@ def SetTmpCookieDir():
     global gE2iPlayerTempCookieDir
     gE2iPlayerTempCookieDir = '/tmp/e2iplayer_cookies/'
     mkdirs(gE2iPlayerTempCookieDir)
-    
+
 
 def ClearTmpCookieDir():
     global gE2iPlayerTempCookieDir
@@ -385,7 +385,7 @@ def ClearTmpCookieDir():
                 rm(gE2iPlayerTempCookieDir + '/' + file)
         except Exception:
             printExc()
-    
+
     gE2iPlayerTempCookieDir = None
 
 
@@ -468,7 +468,7 @@ def GetE2iPlayerRootfsDir(file=''):
 
 def GetE2iPlayerVKLayoutDir(file=''):
     return GetE2iPlayerRootfsDir('etc/vk/' + file)
-    
+
 
 def CreateTmpFile(filename, data=''):
     sts = False
@@ -480,7 +480,7 @@ def CreateTmpFile(filename, data=''):
     except Exception:
         printExc()
     return sts, filePath
-    
+
 
 def GetCacheSubDir(dir, file=''):
     path = config.plugins.iptvplayer.SciezkaCache.value + "/" + dir
@@ -491,15 +491,15 @@ def GetCacheSubDir(dir, file=''):
 
 def GetSearchHistoryDir(file=''):
     return GetCacheSubDir('SearchHistory', file)
-    
+
 
 def GetFavouritesDir(file=''):
     return GetCacheSubDir('IPTVFavourites', file)
-    
+
 
 def GetSubtitlesDir(file=''):
     return GetCacheSubDir('Subtitles', file)
-    
+
 
 def GetMovieMetaDataDir(file=''):
     return GetCacheSubDir('MovieMetaData', file)
@@ -540,7 +540,7 @@ def IsExecutable(fpath):
     except Exception:
         printExc()
     return False
-    
+
 
 def Which(program):
     try:
@@ -562,7 +562,7 @@ def Which(program):
         printExc()
     return ''
 #############################################################
-# class used to auto-select one link when video has several 
+# class used to auto-select one link when video has several
 # links with different qualities
 #############################################################
 
@@ -573,7 +573,7 @@ class CSelOneLink():
        self.listOfLinks = listOfLinks
        self.getQualiyFun = getQualiyFun
        self.maxRes = maxRes
-       
+
     def _cmpLinks(self, item1, item2):
         val1 = self.getQualiyFun(item1)
         val2 = self.getQualiyFun(item2)
@@ -584,10 +584,10 @@ class CSelOneLink():
         else:
             ret = 0
         return ret
-        
+
     def _cmpLinksBest(self, item1, item2):
         return -1 * self._cmpLinks(item1, item2)
-        
+
     def getBestSortedList(self):
         printDBG('getBestSortedList')
         sortList = self.listOfLinks[::-1]
@@ -602,16 +602,16 @@ class CSelOneLink():
                 tmpList.insert(0, item)
         retList.extend(tmpList)
         return retList
-        
+
     def getSortedLinks(self, defaultFirst=True):
         printDBG('getSortedLinks defaultFirst[%r]' % defaultFirst)
         sortList = self.listOfLinks[::-1]
         sortList.sort(self._cmpLinks)
         if len(self.listOfLinks) < 2 or None == self.maxRes:
             return self.listOfLinks
-        
+
         if defaultFirst:
-            # split links to two groups 
+            # split links to two groups
             # first gorup will meet maxRes
             # second group not
             group1 = []
@@ -626,7 +626,7 @@ class CSelOneLink():
             group2.sort(self._cmpLinks)
             group1.extend(group2)
             return group1
-        
+
         defIdx = -1
         for idx in range(len(sortList)):
             linkRes = self.getQualiyFun(sortList[idx])
@@ -634,13 +634,13 @@ class CSelOneLink():
             if linkRes <= self.maxRes:
                 defIdx = idx
                 printDBG('getOneLink use format %d/%d' % (linkRes, self.maxRes))
-                
+
         if defaultFirst and -1 < defIdx:
             item = sortList[defIdx]
             del sortList[defIdx]
             sortList.insert(0, item)
         return sortList
-            
+
     def getOneLink(self):
         printDBG('getOneLink start')
         tab = self.getSortedLinks()
@@ -707,17 +707,17 @@ def __isHostNameValid(hostName):
     if len(hostName) > 4 and BLOCKED_MARKER not in hostName and hostName.startswith("host"):
         return True
     return False
-    
+
 
 def __getHostsPath(file=''):
     return resolveFilename(SCOPE_PLUGINS, 'Extensions/IPTVPlayer/hosts/' + file)
-    
+
 
 def GetHostsFromList(useCache=True):
     global g_cacheHostsFromList
     if useCache and g_cacheHostsFromList != None:
         return list(g_cacheHostsFromList)
-    
+
     lhosts = []
     try:
         sts, data = ReadTextFile(__getHostsPath('/list.txt'))
@@ -730,16 +730,16 @@ def GetHostsFromList(useCache=True):
                     printDBG('getHostsList add host from list.txt hostName: "%s"' % line[4:])
     except Exception:
         printExc()
-    
+
     g_cacheHostsFromList = list(lhosts)
     return lhosts
-        
+
 
 def GetHostsFromFolder(useCache=True):
     global g_cacheHostsFromFolder
     if useCache and g_cacheHostsFromFolder != None:
         return g_cacheHostsFromFolder
-    
+
     lhosts = []
     try:
         fileList = os.listdir(__getHostsPath())
@@ -755,27 +755,27 @@ def GetHostsFromFolder(useCache=True):
         lhosts.sort()
     except Exception:
         printDBG('GetHostsList EXCEPTION')
-    
+
     g_cacheHostsFromFolder = list(lhosts)
     return lhosts
 
 
 def GetHostsList(fromList=True, fromHostFolder=True, useCache=True):
     printDBG('getHostsList begin')
-    
-    lhosts = [] 
+
+    lhosts = []
     if fromHostFolder:
         lhosts = GetHostsFromFolder(useCache)
-    
-    # when new option to remove not enabled host is enabled 
-    # on list should be also host which are not normally in 
-    # the folder, so we will read first predefined list 
+
+    # when new option to remove not enabled host is enabled
+    # on list should be also host which are not normally in
+    # the folder, so we will read first predefined list
     if fromList:
         tmp = GetHostsFromList(useCache)
         for host in tmp:
             if host not in lhosts:
                 lhosts.append(host)
-    
+
     return lhosts
 
 
@@ -792,7 +792,7 @@ def GetHostsAliases():
     except Exception:
         printExc()
     return ret
-    
+
 
 def GetEnabledHostsList():
     hostsList = GetHostsList(fromList=True, fromHostFolder=True)
@@ -801,14 +801,14 @@ def GetEnabledHostsList():
         if IsHostEnabled(hostName):
             enabledHostsList.append(hostName)
     return enabledHostsList
-    
+
 
 def SortHostsList(hostsList):
     hostsList = list(hostsList)
     hostsOrderList = GetHostsOrderList()
     sortedList = []
     for item in hostsOrderList:
-        if item in hostsList: 
+        if item in hostsList:
             sortedList.append(item)
             hostsList.remove(item)
     sortedList.extend(hostsList)
@@ -825,7 +825,7 @@ def SaveHostsOrderList(list, fileName="iptvplayerhostsorder"):
         f.close()
     except Exception:
         printExc()
-    
+
 
 def GetHostsOrderList(fileName="iptvplayerhostsorder"):
     printDBG('GetHostsOrderList begin')
@@ -859,7 +859,7 @@ def GetSkinsList():
     skins.append(("auto", "auto"))
     printDBG('getSkinsList end')
     return skins
-    
+
 
 def IsHostEnabled(hostName):
     hostEnabled = False
@@ -890,7 +890,7 @@ def FreeSpace(katalog, requiredSpace, unitDiv=1024 * 1024):
     printDBG("FreeSpace freeSpace[%s] requiredSpace[%s] unitDiv[%s]" % (freeSpace, requiredSpace, unitDiv))
     if None == requiredSpace:
         return freeSpace
-    else:    
+    else:
         if freeSpace >= requiredSpace:
             return True
         else:
@@ -905,14 +905,14 @@ def IsValidFileName(name, NAME_MAX=255):
                 return False
         return True
     return False
-    
+
 
 def RemoveDisallowedFilenameChars(name, replacment='.'):
     prohibited_characters = ['/', "\000", '\\', ':', '*', '<', '>', '|', '"']
     for item in prohibited_characters:
         name = name.replace(item, replacment).replace(replacment + replacment, replacment)
     return name
-        
+
 
 def touch(fname, times=None):
     try:
@@ -922,8 +922,8 @@ def touch(fname, times=None):
     except Exception:
         printExc()
         return False
-        
-        
+
+
 def mkdir(newdir):
     """ Wrapper for the os.mkdir function
         returns status instead of raising exception
@@ -964,7 +964,7 @@ def mkdirs(newdir, raiseException=False):
         if raiseException:
             raise e
     return False
-        
+
 
 def rm(fullname):
     try:
@@ -1019,15 +1019,15 @@ def rmtree(path, ignore_errors=False, onerror=None):
     try:
         os.rmdir(path)
     except os.error:
-        onerror(os.rmdir, path) 
-        
+        onerror(os.rmdir, path)
+
 
 def GetFileSize(filepath):
     try:
         return os.stat(filepath).st_size
     except Exception:
         return -1
-       
+
 
 def DownloadFile(url, filePath):
     printDBG('DownloadFile [%s] from [%s]' % (filePath, url))
@@ -1052,7 +1052,7 @@ def DownloadFile(url, filePath):
 
 ########################################################
 #                     For icon manager
-########################################################  
+########################################################
 
 
 def GetLastDirNameFromPath(path):
@@ -1065,10 +1065,10 @@ def GetLastDirNameFromPath(path):
 
 def GetIconDirBaseName():
     return '.iptvplayer_icons_'
-    
+
 
 def CheckIconName(name):
-    #check if name is correct 
+    #check if name is correct
     if 36 == len(name) and '.jpg' == name[-4:]:
         try:
             tmp = int(name[:-4], 16)
@@ -1092,7 +1092,7 @@ def CheckIconsDirName(path):
         except Exception:
             pass
     return False
-    
+
 
 def GetIconsDirs(basePath):
     iconsDirs = []
@@ -1105,7 +1105,7 @@ def GetIconsDirs(basePath):
     except Exception:
         printExc()
     return iconsDirs
-    
+
 
 def GetIconsFilesFromDir(basePath):
     iconsFiles = []
@@ -1118,9 +1118,9 @@ def GetIconsFilesFromDir(basePath):
                     iconsFiles.append(item)
         except Exception:
             printExc()
-    
+
     return iconsFiles
-    
+
 
 def GetCreationIconsDirTime(fullPath):
     try:
@@ -1129,7 +1129,7 @@ def GetCreationIconsDirTime(fullPath):
         return float(dirName[len(baseName):])
     except Exception:
         return None
-        
+
 
 def GetCreateIconsDirDeltaDateInDays(fullPath):
     ret = -1
@@ -1143,7 +1143,7 @@ def GetCreateIconsDirDeltaDateInDays(fullPath):
         except Exception:
             printExc()
     return ret
-    
+
 
 def RemoveIconsDirByPath(path):
     printDBG("RemoveIconsDirByPath[%s]" % path)
@@ -1151,8 +1151,8 @@ def RemoveIconsDirByPath(path):
     try:
         os.rmdir(path)
     except Exception:
-        printExc('RemoveIconsDirByPath dir[%s] is not empty' % path) 
-    
+        printExc('RemoveIconsDirByPath dir[%s] is not empty' % path)
+
 
 def RemoveOldDirsIcons(path, deltaInDays='7'):
     deltaInDays = int(deltaInDays)
@@ -1181,7 +1181,7 @@ def RemoveAllFilesIconsFromPath(path):
                     printDBG("ERROR while removing file %s" % filePath)
     except Exception:
         printExc('ERROR: in RemoveAllFilesIconsFromPath')
-        
+
 
 def RemoveAllDirsIconsFromPath(path, old=False):
     if old:
@@ -1194,21 +1194,21 @@ def RemoveAllDirsIconsFromPath(path, old=False):
                 RemoveIconsDirByPath(currDir)
         except Exception:
             printExc()
-    
+
 
 def formatBytes(bytes, precision=2):
     import math
-    units = ['B', 'KB', 'MB', 'GB', 'TB'] 
+    units = ['B', 'KB', 'MB', 'GB', 'TB']
     bytes = max(bytes, 0)
     if bytes:
         pow = math.log(bytes)
     else:
         pow = 0
-    pow = math.floor(pow / math.log(1024)) 
-    pow = min(pow, len(units) - 1) 
+    pow = math.floor(pow / math.log(1024))
+    pow = min(pow, len(units) - 1)
     bytes /= math.pow(1024, pow)
-    return ("%s%s" % (str(round(bytes, precision)), units[int(pow)])) 
-    
+    return ("%s%s" % (str(round(bytes, precision)), units[int(pow)]))
+
 
 def remove_html_markup(s, replacement=''):
     tag = False
@@ -1242,7 +1242,7 @@ class CSearchHistoryHelper():
     def getHistoryList(self):
         printDBG('CSearchHistoryHelper.getHistoryList from file = "%s"' % self.PATH_FILE)
         historyList = []
-    
+
         try:
             file = codecs.open(self.PATH_FILE, 'r', 'utf-8', 'ignore')
             for line in file:
@@ -1256,7 +1256,7 @@ class CSearchHistoryHelper():
         except Exception:
             printExc()
             return []
-        
+
         orgLen = len(historyList)
         # remove duplicates
         # last 50 searches patterns are stored
@@ -1270,7 +1270,7 @@ class CSearchHistoryHelper():
         # strip file if it has to big overhead
         if orgLen - len(historyList) > 50:
             self._saveHistoryList(historyList)
-        
+
         # now type also can be stored
         #################################
         newList = []
@@ -1280,13 +1280,13 @@ class CSearchHistoryHelper():
                 newList.append({'pattern': fields[0], 'type': fields[1]})
             elif self.storeTypes:
                 newList.append({'pattern': fields[0]})
-        
+
         if len(newList) > 0:
             return newList
         #################################
-            
+
         return historyList
-    
+
     def addHistoryItem(self, itemValue, itemType=None):
         printDBG('CSearchHistoryHelper.addHistoryItem to file = "%s"' % self.PATH_FILE)
         try:
@@ -1297,7 +1297,7 @@ class CSearchHistoryHelper():
                     value = value + self.TYPE_SEP + itemType
                 value = value if isinstance(u'', type(value)) else value.decode('utf-8', 'replace')
                 file.write(value + u'\n')
-                printDBG('Added pattern: "%s"' % itemValue) 
+                printDBG('Added pattern: "%s"' % itemValue)
                 file.close
         except Exception:
             printExc('CSearchHistoryHelper.addHistoryItem EXCEPTION')
@@ -1366,10 +1366,10 @@ class CMoviePlayerPerHost():
         self.filePath = GetCacheSubDir('MoviePlayer', hostName + '.json')
         self.activePlayer = {} # {buffering:True/False, 'player':''}
         self.load()
-        
+
     def __del__(self):
         self.save()
-        
+
     def load(self):
         from Plugins.Extensions.IPTVPlayer.libs.e2ijson import loads as json_loads
         sts, ret = False, ''
@@ -1389,7 +1389,7 @@ class CMoviePlayerPerHost():
         except Exception:
             printExc()
         return sts, ret
-        
+
     def save(self):
         from Plugins.Extensions.IPTVPlayer.libs.e2ijson import dumps as json_dumps
         sts = False
@@ -1408,14 +1408,14 @@ class CMoviePlayerPerHost():
         except Exception:
             printExc()
         return sts
-    
+
     def get(self, key, defval):
         return self.activePlayer.get(key, defval)
-        
+
     def set(self, activePlayer):
         self.activePlayer = activePlayer
         self.save()
-        
+
 
 def byteify(input, noneReplacement=None, baseTypesAsString=False):
     if isinstance(input, dict):
@@ -1447,7 +1447,7 @@ def GetIPTVPlayerVerstion():
     except Exception:
         IPTV_VERSION = "XX.YY.ZZ"
     return IPTV_VERSION
-    
+
 
 def GetIPTVPlayerComitStamp():
     try:
@@ -1459,7 +1459,7 @@ def GetIPTVPlayerComitStamp():
 
 def GetShortPythonVersion():
     return "%d.%d" % (sys.version_info[0], sys.version_info[1])
-    
+
 
 def GetVersionNum(ver):
     try:
@@ -1480,7 +1480,7 @@ def IsSubtitlesParserExtensionCanBeUsed():
     except Exception:
         printExc()
     return False
-    
+
 
 def IsBrokenDriver(filePath):
     # workaround for broken DVB driver mbtwinplus:
@@ -1495,7 +1495,7 @@ def IsBrokenDriver(filePath):
     except Exception:
         printExc()
     return False
-        
+
 
 def GetE2OptionsFromFile(filePath):
     options = []
@@ -1545,37 +1545,37 @@ def GetE2VideoAspect():
     if 1 == len(options):
         return options[0]
     return None
-    
+
 
 def SetE2VideoAspect(value):
     return SetE2OptionByFile('/proc/stb/video/aspect', value)
-    
+
 
 def GetE2VideoPolicyChoices(num=''):
     return GetE2OptionsFromFile('/proc/stb/video/policy%s_choices' % num)
-    
+
 
 def GetE2VideoPolicy(num=''):
     options = GetE2OptionsFromFile('/proc/stb/video/policy' + num)
     if 1 == len(options):
         return options[0]
     return None
-    
+
 
 def SetE2VideoPolicy(value, num=''):
     return SetE2OptionByFile('/proc/stb/video/policy' + num, value)
-    
+
 
 def GetE2AudioCodecMixChoices(codec):
     return GetE2OptionsFromFile('/proc/stb/audio/%s_choices' % codec)
-    
+
 
 def GetE2AudioCodecMixOption(codec):
     options = GetE2OptionsFromFile('/proc/stb/audio/%s' % codec)
     if 1 == len(options):
         return options[0]
     return None
-    
+
 
 def SetE2AudioCodecMixOption(codec, value):
     return SetE2OptionByFile('/proc/stb/audio/%s' % codec, value)
@@ -1586,7 +1586,7 @@ def SetE2AudioCodecMixOption(codec, value):
 def GetE2VideoModeChoices():
     # return 'pal ntsc 480i 576i 480p 576p 720p50 720p 1080i50 1080i 1080p24 1080p25 1080p30 720p24 720p25 720p30 1080p50 1080p'.split(' ')
     return GetE2OptionsFromFile('/proc/stb/video/videomode_choices')
-    
+
 
 def GetE2VideoMode():
     # return '1080p50'
@@ -1594,7 +1594,7 @@ def GetE2VideoMode():
     if 1 == len(options):
         return options[0]
     return None
-    
+
 
 def SetE2VideoMode(value):
     return SetE2OptionByFile('/proc/stb/video/videomode', value)
@@ -1627,7 +1627,7 @@ def ReadGnuMIPSABIFP(elfFileName):
     Val_GNU_MIPS_ABI_FP_64 = 6
     Val_GNU_MIPS_ABI_FP_64A = 7
     Val_GNU_MIPS_ABI_FP_NAN2008 = 8
-    
+
     def _readLeb128(data, start, end):
         result = 0
         numRead = 0
@@ -1644,14 +1644,14 @@ def ReadGnuMIPSABIFP(elfFileName):
             if byte < 0x80:
                 break
         return numRead, result
-    
+
     def _getStr(stsTable, idx):
         val = ''
         while stsTable[idx] != '\0':
             val += stsTable[idx]
             idx += 1
         return val
-    
+
     Val_HAS_MIPS_ABI_FLAGS = False
     Val_GNU_MIPS_ABI_FP = -1
     try:
@@ -1659,27 +1659,27 @@ def ReadGnuMIPSABIFP(elfFileName):
             # e_shoff - Start of section headers
             file.seek(32)
             shoff = ReadUint32(file.read(4))
-        
+
             # e_shentsize - Size of section headers
             file.seek(46)
             shentsize = ReadUint16(file.read(2))
-            
+
             # e_shnum -  Number of section headers
             shnum = ReadUint16(file.read(2))
-            
+
             # e_shstrndx - Section header string table index
             shstrndx = ReadUint16(file.read(2))
-            
+
             # read .shstrtab section header
             headerOffset = shoff + shstrndx * shentsize
-            
+
             file.seek(headerOffset + 16)
             offset = ReadUint32(file.read(4))
             size = ReadUint32(file.read(4))
-            
+
             file.seek(offset)
             secNameStrTable = file.read(size)
-            
+
             for idx in range(shnum):
                 offset = shoff + idx * shentsize
                 file.seek(offset)
@@ -1698,7 +1698,7 @@ def ReadGnuMIPSABIFP(elfFileName):
                         while sectionLen > 0:
                             attrLen = ReadUint32(contents[p:])
                             p += 4
-                            
+
                             if attrLen > sectionLen:
                                 attrLen = sectionLen
                             elif attrLen < 5:
@@ -1706,10 +1706,10 @@ def ReadGnuMIPSABIFP(elfFileName):
                             sectionLen -= attrLen
                             attrLen -= 4
                             attrName = _getStr(contents, p)
-                            
+
                             p += len(attrName) + 1
                             attrLen -= len(attrName) + 1
-                            
+
                             while attrLen > 0 and p < len(contents):
                                 if attrLen < 6:
                                     sectionLen = 0
@@ -1722,11 +1722,11 @@ def ReadGnuMIPSABIFP(elfFileName):
                                 if size < 6:
                                     sectionLen = 0
                                     break
-                                    
+
                                 attrLen -= size
                                 end = p + size - 1
                                 p += 4
-                                
+
                                 if tag == 1 and attrName == "gnu": #File Attributes
                                     while p < end:
                                         # display_gnu_attribute

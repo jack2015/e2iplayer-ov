@@ -38,8 +38,8 @@ try:
         from urlparse import urlparse as compat_urllib_parse_urlparse
 except Exception:
     printDBG("YT import problem 4")
-  
-try:  
+
+try:
     try:
         import http.cookiejar as compat_cookiejar
     except ImportError as e: # Python 2
@@ -47,15 +47,15 @@ try:
 except Exception:
     printDBG("YT import problem 5")
 
-try: 
+try:
     try:
         import html.entities as compat_html_entities
     except ImportError as e: # Python 2
         import htmlentitydefs as compat_html_entities
 except Exception:
     printDBG("YT import problem 6")
-  
-try:  
+
+try:
     try:
         import http.client as compat_http_client
     except ImportError as e: # Python 2
@@ -92,7 +92,7 @@ except ImportError as e: # Python 2
                 rest = '%' + item
             # Encountered non-percent-encoded characters. Flush the current
             # pct_sequence.
-            string += pct_sequence if encoding == None else pct_sequence.decode(encoding, errors) 
+            string += pct_sequence if encoding == None else pct_sequence.decode(encoding, errors)
             string += rest
             pct_sequence = b''
         if pct_sequence:
@@ -205,7 +205,7 @@ def clean_html(html):
     elif isinstance(html, type('')):
         strType = 'utf-8'
         html = html.decode("utf-8", 'ignore')
-        
+
     # Newline vs <br />
     html = html.replace('\n', ' ')
     html = re.sub(r'\s*<\s*br\s*/?\s*>\s*', '\n', html)
@@ -214,10 +214,10 @@ def clean_html(html):
     html = re.sub('<.*?>', '', html)
     # Replace html entities
     html = unescapeHTML(html)
-    
-    if strType == 'utf-8': 
+
+    if strType == 'utf-8':
         html = html.encode("utf-8")
-    
+
     return html.strip()
 
 

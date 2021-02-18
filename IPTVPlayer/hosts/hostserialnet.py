@@ -29,23 +29,23 @@ def gettytul():
 
 
 class SerialeNet(CBaseHostClass):
-    
+
     def __init__(self):
         printDBG("SerialeNet.__init__")
         CBaseHostClass.__init__(self, {'history': 'SerialeNet', 'cookie': 'serialenet.cookie'})
-        
+
         self.DEFAULT_ICON_URL = 'http://3.bp.blogspot.com/_Gm9qKcXSvaM/S3X4VtoRfjI/AAAAAAAAAHw/I3ZTIK_DZlY/s200/MCj04421470000%5B1%5D.png'
         self.MAIN_URL = "http://serialnet.pl/"
         self.CAT_TAB = [{'category': 'abc_menu', 'title': 'Alfabetycznie', 'url': self.getMainUrl()},
                          {'category': 'last_update', 'title': 'Ostatnio uzupełnione', 'url': self.getMainUrl()},
-                         
+
                          {'category': 'search', 'title': _('Search'), 'search_item': True},
                          {'category': 'search_history', 'title': _('Search history')}]
         self.seasonsCache = []
-        
+
     def _getStr(self, v, default=''):
         return clean_html(self._encodeStr(v, default))
-        
+
     def _encodeStr(self, v, default=''):
         if isinstance(v, type(u'')):
             return v.encode('utf-8')
@@ -53,7 +53,7 @@ class SerialeNet(CBaseHostClass):
             return v
         else:
             return default
-        
+
     def decodeJS(self, s):
         ret = ''
         try:
@@ -74,7 +74,7 @@ class SerialeNet(CBaseHostClass):
             if k[i]:
                p = re.sub('\\b' + self.int2base(i, a) + '\\b', k[i], p)
         return p
-        
+
     def int2base(self, x, base):
         digs = string.digits + string.lowercase + string.uppercase
         if x < 0:
@@ -92,7 +92,7 @@ class SerialeNet(CBaseHostClass):
             digits.append('-')
         digits.reverse()
         return ''.join(digits)
-        
+
     def _listsSeries(self, url):
         printDBG("SerialeNet._listsSeries")
         url = self.getFullUrl(url)
@@ -119,7 +119,7 @@ class SerialeNet(CBaseHostClass):
             params = dict(cItem)
             params.update({'title': item, 'letter': item, 'category': category})
             self.addDir(params)
-    
+
     def listsSeriesByLetter(self, cItem, category):
         printDBG("SerialeNet.listsSeriesByLetter")
         letter = cItem.get('letter', '')
@@ -152,17 +152,17 @@ class SerialeNet(CBaseHostClass):
         printDBG("SerialeNet.listSeasons")
         url = self.getFullUrl(cItem['url'])
         self.seasonsCache = []
-        
+
         sts, data = self.cm.getPage(url)
         if not sts:
             return
-        
+
         serieTitle = cItem.get('title', '')
-        
+
         desc = self.cm.ph.getDataBeetwenMarkers(data, '<div id="desc">', '</div>', False)[1]
         icon = self.getFullUrl(self.cm.ph.getSearchGroups(desc, 'src="([^"]+?)"')[0])
         desc = self.cleanHtmlStr(desc)
-        
+
         data = self.cm.ph.getDataBeetwenReMarkers(data, re.compile('<div[^>]+?id="wrp1"[^>]*?></?br[^>]*?>'), re.compile('<script>'), False)[1]
         data = data.split('<div')
         if len(data):
@@ -171,14 +171,14 @@ class SerialeNet(CBaseHostClass):
             seasonName = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(item, '<h3>', '</h3>', False)[1])
             if seasonName == '':
                 continue
-            
+
             sNum = self.cm.ph.getSearchGroups(seasonName, '''\s*?([0-9]+)''')[0]
-            
+
             self.seasonsCache.append({'title': seasonName, 'episodes': []})
             episodes = self.cm.ph.getAllItemsBeetwenMarkers(item, '<a', '</a>')
             re.findall('<a title="([^"]*?)"[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>', item)
             for e in episodes:
-                url = self.cm.ph.getSearchGroups(e, '''href=['"](https?://[^'^"]+?)['"]''')[0] 
+                url = self.cm.ph.getSearchGroups(e, '''href=['"](https?://[^'^"]+?)['"]''')[0]
                 if not self.cm.isValidUrl(url):
                     continue
                 title = self.cleanHtmlStr(e)
@@ -193,7 +193,7 @@ class SerialeNet(CBaseHostClass):
                     title = '%s%s, %s' % (num, seasonName, title)
                 title = '%s - %s' % (serieTitle, title)
                 self.seasonsCache[-1]['episodes'].append({'good_for_fav': True, 'title': title, 'url': url, 'desc': desc})
-        
+
         if 1 < len(self.seasonsCache):
             seasonsId = 0
             for item in self.seasonsCache:
@@ -204,7 +204,7 @@ class SerialeNet(CBaseHostClass):
         elif 1 == len(self.seasonsCache):
             cItem.update({'seasons_id': 0})
             self.listEpisodes(cItem)
-    
+
     def listEpisodes(self, cItem):
         seasonsID = cItem.get('seasons_id', -1)
         if -1 < seasonsID and seasonsID < len(self.seasonsCache):
@@ -214,7 +214,7 @@ class SerialeNet(CBaseHostClass):
                 params = dict(cItem)
                 params.update(item)
                 self.addVideo(params)
-               
+
     def listLastUpdated(self, cItem, category):
         printDBG("SerialeNet.listLastUpdated")
         url = self.getFullUrl(cItem['url'])
@@ -230,7 +230,7 @@ class SerialeNet(CBaseHostClass):
                 params = dict(cItem)
                 params.update({'good_for_fav': True, 'category': category, 'title': title, 'icon': icon, 'desc': desc, 'url': url})
                 self.addDir(params)
-                    
+
     def listSearchResult(self, cItem, searchPattern, searchType):
         printDBG("SerialeNet.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         keywordList = self.cm.ph.getNormalizeStr(searchPattern).upper().split(' ')
@@ -254,7 +254,7 @@ class SerialeNet(CBaseHostClass):
                     params.update({'title': title, 'url': item['url'], 'matches': matches})
                     self.addDir(params)
             self.currList.sort(key=lambda item: item.get('matches', 0), reverse=True)
-    
+
     def getLinksForVideo(self, cItem):
         videoUrlTab = []
         baseUrl = self.getFullUrl(cItem['url'])
@@ -278,7 +278,7 @@ class SerialeNet(CBaseHostClass):
                 try:
                     url = item['url']
                     sts, data = self.cm.getPage(url)
-                    
+
                     videoUrl = ''
                     if "url: escape('http" in data:
                         match = re.search("url: escape\('([^']+?)'", data)
@@ -308,7 +308,7 @@ class SerialeNet(CBaseHostClass):
                         videoUrlTab.append({'name': item['title'], 'url': videoUrl})
                     else:
                         msg = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<div id="errorbox"', '</div>')[1])
-                        if msg == '': 
+                        if msg == '':
                             msg = self.cm.ph.getDataBeetwenMarkers(data, 'on("error"', '}', False)[1]
                             msg = self.cleanHtmlStr(self.cm.ph.getSearchGroups(msg, "text\('([^']+?)'")[0])
                         SetIPTVPlayerLastHostError(msg)
@@ -317,15 +317,15 @@ class SerialeNet(CBaseHostClass):
                     printExc()
         except Exception:
             printExc()
-        return videoUrlTab 
-        
+        return videoUrlTab
+
     def getVideoLink(self, url):
         printDBG("getVideoLink url [%s]" % url)
-        
+
     def getFavouriteData(self, cItem):
         printDBG('SerialeNet.getFavouriteData')
         return json.dumps(cItem)
-        
+
     def getLinksForFavourite(self, fav_data):
         printDBG('SerialeNet.getLinksForFavourite')
         links = []
@@ -335,17 +335,17 @@ class SerialeNet(CBaseHostClass):
         except Exception:
             printExc()
         return links
-        
+
     def setInitListFromFavouriteItem(self, fav_data):
         printDBG('SerialeNet.setInitListFromFavouriteItem')
         try:
             params = byteify(json.loads(fav_data))
-        except Exception: 
+        except Exception:
             params = {}
             printExc()
         self.addDir(params)
         return True
-    
+
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('SerialeNet.handleService start')
 
@@ -354,7 +354,7 @@ class SerialeNet(CBaseHostClass):
         category = self.currItem.get("category", '')
         printDBG("SerialeNet.handleService: ---------> name[%s], category[%s] " % (name, category))
         searchPattern = self.currItem.get("search_pattern", searchPattern)
-        self.currList = [] 
+        self.currList = []
 
         if None == name:
             self.listsTab(self.CAT_TAB, {'name': 'category'})
@@ -376,7 +376,7 @@ class SerialeNet(CBaseHostClass):
     #WYSZUKAJ
         elif category == "search":
             cItem = dict(self.currItem)
-            cItem.update({'good_for_fav': True, 'category': 'seasons', 'search_item': False, 'name': 'category'}) 
+            cItem.update({'good_for_fav': True, 'category': 'seasons', 'search_item': False, 'name': 'category'})
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA WYSZUKIWANIA
         elif category == "search_history":
@@ -390,4 +390,3 @@ class IPTVHost(CHostBase):
 
     def __init__(self):
         CHostBase.__init__(self, SerialeNet(), True)
-    

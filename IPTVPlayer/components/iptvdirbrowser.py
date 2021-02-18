@@ -5,7 +5,7 @@
 #
 #  $Id$
 #
-# 
+#
 ###################################################
 # LOCAL import
 ###################################################
@@ -14,7 +14,7 @@ from Plugins.Extensions.IPTVPlayer.components.iptvlist import IPTVMainNavigatorL
 from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, mkdir, IsValidFileName, GetBinDir, eConnectCallback, E2PrioFix
 from Plugins.Extensions.IPTVPlayer.components.e2ivkselector import GetVirtualKeyboard
 ###################################################
- 
+
 ###################################################
 # FOREIGN import
 ###################################################
@@ -34,10 +34,10 @@ class CListItem:
         self.type = type
         self.name = name
         self.fullDir = fullDir
-        
+
     def getDisplayTitle(self):
         return self.name
-        
+
     def getTextColor(self):
         return None
 
@@ -50,7 +50,7 @@ class IPTVDirBrowserList(IPTVMainNavigatorList):
 
 class IPTVDirectorySelectorWidget(Screen):
     screenwidth = getDesktop(0).size().width()
-    if screenwidth and screenwidth == 1920:  
+    if screenwidth and screenwidth == 1920:
         skin = """
         <screen name="IPTVDirectorySelectorWidget" position="center,center" size="820,860" title="">
             <widget name="key_red"     position="10,10"  zPosition="2"  size="600,35" valign="center"  halign="left"   font="Regular;28" transparent="1" foregroundColor="red" />
@@ -68,7 +68,7 @@ class IPTVDirectorySelectorWidget(Screen):
             <widget name="curr_dir"    position="10,50"  zPosition="2"  size="600,35" valign="center"  halign="left"   font="Regular;18" transparent="1" foregroundColor="white" />
             <widget name="list"        position="10,85"  zPosition="1"  size="580,335" transparent="1" scrollbarMode="showOnDemand" enableWrapAround="1" />
         </screen>"""
-        
+
     def __init__(self, session, currDir, title="Directory browser"):
         printDBG("IPTVDirectorySelectorWidget.__init__ -------------------------------")
         Screen.__init__(self, session)
@@ -88,18 +88,18 @@ class IPTVDirectorySelectorWidget(Screen):
                     "ok": self.requestOk,
                     "cancel": self.requestBack
                 })
-        
+
         self.title = title
         self.onLayoutFinish.append(self.layoutFinished)
         self.onClose.append(self.__onClose)
-        
+
         self.console = eConsoleAppContainer()
         self.console_appClosed_conn = eConnectCallback(self.console.appClosed, self.refreshFinished)
         self.console_stderrAvail_conn = eConnectCallback(self.console.stderrAvail, self.refreshNewData)
         self.underRefreshing = False
         self.underClosing = False
         self.deferredAction = None
-        
+
         try:
             while not os_path.isdir(currDir):
                 tmp = os_path.dirname(currDir)
@@ -109,10 +109,10 @@ class IPTVDirectorySelectorWidget(Screen):
         except Exception:
             currDir = ''
             printExc()
-        
+
         self.currDir = currDir
         self.currList = []
-        
+
         self.tmpData = ''
         self.tmpList = []
 
@@ -127,21 +127,21 @@ class IPTVDirectorySelectorWidget(Screen):
             self.console_stdoutAvail_conn = None
             self.console.sendCtrlC()
             self.console = None
-            
+
         self.onClose.remove(self.__onClose)
         self.onLayoutFinish.remove(self.layoutFinished)
-        
+
     def _iptvDoClose(self, ret=None):
         if self.console:
             self.console.sendCtrlC()
         self.close(ret)
-        
+
     def _getSelItem(self):
         currSelIndex = self["list"].getCurrentIndex()
         if len(self.currList) <= currSelIndex:
             return None
         return self.currList[currSelIndex]
-        
+
     def prepareCmd(self):
         lsdirPath = GetBinDir("lsdir")
         try:
@@ -150,14 +150,14 @@ class IPTVDirectorySelectorWidget(Screen):
             printExc()
         cmd = '%s "%s" dl d' % (lsdirPath, self.currDir)
         return cmd
-        
+
     def doAction(self, action):
         if not self.underRefreshing:
             action()
         else:
             self.deferredAction = action
             self.console.sendCtrlC()
-    
+
     def layoutFinished(self):
         printDBG("IPTVDirectorySelectorWidget.layoutFinished -------------------------------")
         self.setTitle(_(self.title))
@@ -169,15 +169,15 @@ class IPTVDirectorySelectorWidget(Screen):
         self["curr_dir"].setText(_(self.currDir))
         self["list"].setList([])
         self.requestRefresh()
-        
+
     def getCurrentDirectory(self):
-        if self.currDir and os_path.isdir(self.currDir): 
+        if self.currDir and os_path.isdir(self.currDir):
             if '/' != self.currDir[-1]:
                 self.currDir += '/'
             return self.currDir
         else:
             return "/"
-    
+
     def refreshFinished(self, code):
         printDBG("IPTVDirectorySelectorWidget.refreshFinished")
         self.underRefreshing = False
@@ -196,7 +196,7 @@ class IPTVDirectorySelectorWidget(Screen):
             self["list"].setList([(x,) for x in self.currList])
             self.tmpList = []
             self.tmpData = ''
-        
+
     def refreshNewData(self, data):
         self.tmpData += data
         newItems = self.tmpData.split('\n')
@@ -206,7 +206,7 @@ class IPTVDirectorySelectorWidget(Screen):
             self.tmpData = newItems[-1]
             del newItems[-1]
         self.doRefreshNewData(newItems)
-            
+
     def doRefreshNewData(self, newItems):
         for item in newItems:
             params = item.split('//')
@@ -217,12 +217,12 @@ class IPTVDirectorySelectorWidget(Screen):
                 #if '0' == params[2]: type = 'dir'
                 #else: type = 'linkdir'
                 self.tmpList.append(CListItem(name=params[0], fullDir=params[3], type='dir'))
-        
+
     def requestApply(self):
         if self.underClosing:
             return
         self.doAction(boundFunction(self._iptvDoClose, self.getCurrentDirectory()))
-        
+
     def requestCancel(self):
         printDBG(">>>REQUEST CANCEL<<<")
         try:
@@ -233,7 +233,7 @@ class IPTVDirectorySelectorWidget(Screen):
             self._iptvDoClose(None)
         else:
             self.doAction(boundFunction(self._iptvDoClose, None))
-        
+
     def requestRefresh(self):
         if self.underClosing:
             return
@@ -250,17 +250,17 @@ class IPTVDirectorySelectorWidget(Screen):
         if self.underClosing:
             return
         self.doAction(self.newDir)
-        
+
     def requestOk(self):
         if self.underClosing:
             return
         self.doAction(self.ok)
-        
+
     def requestBack(self):
         if self.underClosing:
             return
         self.doAction(self.back)
-        
+
     def ok(self):
         item = self._getSelItem()
         if None == item or '' == item.name:
@@ -278,7 +278,7 @@ class IPTVDirectorySelectorWidget(Screen):
         else:
             self.currDir = self.currDir[:self.currDir[:-1].rfind('/')]
             self.currDirChanged()
-        
+
     def newDir(self):
         self.session.openWithCallback(self.enterPatternCallBack, GetVirtualKeyboard(), title=(_("Enter name")), text="")
 
@@ -300,7 +300,7 @@ class IPTVDirectorySelectorWidget(Screen):
 
 class IPTVFileSelectorWidget(IPTVDirectorySelectorWidget):
     screenwidth = getDesktop(0).size().width()
-    if screenwidth and screenwidth == 1920:  
+    if screenwidth and screenwidth == 1920:
         skin = """
         <screen name="IPTVFileSelectorWidget" position="center,center" size="820,860" title="">
             <widget name="key_red"     position="10,10"  zPosition="2"  size="600,35" valign="center"  halign="left"   font="Regular;28" transparent="1" foregroundColor="red" />
@@ -313,7 +313,7 @@ class IPTVFileSelectorWidget(IPTVDirectorySelectorWidget):
             <widget name="key_red"     position="10,10"  zPosition="2"  size="600,35" valign="center"  halign="left"   font="Regular;22" transparent="1" foregroundColor="red" />
             <widget name="curr_dir"    position="10,50"  zPosition="2"  size="600,35" valign="center"  halign="left"   font="Regular;18" transparent="1" foregroundColor="white" />
             <widget name="list"        position="10,85"  zPosition="1"  size="580,335" transparent="1" scrollbarMode="showOnDemand" enableWrapAround="1" />
-        </screen>"""      
+        </screen>"""
 
     def __init__(self, session, currDir, title="File browser", fileMatch=None):
         printDBG("IPTVFileSelectorWidget.__init__ -------------------------------")
@@ -331,7 +331,7 @@ class IPTVFileSelectorWidget(IPTVDirectorySelectorWidget):
                     "cancel": self.requestBack
                 })
         self.fileMatch = fileMatch
-        
+
     def prepareCmd(self):
         lsdirPath = GetBinDir("lsdir")
         try:
@@ -340,7 +340,7 @@ class IPTVFileSelectorWidget(IPTVDirectorySelectorWidget):
             printExc()
         cmd = '%s "%s" drl dr' % (lsdirPath, self.currDir)
         return cmd
-        
+
     def doRefreshNewData(self, newItems):
         for item in newItems:
             params = item.split('//')
@@ -359,7 +359,7 @@ class IPTVFileSelectorWidget(IPTVDirectorySelectorWidget):
                         printExc()
                         continue
                 self.tmpList.append(CListItem(name=params[0], fullDir=params[3], type=type))
-                
+
     def ok(self):
         item = self._getSelItem()
         if None == item or '' == item.name:
@@ -373,7 +373,7 @@ class IPTVFileSelectorWidget(IPTVDirectorySelectorWidget):
                 self.currDirChanged()
         elif item.type == 'file':
             self.requestApply(fullPath)
-        
+
     def requestApply(self, fullPath):
         if self.underClosing:
             return

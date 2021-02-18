@@ -20,7 +20,7 @@ def _(txt):
 		if t == txt:
 			t = gettext.gettext(txt)
 	return t
-      
+
 
 localeInit()
 language.addCallback(localeInit)

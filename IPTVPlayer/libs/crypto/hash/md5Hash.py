@@ -32,5 +32,3 @@ class MD5(Hash):
             non-ASCII characters, including null bytes.
         """
         return self.pymd5.digest()
-
-

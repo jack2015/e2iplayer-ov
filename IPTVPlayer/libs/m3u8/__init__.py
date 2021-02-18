@@ -59,4 +59,3 @@ def _load_from_file(uri):
         raw_content = fileobj.read().strip()
     base_uri = os.path.dirname(uri)
     return M3U8(raw_content, base_uri=base_uri)
-

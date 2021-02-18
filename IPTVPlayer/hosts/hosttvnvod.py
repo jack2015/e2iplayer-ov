@@ -37,7 +37,7 @@ config.plugins.iptvplayer.TVNDefaultformat = ConfigSelection(default="9999", cho
 config.plugins.iptvplayer.TVNUseDF = ConfigYesNo(default=False)
 config.plugins.iptvplayer.TVNdevice = ConfigSelection(default="_mobile_", choices=[("_mobile_", "Mobile"), ("_tv_", "TV")])
 config.plugins.iptvplayer.proxyenable = ConfigYesNo(default=False)
-   
+
 
 def GetConfigList():
     optionList = []
@@ -57,8 +57,8 @@ def gettytul():
 
 class TvnVod(CBaseHostClass):
     ICON_URL = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/%s?quality=50&dstw=290&dsth=287&type=1'
-    
-    QUALITIES_TABLE = { 
+
+    QUALITIES_TABLE = {
         'HD': 7,
         'Bardzo wysoka': 6,
         'Wysoka': 5,
@@ -67,18 +67,18 @@ class TvnVod(CBaseHostClass):
         'Niska': 2,
         'Bardzo niska': 1,
     }
-        
+
     SERVICE_MENU_TABLE = [
         "Kategorie",
         "Wyszukaj",
         "Historia wyszukiwania"
     ]
-    
+
     def __init__(self):
         printDBG("TvnVod.__init__")
         CBaseHostClass.__init__(self, {'history': 'TvnVod', 'history_store_type': True, 'proxyURL': config.plugins.iptvplayer.proxyurl.value, 'useProxy': config.plugins.iptvplayer.proxyenable.value})
         self.itemsPerPage = 30 # config.plugins.iptvplayer.tvp_itemsperpage.value
-        self.DEFAULT_ICON_URL = 'http://www.programosy.pl/download/screens/13711/android-player-1_s.png' 
+        self.DEFAULT_ICON_URL = 'http://www.programosy.pl/download/screens/13711/android-player-1_s.png'
         self.platforms = {
             'Panasonic': {
                 'platform': 'ConnectedTV',
@@ -129,21 +129,21 @@ class TvnVod(CBaseHostClass):
                 'api': '3.7',
             },
         }
-        
+
     def getDefaultPlatform(self):
         if '_tv_' == config.plugins.iptvplayer.TVNdevice.value:
             return 'Panasonic'
         return "Android4"
-        
+
     def getBaseUrl(self, pl):
         url = self.platforms[pl]['base_url'] + '/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (self.platforms[pl]['platform'], self.platforms[pl]['terminal'], self.platforms[pl]['authKey'], self.platforms[pl]['api'])
         if pl not in ['Android', 'Android2', 'Panasonic']:
             url += 'showContentContractor=free%2Csamsung%2Cstandard&'
-        return url 
-        
+        return url
+
     def getHttpHeader(self, pl):
         return self.platforms[pl]['header']
-        
+
     def _getJItemStr(self, item, key, default=''):
         try:
             v = item.get(key, None)
@@ -152,7 +152,7 @@ class TvnVod(CBaseHostClass):
         except Exception:
             return default
         return clean_html('%s' % v)
-        
+
     def _getJItemNum(self, item, key, default=0):
         v = item.get(key, None)
         if None != v:
@@ -160,11 +160,11 @@ class TvnVod(CBaseHostClass):
                 NumberTypes = (int, int, float, complex)
             except NameError:
                 NumberTypes = (int, int, float)
-                
+
             if isinstance(v, NumberTypes):
                 return v
         return default
-        
+
     def _getIconUrl(self, cItem):
         iconUrl = ''
         try:
@@ -186,7 +186,7 @@ class TvnVod(CBaseHostClass):
         except Exception:
             printExc()
         return iconUrl
-        
+
     def _generateToken(self, url):
         url = url.replace('http://redir.atmcdn.pl/http/', '')
         SecretKey = 'AB9843DSAIUDHW87Y3874Q903409QEWA'
@@ -206,11 +206,11 @@ class TvnVod(CBaseHostClass):
         encryptedToken = tvncrypt.encrypt(unencryptedToken, iv=binascii.unhexlify(salt))
         encryptedTokenHEX = binascii.hexlify(encryptedToken).upper()
         return "http://redir.atmcdn.pl/http/%s?salt=%s&token=%s" % (url, salt, encryptedTokenHEX)
-        
+
     def listsCategories(self, cItem, searchCategories=False):
         printDBG("TvnVod.listsCategories cItem[%s]" % cItem)
         pl = 'Panasonic' #self.getDefaultPlatform()
-        
+
         searchMode = False
         page = 1 + cItem.get('page', 0)
         if 'search' == cItem.get('category', None):
@@ -227,22 +227,22 @@ class TvnVod(CBaseHostClass):
         else:
             groupName = 'categories'
             urlQuery = '&m=mainInfo'
-        
+
         try:
             url = self.getBaseUrl(pl) + urlQuery
             sts, data = self.cm.getPage(url, {'header': self.getHttpHeader(pl)})
             data = json_loads(data)
-            
+
             if 'success' != data['status']:
                 printDBG("TvnVod.listsCategories status[%s]" % data['status'])
-                return 
-                
+                return
+
             countItem = self._getJItemNum(data, 'count_items', None)
             if None != countItem and countItem > self.itemsPerPage * page:
                 showNextPage = True
             else:
                 showNextPage = False
-            
+
             catalogs = False
             if searchMode:
                 seasons = None
@@ -263,7 +263,7 @@ class TvnVod(CBaseHostClass):
                     groupName = 'categories'
                     showNextPage = False
                 data = data[groupName]
-            
+
             showSeasons = False
             if None != seasons and 0 == cItem.get('season', 0):
                 showSeasons = True
@@ -283,8 +283,8 @@ class TvnVod(CBaseHostClass):
                             category = 'catalog'
                         if '0' == id:
                             id = cItem['id']
-                    
-                    # get title 
+
+                    # get title
                     title = self._getJItemStr(item, 'name', '')
                     if '' == title:
                         title = self._getJItemStr(item, 'title', '')
@@ -307,12 +307,12 @@ class TvnVod(CBaseHostClass):
                                 title += " (planowany)"
                     except Exception:
                         printExc()
-                    
+
                     # get description
                     desc = self._getJItemStr(item, 'lead', '')
                     # get icon
                     icon = self._getIconUrl(item)
-                
+
                     params = {'id': id,
                                'previd': cItem.get('id', ''),
                                'title': title,
@@ -331,7 +331,7 @@ class TvnVod(CBaseHostClass):
                         self.addDir(params)
             else:
                 showNextPage = False
-            
+
             if showSeasons:
                 for season in seasons:
                     params = {'id': cItem['id'],
@@ -347,7 +347,7 @@ class TvnVod(CBaseHostClass):
                 params = dict(cItem)
                 params.update({'good_for_fav': False, 'title': _('Next page'), 'page': page, 'icon': '', 'desc': ''})
                 self.addDir(params)
-        except Exception: 
+        except Exception:
             printExc()
 
     def listSearchResult(self, cItem, pattern, searchType):
@@ -375,7 +375,7 @@ class TvnVod(CBaseHostClass):
             if item == 'Historia wyszukiwania':
                 params['category'] = 'search_history'
             self.addDir(params)
-    
+
     def getVideoLinks(self, url):
         printDBG("TvnVod.getVideoLinks url[%s]" % url)
         url = strwithmeta(url)
@@ -395,21 +395,21 @@ class TvnVod(CBaseHostClass):
         if self.cm.isValidUrl(videoUrl):
             urlTab.append({'name': 'direct', 'url': videoUrl})
         return urlTab
-            
+
     def getLinksForVideo(self, cItem):
         return self.getLinks(cItem['id'])
-    
+
     def getLinks(self, id):
         printDBG("TvnVod.getLinks cItem.id[%r]" % id)
         videoUrls = []
-        
-        for pl in ['Panasonic', 'Samsung', 'Android2']:#, 'Android4']: #'Android', ''Samsung', 
+
+        for pl in ['Panasonic', 'Samsung', 'Android2']:#, 'Android4']: #'Android', ''Samsung',
             if pl in ['Android', 'Android2', 'Panasonic']:
                 url = '&type=episode&id=%s&limit=%d&page=1&sort=newest&m=%s' % (id, self.itemsPerPage, 'getItem')
             else:
                 url = 'm=getItem&id=%s&android23video=1&deviceType=Tablet&os=4.1.1&playlistType=&connectionType=WIFI&deviceScreenWidth=1920&deviceScreenHeight=1080&appVersion=3.3.4&manufacturer=unknown&model=androVMTablet' % id
             url = self.getBaseUrl(pl) + url
-            
+
             sts, data = self.cm.getPage(url, {'header': self.getHttpHeader(pl)})
             if not sts:
                 continue
@@ -422,7 +422,7 @@ class TvnVod(CBaseHostClass):
                     # if '' != tmp:
                         # tmp = tmp.split(":")
                         # videoTime = int(tmp[0])*60*60+int(tmp[1])*60+int(tmp[2])
-                     
+
                     plot = self._getJItemStr(data, 'lead', '')
                     printDBG("data:\n%s\n" % data)
                     videos = data['videos']['main']['video_content']
@@ -451,7 +451,7 @@ class TvnVod(CBaseHostClass):
             if len(videoUrls):
                 break
         return videoUrls
-        
+
     def getLinksForFavourite(self, fav_data):
         try:
             cItem = json_loads(fav_data)
@@ -462,9 +462,9 @@ class TvnVod(CBaseHostClass):
 
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('TvnVod..handleService start')
-        
+
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
-        
+
         # clear hosting tab cache
         self.linksCacheCache = {}
 
@@ -472,7 +472,7 @@ class TvnVod(CBaseHostClass):
         category = self.currItem.get("category", '')
         printDBG("TvnVod.handleService: ---------> name[%s], category[%s] " % (name, category))
         self.currList = []
-        
+
     #MAIN MENU
         if name == None:
             self.listsMainMenu()
@@ -480,7 +480,7 @@ class TvnVod(CBaseHostClass):
         elif category in ["search", "search_next_page"]:
             pattern = urllib.quote_plus(searchPattern)
             cItem = dict(self.currItem)
-            cItem.update({'search_item': False, 'name': 'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'})
             self.listSearchResult(cItem, pattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":

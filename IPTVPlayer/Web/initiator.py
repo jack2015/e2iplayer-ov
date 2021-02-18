@@ -28,7 +28,7 @@ def checkForFC():
 		myfileName = resolveFilename(SCOPE_PLUGINS, 'Extensions/OpenWebif/controllers/base.pyo')
 	else:
 		return False
-	
+
 	try:
 		with open(myfileName, "r") as myfile:
 			data = myfile.read()
@@ -38,7 +38,7 @@ def checkForFC():
 			data = None
 	except Exception:
 		pass
-	      
+
 	data = None
 	return ret
 

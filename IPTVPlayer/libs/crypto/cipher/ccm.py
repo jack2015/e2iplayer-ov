@@ -237,10 +237,3 @@ class CCM(BlockCipherWithIntegrity):
         else:
             raise DecryptError, 'CCM auth length error'
         return messageLength
-
-
-
-
-
-
-

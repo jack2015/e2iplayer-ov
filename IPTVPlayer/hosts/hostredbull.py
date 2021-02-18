@@ -43,7 +43,7 @@ class Redbull(CBaseHostClass):
 
         self.HTTP_HEADER = self.cm.getDefaultHeader(browser='chrome')
         self.defaultParams = {'header': self.HTTP_HEADER}
-        self.REDBULL_API = "https://appletv.redbull.tv/" 
+        self.REDBULL_API = "https://appletv.redbull.tv/"
         self.MAIN_URL = 'http://redbull.tv/'
         self.DEFAULT_ICON_URL = 'https://www.redbull.com/v3/resources/images/appicon/android-chrome-192.png'
 
@@ -55,7 +55,7 @@ class Redbull(CBaseHostClass):
                          {'category': 'explore_item', 'title': _('Channels'), 'url': self.REDBULL_API + "products/channels"},
                          {'category': 'explore_item', 'title': _('Calendar'), 'url': self.REDBULL_API + "products/calendar"},
                          {'category': 'search', 'title': _('Search'), 'search_item': True, },
-                         {'category': 'search_history', 'title': _('Search history'), } 
+                         {'category': 'search_history', 'title': _('Search history'), }
                         ]
 
         self.listsTab(MAIN_CAT_TAB, cItem)
@@ -97,7 +97,7 @@ class Redbull(CBaseHostClass):
             url = self.getFullUrl(ph.search(item, ph.A_HREF_URI_RE)[1])
             icon = self.getFullUrl(ph.search(item, self.reImgObj)[1])
             title = self.cleanHtmlStr(item)
-            if not title: 
+            if not title:
                 title = icon.rsplit('/', 1)[-1].rsplit('.', 1)[0]
                 #title = self.titlesMap.get(title, title.upper())
             subItems.append(MergeDicts(cItem, {'good_for_fav': True, 'category': nextCategory, 'title': title, 'url': url, 'icon': icon}))
@@ -129,7 +129,7 @@ class Redbull(CBaseHostClass):
             return []
         printDBG("hostredbull.exploreItem.data2 |%s|" % data)
 
-        if '<mediaURL>' in data: 
+        if '<mediaURL>' in data:
             icon = self.getFullIconUrl(ph.search(data, '''src720=['"]([^'^"]+?)['"]''')[0])
             url = self.getFullUrl(ph.search(data, '''onPlay="loadPage\(['"]([^'^"]+?)['"]''')[0])
             title = self.cleanHtmlStr(ph.search(data, '''<label2>([^>]+?)</label2>''')[0])
@@ -232,7 +232,7 @@ class Redbull(CBaseHostClass):
                 urlsTab.append({'name': name, 'url': item['url'], 'need_resolve': 0, 'bitrate': item['bitrate'], 'original': ''})
             urlsTab.sort(key=lambda x: x['bitrate'], reverse=True)
             return urlsTab
-        else: 
+        else:
             url = self.getFullUrl(ph.search(data, '''onPlay="loadPage\(['"]([^'^"]+?)['"]''')[0])
             sts, data = self.getPage(url)
             if not sts:
@@ -248,7 +248,7 @@ class Redbull(CBaseHostClass):
 
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
-        
+
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
 
         name = self.currItem.get("name", '')
@@ -271,14 +271,14 @@ class Redbull(CBaseHostClass):
             self.listSearchItems(self.currItem)
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item': False, 'name': 'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'})
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
             self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
-        
+
         CBaseHostClass.endHandleService(self, index, refresh)
 
 
@@ -286,4 +286,3 @@ class IPTVHost(CHostBase):
 
     def __init__(self):
         CHostBase.__init__(self, Redbull(), True, [])
-

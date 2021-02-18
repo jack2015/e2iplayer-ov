@@ -101,5 +101,3 @@ class PasswordFactoryReadable_01(PasswordFactory):
 
     def passwordsForSize(self, pwSize):
         return (len(vowels_01)**(pwSize / 2)) * (len(consonants_01)**ceil(pwSize / 2))
-
-

@@ -25,7 +25,7 @@ except Exception:
 ############################################
 
 ###################################################
-# E2 GUI COMMPONENTS 
+# E2 GUI COMMPONENTS
 ###################################################
 from Plugins.Extensions.IPTVPlayer.components.asynccall import MainSessionWrapper
 from Screens.MessageBox import MessageBox
@@ -43,7 +43,7 @@ def GetConfigList():
     optionList.append(getConfigListEntry(_("Email") + ": ", config.plugins.iptvplayer.edemtv_login))
     optionList.append(getConfigListEntry(_("Password") + ": ", config.plugins.iptvplayer.edemtv_password))
     return optionList
-    
+
 ###################################################
 
 
@@ -59,17 +59,17 @@ class EdemTvApi:
         self.http_params.update({'header': self.HTTP_HEADER, 'save_cookie': True, 'load_cookie': True, 'cookiefile': self.COOKIE_FILE})
         self.cacheChannels = {}
         self.sessionEx = MainSessionWrapper()
-        
+
     def getFullUrl(self, url):
         if url.startswith('http'):
             return url
         elif url.startswith('/'):
             return self.MAIN_URL + url[1:]
         return self.MAIN_URL + url
-        
+
     def cleanHtmlStr(self, str):
         return CBaseHostClass.cleanHtmlStr(str)
-        
+
     def doLogin(self, login, password):
         logged = False
         HTTP_HEADER = dict(self.HTTP_HEADER)
@@ -82,7 +82,7 @@ class EdemTvApi:
         if sts and '/account/logout' in data:
             logged = True
         return logged
-    
+
     def getChannelsList(self, cItem):
         printDBG("EdemTvApi.getChannelsList")
         channelsTab = []
@@ -97,13 +97,13 @@ class EdemTvApi:
             else:
                 self.sessionEx.open(MessageBox, _('This host requires registration. \nPlease fill your login and password in the host configuration. Available under blue button.'), type=MessageBox.TYPE_ERROR, timeout=10)
                 return []
-            
+
             self.cacheChannels = {}
             categoryUrl = self.getFullUrl('category')
             sts, data = self.cm.getPage(categoryUrl, self.http_params)
             if not sts:
                 return []
-            
+
             marker = "animated_hidden uk-width-1-1"
             channelsData = self.cm.ph.getDataBeetwenMarkers(data, marker, 'uk-visible-small', False)[1]
             channelsData = channelsData.split(marker)
@@ -116,13 +116,13 @@ class EdemTvApi:
                     url = self.cm.ph.getSearchGroups(item, ''' href=['"]([^'^"]+?)['"]''')[0]
                     icon = self.cm.ph.getSearchGroups(item, ''' src=['"]([^'^"]+?)['"]''')[0]
                     alt = self.cm.ph.getSearchGroups(item, ''' alt=['"]([^'^"]+?)['"]''')[0]
-                    
+
                     params = {'type': 'video', 'url': self.getFullUrl(url), 'title': self.cleanHtmlStr(alt), 'icon': self.getFullUrl(icon), 'desc': self.cleanHtmlStr(item)}
                     if catId not in self.cacheChannels:
                         self.cacheChannels[catId] = [params]
                     else:
                         self.cacheChannels[catId].append(params)
-            
+
             catsData = self.cm.ph.getDataBeetwenMarkers(data, 'uk-visible-small', '</ul>')[1]
             catsData = self.cm.ph.getAllItemsBeetwenMarkers(catsData, '<li ', '</li>')
             for item in catsData:
@@ -130,12 +130,12 @@ class EdemTvApi:
                 catTitle = self.cleanHtmlStr(item) + ' (%s)' % catId.title()
                 if 0 == len(self.cacheChannels.get(catId, [])):
                     continue
-                
+
                 if 'adult' == catId:
                     adult = True
                 else:
                     adult = False
-                
+
                 params = dict(cItem)
                 params.update({'title': catTitle, 'cat_id': catId, 'get_list': False, 'pin_locked': adult})
                 channelsTab.append(params)
@@ -147,7 +147,7 @@ class EdemTvApi:
                 params.update(item)
                 channelsTab.append(params)
         return channelsTab
-    
+
     def getCookieItem(self, name):
         value = ''
         try:
@@ -155,10 +155,10 @@ class EdemTvApi:
         except Exception:
             printExc()
         return value
-    
+
     def getVideoLink(self, cItem):
         printDBG("EdemTvApi.getVideoLink")
-        
+
         playlistUrl = self.getFullUrl('playlist')
         tries = 0
         while tries < 7:
@@ -166,13 +166,13 @@ class EdemTvApi:
             sts, data = self.cm.getPage(playlistUrl, self.http_params)
             if not sts:
                 return []
-            
+
             subdomain = self.cm.ph.getSearchGroups(data, '''<input[^>]*?name=['"]subdomain['"][^>]*?value=['"]([^'^"]+?)['"]''')[0]
             domainTab = self.cm.ph.getSearchGroups(data, '''<option[^>]*?value="([0-9]+?)"[^>]*?selected[^>]*?>([^<]+?)</option>''', 2)
             if subdomain == '' or '' == domainTab[0] or '' == domainTab[1]:
                 HTTP_HEADER = dict(self.HTTP_HEADER)
                 HTTP_HEADER.update({'Referer': playlistUrl, 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'X-Requested-With': 'XMLHttpRequest'})
-                
+
                 login = config.plugins.iptvplayer.edemtv_login.value
                 passwd = config.plugins.iptvplayer.edemtv_password.value
                 subdomain = md5(login + passwd).hexdigest()
@@ -188,15 +188,15 @@ class EdemTvApi:
                     printDBG(data)
             else:
                 break
-        
+
         sts, data = self.cm.getPage(cItem['url'], self.http_params)
         if not sts:
             return []
-        
+
         #printDBG(data)
-        
+
         data = self.cm.ph.getDataBeetwenMarkers(data, 'playlist:', ']', False)[1]
-        
+
         hlsUrl = self.cm.ph.getSearchGroups(data, '''['"](http[^'^"]+?)['"]''')[0]
         rmpUrl = self.cm.ph.getSearchGroups(data, '''['"](rtmp[^'^"]+?)['"]''')[0]
 

@@ -48,11 +48,11 @@ class Twitch(CBaseHostClass):
         self.MAIN_URL = 'https://www.twitch.tv/'
         self.API1_URL = 'https://api.twitch.tv/'
         self.API2_URL = 'https://gql.twitch.tv/'
-        
+
         self.CHANNEL_TOKEN_URL = self.getFullUrl('/api/channels/%s/access_token')
         self.LIVE_URL = 'http://usher.justin.tv/api/channel/hls/%s.m3u8?token=%s&sig=%s&allow_source=true'
         self.CHANNEL_TOKEN_URL = self.API1_URL + 'api/channels/%s/access_token?need_https=false&oauth_token&platform=web&player_backend=mediaplayer&player_type=embed'
-        
+
         self.VOD_TOKEN_URL = self.API1_URL + 'api/vods/%s/access_token?need_https=true&oauth_token&platform=web&player_backend=mediaplayer&player_type=embed'
         self.VOD_URL = 'https://usher.ttvnw.net/vod/%s.m3u8?token=%s&sig=%s&allow_source=true'
 
@@ -108,13 +108,13 @@ class Twitch(CBaseHostClass):
         if default:
             self.langItems.insert(0, default)
         self.langItems.insert(0, {'title': _('All')})
-        
-        self.VIDEOS_TYPES_TAB = [{'title': _('All')}, 
+
+        self.VIDEOS_TYPES_TAB = [{'title': _('All')},
                                  {'title': _('Past premieres'), 'videos_type': 'PAST_PREMIERE'},
                                  {'title': _('Archive'), 'videos_type': 'ARCHIVE'},
                                  {'title': _('Highlights'), 'videos_type': 'HIGHLIGHT'},
                                  {'title': _('Uploads'), 'videos_type': 'UPLOAD'}, ]
- 
+
         self.VIDEOS_SORT_TAB = [{'title': _('Popular'), 'sort': 'VIEWS'},
                                 {'title': _('Recent'), 'sort': 'TIME'}, ]
 
@@ -123,7 +123,7 @@ class Twitch(CBaseHostClass):
                                   {'title': _('Last week'), 'clips_filter': 'LAST_WEEK'},
                                   {'title': _('Last month'), 'clips_filter': 'LAST_MONTH'},
                                   {'title': _('All time'), 'clips_filter': 'ALL_TIME'}, ]
-                                  
+
         self.GAME_CAT_TAB = [{'category': 'game_lang', 'next_category': 'game_channels', 'title': _('Channels')},
                              {'category': 'game_lang', 'next_category': 'game_videos_types', 'title': _('Videos')},
                              {'category': 'game_lang', 'next_category': 'game_clips_filters', 'title': _('Clips')},
@@ -237,7 +237,7 @@ class Twitch(CBaseHostClass):
         lang = '"%s"' % cItem['lang'].upper() if 'lang' in cItem else ''
         cursor = ',"cursor":"%s"' % cItem['cursor'] if 'cursor' in cItem else ''
         # post_data updated as per changes to their api.  CM
-        post_data = '[{"operationName":"DirectoryPage_Game","variables":{"name":"%s","options":{"sort":"VIEWER_COUNT","recommendationsContext":{"platform":"web"},"requestID":"a40436b85daf0810","tags":[%s]},"sortTypeIsRecency":false,"limit":30%s},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"c250a5fa4134a24c3d96abff9450391fd621b1c973c47f3d6adda3be6098c850"}}}]' % (cItem['game_name'], lang, cursor)        
+        post_data = '[{"operationName":"DirectoryPage_Game","variables":{"name":"%s","options":{"sort":"VIEWER_COUNT","recommendationsContext":{"platform":"web"},"requestID":"a40436b85daf0810","tags":[%s]},"sortTypeIsRecency":false,"limit":30%s},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"c250a5fa4134a24c3d96abff9450391fd621b1c973c47f3d6adda3be6098c850"}}}]' % (cItem['game_name'], lang, cursor)
         url = self.getFullUrl('/gql', self.API2_URL)
         sts, data = self.getPage(url, MergeDicts(self.defaultParams, {'raw_post_data': True}), post_data)
         if not sts:
@@ -311,7 +311,7 @@ class Twitch(CBaseHostClass):
                 descTab.append(_('%s viewers') % item['viewCount'])
                 descTab.append(jstr(item, 'publishedAt'))
                 descTab = [' | '.join(descTab)]
-                
+
                 icon = self.getFullIconUrl(jstr(item, 'previewThumbnailURL'), self.cm.meta['url'])
                 title = jstr(item, 'title')
 
@@ -319,7 +319,7 @@ class Twitch(CBaseHostClass):
                     descTab.append(jstr(item['owner'], '__typename') + ': ' + jstr(item['owner'], 'displayName'))
                 if item.get('game'):
                     descTab.append(jstr(item['game'], '__typename') + ': ' + jstr(item['game'], 'name'))
-                     
+
                 params = {'good_for_fav': True, 'title': title, 'video_type': 'video', 'video_id': jstr(item, 'id'), 'icon': icon, 'desc': '[/br]'.join(descTab)}
                 self.addVideo(params)
 
@@ -426,7 +426,7 @@ class Twitch(CBaseHostClass):
     def listSubItems(self, cItem):
         printDBG("Twitch.listSubItems")
         self.currList = cItem['sub_items']
-        
+
     def listV5Channels(self, cItem):
         printDBG("Twitch.listV5Channels [%s]" % cItem)
         offset = cItem.get('offset', 0)
@@ -524,11 +524,11 @@ class Twitch(CBaseHostClass):
             url = self.API1_URL + 'kraken/search/streams?query=%s&limit=25&offset=' % (urllib.quote_plus(searchPattern))
             cItem = MergeDicts(cItem, {'url': url, 'category': 'v5_streams'})
             self.listV5Streams(cItem)
-            
+
     def getLinksForVideo(self, cItem):
         printDBG("Twitch.getLinksForVideo [%s]" % cItem)
         urlTab = []
-        
+
         id = ''
         if cItem['video_type'] == 'clip':
             post_data = '[{"operationName":"VideoAccessToken_Clip","variables":{"slug":"%s"},"extensions":{"persistedQuery":{"version":1,"sha256Hash":"9bfcc0177bffc730bd5a5a89005869d2773480cf1738c592143b5173634b7d15"}}}]' % cItem['clip_slug']
@@ -572,7 +572,7 @@ class Twitch(CBaseHostClass):
 
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
-        
+
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
 
         name = self.currItem.get("name", '')
@@ -622,7 +622,7 @@ class Twitch(CBaseHostClass):
             self.listsTab(self.VIDEOS_SORT_TAB, MergeDicts(self.currItem, {'category': 'game_list_videos'}))
         elif category == 'game_list_videos':
             self.listGameVideos(self.currItem)
-            
+
         elif category == 'game_clips_filters':
             self.listsTab(self.CLIPS_FILTERS_TAB, MergeDicts(self.currItem, {'category': 'game_list_clips'}))
         elif category == 'game_list_clips':
@@ -638,14 +638,14 @@ class Twitch(CBaseHostClass):
     #SEARCH
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item': False, 'name': 'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'})
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
             self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
-        
+
         CBaseHostClass.endHandleService(self, index, refresh)
 
 

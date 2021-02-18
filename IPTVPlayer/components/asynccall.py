@@ -59,11 +59,11 @@ def SetThreadKillable(killable):
             thread._iptvplayer_ext['killable'] = killable
     except Exception:
         # This is used to catch exceptions like:
-        # thread do not have member _iptvplayer_ext 
+        # thread do not have member _iptvplayer_ext
         printExc()
-    
+
     if terminated:
-        # there was request to terminate this 
+        # there was request to terminate this
         # thread as soon as possible
         raise SystemExit(-1)
 
@@ -92,13 +92,13 @@ class AsyncCall(object):
         self.Thread._iptvplayer_ext = {'kill_lock': threading.Lock(), 'killable': True, 'terminated': False, 'iptv_execute': None}
         self.Thread.start()
         return self
-        
+
     def isFinished(self):
         return self.finished
-    
+
     def isAlive(self):
         return None != self.Thread and self.Thread.isAlive()
-        
+
     def _kill(self):
         bRet = False
         if None != self.Thread:
@@ -107,7 +107,7 @@ class AsyncCall(object):
                 # do we have it cached?
                 if hasattr(self.Thread, "_thread_id"):
                     thread_id = self.Thread._thread_id
-                
+
                 # no, look for it in the _active dict
                 for tid, tobj in threading._active.items():
                     if tobj is self.Thread:
@@ -127,12 +127,12 @@ class AsyncCall(object):
             except Exception:
                 printDBG("AsyncCall._kill *** exception")
         return bRet
-    
+
     def kill(self):
         bRet = False
-        
+
         printDBG("THREAD KILL >>>")
-        
+
         killable = True
         try:
             thread = self.Thread
@@ -142,17 +142,17 @@ class AsyncCall(object):
                     thread._iptvplayer_ext['terminated'] = True
                 thread = None
                 if not killable:
-                    # if thread was marked as not killable then thread will 
+                    # if thread was marked as not killable then thread will
                     # finish it self, after exist from not killable block
                     return True
         except Exception:
             thread = None
             printExc()
 
-        # we will kill this thread, so we need clear 
+        # we will kill this thread, so we need clear
         # resource which it allocated
         self.mainLock.acquire()
-        
+
         if self.Thread:
             if self.Thread._iptvplayer_ext['iptv_execute'] != None:
                 try:
@@ -167,11 +167,11 @@ class AsyncCall(object):
                     self._kill()
                     self.Thread._Thread__stop()
                 bRet = True
-            
+
         self.mainLock.release()
 
         return bRet
-        
+
     def getExceptStack(self):
         self.mainLock.acquire()
         exceptStack = self.exceptStack
@@ -181,13 +181,13 @@ class AsyncCall(object):
     def run(self, *args, **kwargs):
         try:
             result = self.Callable(*args, **kwargs)
-        except Exception: 
+        except Exception:
             self.mainLock.acquire()
             self.exceptStack = traceback.format_exc()
             self.mainLock.release()
             printDBG(">> %s" % self.exceptStack)
             return
-            
+
         self.mainLock.acquire()
 
         self.finished = True
@@ -197,7 +197,7 @@ class AsyncCall(object):
                 self.Callback(self, result)
             else:
                 self.Callback(result)
-            
+
         self.Thread = None
         self.Callable = None
         self.Callback = None
@@ -212,7 +212,7 @@ class AsyncMethod(object):
         self.Callable = fnc
         self.Callback = callback
         self.CallbackWithThreadID = callbackWithThreadID
-        
+
     def __del__(self):
         printDBG("AsyncMethod.__del__ ---")
 
@@ -224,7 +224,7 @@ class AsyncMethod(object):
         self.Callback = None
         self.CallbackWithThreadID = None
         return AsyncCall(fnc, callback, callbackWithThreadID)(*args, **kwargs)
-        
+
 
 class Delegate(object):
     def __init__(self, proxyFunctionQueue, fnc):
@@ -232,15 +232,15 @@ class Delegate(object):
         self.proxyQueue = proxyFunctionQueue
         self.event = threading.Event()
         self.returnValues = None
-        
+
     def __call__(self, *args, **kwargs):
         if self.proxyQueue:
             if self.proxyQueue.mainThreadName != threading.currentThread().getName():
                 self.event.clear()
-            
+
                 item = CPQItemDelegate(self.function, args, kwargs, self.finished)
                 self.proxyQueue.addItemQueue(item)
-                
+
                 self.event.wait()
                 returnValues = self.returnValues
                 self.returnValues = None
@@ -251,7 +251,7 @@ class Delegate(object):
     def finished(self, *args):
         self.returnValues = args
         self.event.set()
-        
+
     #def __del__(self):
     #    printDBG("Delegate.__del__ ---")
 
@@ -260,7 +260,7 @@ class DelegateToMainThread(Delegate):
     def __init__(self, fnc, mainThreadIdx=0):
         global gMainFunctionsQueueTab
         Delegate.__init__(self, gMainFunctionsQueueTab[mainThreadIdx], fnc)
-        
+
     #def __del__(self):
     #    printDBG("DelegateToMainThread.__del__ ---")
 
@@ -276,20 +276,20 @@ class MainSessionWrapper(object):
         self.retVal = None
         self.event = threading.Event()
         self.mainThreadIdx = mainThreadIdx
-        
+
     def open(self, *args, **kwargs):
         DelegateToMainThread(self._open, self.mainThreadIdx)(*args, **kwargs)
-        
+
     def _open(self, session, *args, **kwargs):
         session.open(*args, **kwargs)
 
     def waitForFinishOpen(self, *args, **kwargs):
         self.event.clear()
         tmpRet = DelegateToMainThread(self._waitForFinishOpen, self.mainThreadIdx)(*args, **kwargs)
-        if tmpRet and tmpRet[0] == MainSessionWrapper.WAIT_RET: 
+        if tmpRet and tmpRet[0] == MainSessionWrapper.WAIT_RET:
             self.event.wait()
             return self.retVal
-        else: 
+        else:
             raise BaseException("DelegateToMainThread Error")
 
     def _waitForFinishOpen(self, session, *args, **kwargs):
@@ -324,30 +324,30 @@ class iptv_execute(object):
         printDBG("iptv_execute.__call__: Here we must not be in main thread context: [%s]" % threading.current_thread())
         self.event.clear()
         tmpRet = DelegateToMainThread(self._system, self.mainThreadIdx)(cmd)
-        if tmpRet and tmpRet[0] == iptv_execute.WAIT_RET: 
+        if tmpRet and tmpRet[0] == iptv_execute.WAIT_RET:
             self.event.wait()
             ret = self.retVal
             self.retVal = None
             return ret
-        else: 
+        else:
             return {'sts': False}
 
     def _system(self, session, cmd):
         printDBG("iptv_execute._system: Here we must be in main thread context: [%s]" % threading.current_thread())
-        
+
         try:
             terminated = self.Thread._iptvplayer_ext['terminated']
         except Exception:
             printExc()
             terminated = False
-        
+
         if not terminated and self.Thread.isAlive():
             try:
                 self.Thread._iptvplayer_ext['iptv_execute'] = self
             except Exception:
                 printExc()
             self.iptv_system = iptv_system(cmd, self._callBack)
-            
+
             return iptv_execute.WAIT_RET
         return
 
@@ -356,13 +356,13 @@ class iptv_execute(object):
         self.iptv_system = None
         self.retVal = {'sts': True, 'code': code, 'data': outData}
         self.event.set()
-        
+
         try:
             self.Thread._iptvplayer_ext['iptv_execute'] = None
         except Exception:
             printExc()
         self.Thread = None
-    
+
     def terminate(self):
         printDBG("iptv_execute.terminate: Here we must be in main thread context: [%s]" % threading.current_thread())
         self.iptv_system.kill()
@@ -380,7 +380,7 @@ class iptv_execute(object):
 class CPQItemBase:
     def __init__(self):
         pass
-        
+
 
 class CPQItemDelegate(CPQItemBase):
     def __init__(self, callFnc, args, kwargs, retFnc):
@@ -396,12 +396,12 @@ class CPQItemCallBack(CPQItemBase):
         CPQItemBase.__init__(self)
         self.clientFunName = clientFunName
         self.retValue = retValue
-        
+
 
 class CPQParamsWrapper:
     def __init__(self, params):
         self.params = params
-  
+
 
 class CFunctionProxyQueue:
     def __init__(self, session):
@@ -411,11 +411,11 @@ class CFunctionProxyQueue:
         self.QueueLock = threading.Lock()
         self.mainThreadName = threading.currentThread().getName()
         self.procFun = None
-        
-        # this flag will be checked with mutex taken 
+
+        # this flag will be checked with mutex taken
         # to less lock check
         self.QueueEmpty = True
-        
+
     ############################################################
     #       This method can be called only from mainThread
     #       so there is no need to synchronize it by mutex
@@ -428,8 +428,8 @@ class CFunctionProxyQueue:
             return False
         # field self.procFun is accessed only from main thread
         self.procFun = fun
-        return True 
-        
+        return True
+
     def isQueueEmpty(self):
         try:
             if self.QueueEmpty:
@@ -437,14 +437,14 @@ class CFunctionProxyQueue:
         except Exception:
             pass
         return False
-        
+
     def clearQueue(self):
         printDBG('clearQueue')
         self.QueueLock.acquire()
         self.Queue = []
         self.QueueEmpty = True
         self.QueueLock.release()
-        
+
     def addItemQueue(self, item):
         self.QueueLock.acquire()
         self.Queue.append(item)
@@ -455,10 +455,10 @@ class CFunctionProxyQueue:
         printDBG("addToQueue")
         item = CPQItemCallBack(funName, retValue)
         self.addItemQueue(item)
-        
+
     def peekClientFunName(self):
         name = None
-        if not self.isQueueEmpty(): 
+        if not self.isQueueEmpty():
             self.QueueLock.acquire()
             try:
                 item = self.Queue[-1]
@@ -468,7 +468,7 @@ class CFunctionProxyQueue:
                 pass
             self.QueueLock.release()
         return name
-    
+
     def processQueue(self):
        # Queue can be processed only from main thread
         currThreadName = threading.currentThread().getName()
@@ -476,27 +476,27 @@ class CFunctionProxyQueue:
             printDBG("ERROR CFunctionProxyQueue.processQueue: Queue can be processed only from main thread, thread [%s] is not main thread" % currThreadName)
             raise AssertionError, ("ERROR CFunctionProxyQueue.processQueue: Queue can be processed only from main thread, thread [%s] is not main thread" % currThreadName)
             return False
-            
+
         if self.isQueueEmpty():
             return
-            
+
         while True:
             QueueIsEmpty = False
-            
+
             self.QueueLock.acquire()
             if len(self.Queue) > 0:
                 #get CPQItemCallBack from mainList
                 item = self.Queue.pop(0)
                 printDBG("CFunctionProxyQueue.processQueue")
             else:
-                QueueIsEmpty = True 
+                QueueIsEmpty = True
             if QueueIsEmpty:
                 self.QueueEmpty = True
             self.QueueLock.release()
-            
+
             if QueueIsEmpty:
                 return
-                
+
             if isinstance(item, CPQItemCallBack) and None != self.procFun:
                 self.procFun(item)
             elif isinstance(item, CPQItemDelegate) and hasattr(item.callFnc, '__call__') and hasattr(item.retFnc, '__call__'):
