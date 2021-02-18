@@ -31,7 +31,7 @@ class BlockCipher:
         self.decryptBlockCount = 0
         self.bytesToDecrypt = ''
 
-    def setPassphrase(self,passphrase):
+    def setPassphrase(self, passphrase):
         """ Use pbkdf2 to hash passphrase into a key """
         self.setKey(pbkdf2(passphrase, self.name, 4096, self.keySize))
 
@@ -51,7 +51,7 @@ class BlockCipher:
             self.bytesToEncrypt = ''
 
         if more == None:   # no more data expected from caller
-            finalBytes = self.padding.addPad(self.bytesToEncrypt,self.blockSize)
+            finalBytes = self.padding.addPad(self.bytesToEncrypt, self.blockSize)
             if len(finalBytes) > 0:
                 ctBlock = self.encryptBlock(finalBytes)
                 self.encryptBlockCount += 1

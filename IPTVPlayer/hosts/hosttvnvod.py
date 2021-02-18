@@ -73,7 +73,7 @@ class TvnVod(CBaseHostClass):
     
     def __init__(self):
         printDBG("TvnVod.__init__")
-        CBaseHostClass.__init__(self, {'history':'TvnVod', 'history_store_type':True, 'proxyURL': config.plugins.iptvplayer.proxyurl.value, 'useProxy': config.plugins.iptvplayer.proxyenable.value})
+        CBaseHostClass.__init__(self, {'history': 'TvnVod', 'history_store_type': True, 'proxyURL': config.plugins.iptvplayer.proxyurl.value, 'useProxy': config.plugins.iptvplayer.proxyenable.value})
         self.itemsPerPage = 30 # config.plugins.iptvplayer.tvp_itemsperpage.value
         self.DEFAULT_ICON_URL = 'http://www.programosy.pl/download/screens/13711/android-player-1_s.png' 
         self.platforms = {
@@ -82,7 +82,7 @@ class TvnVod(CBaseHostClass):
                 'terminal': 'Panasonic',
                 'authKey': '064fda5ab26dc1dd936f5c6e84b7d3c2',
                 'base_url': 'http://api.tvnplayer.pl/api2',
-                'header': {'User-Agent':'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7', 'X-Api-Version':'3.1', 'Accept-Encoding':'gzip'},
+                'header': {'User-Agent': 'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7', 'X-Api-Version': '3.1', 'Accept-Encoding': 'gzip'},
                 'api': '3.1',
             },
             'Samsung': {
@@ -90,7 +90,7 @@ class TvnVod(CBaseHostClass):
                 'terminal': 'Samsung2',
                 'authKey': '453198a80ccc99e8485794789292f061',
                 'base_url': 'http://api.tvnplayer.pl/api2',
-                'header': {'User-Agent':'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7', 'X-Api-Version':'3.6', 'Accept-Encoding':'gzip'},
+                'header': {'User-Agent': 'Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7', 'X-Api-Version': '3.6', 'Accept-Encoding': 'gzip'},
                 'api': '3.6',
             },
             'Android': {
@@ -98,14 +98,14 @@ class TvnVod(CBaseHostClass):
                 'terminal': 'Android',
                 'authKey': 'b4bc971840de63d105b3166403aa1bea',
                 'base_url': 'http://api.tvnplayer.pl/api',
-                'header': {'User-Agent':'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
+                'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
                 'api': '3.0',
             },
             'Android2': {
                 'platform': 'Mobile',
                 'terminal': 'Android',
                 'authKey': 'b4bc971840de63d105b3166403aa1bea',
-                'header': {'User-Agent':'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
+                'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
                 'base_url': 'http://api.tvnplayer.pl/api',
                 'api': '2.0',
             },
@@ -114,7 +114,7 @@ class TvnVod(CBaseHostClass):
                 'terminal': 'Android',
                 'authKey': '4dc7b4f711fb9f3d53919ef94c23890c',
                 'base_url': 'http://api.tvnplayer.pl/api',
-                'header': {'User-Agent':'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
+                'header': {'User-Agent': 'Apache-HttpClient/UNAVAILABLE (java 1.4)'},
                 'api': '3.1',
             },
             'Android4': {
@@ -122,7 +122,7 @@ class TvnVod(CBaseHostClass):
                 'terminal': 'Android',
                 'authKey': '4dc7b4f711fb9f3d53919ef94c23890c',
                 'base_url': 'http://api.tvnplayer.pl/api2',
-                'header': {'User-Agent':'Player/3.3.4 tablet Android/4.1.1 net/wifi', 'X-Api-Version':'3.7', 'Accept-Encoding':'gzip'},
+                'header': {'User-Agent': 'Player/3.3.4 tablet Android/4.1.1 net/wifi', 'X-Api-Version': '3.7', 'Accept-Encoding': 'gzip'},
                 'api': '3.7',
             },
         }
@@ -342,7 +342,7 @@ class TvnVod(CBaseHostClass):
                     self.addDir(params)
             if showNextPage:
                 params = dict(cItem)
-                params.update({'good_for_fav':False, 'title':_('Next page'), 'page': page, 'icon':'', 'desc':''})
+                params.update({'good_for_fav': False, 'title': _('Next page'), 'page': page, 'icon': '', 'desc': ''})
                 self.addDir(params)
         except Exception: 
             printExc()
@@ -391,7 +391,7 @@ class TvnVod(CBaseHostClass):
         urlTab = []
         videoUrl = strwithmeta(videoUrl, {'header': self.getHttpHeader(pl)})
         if self.cm.isValidUrl(videoUrl):
-            urlTab.append({'name':'direct', 'url':videoUrl})
+            urlTab.append({'name': 'direct', 'url': videoUrl})
         return urlTab
             
     def getLinksForVideo(self, cItem):
@@ -433,9 +433,9 @@ class TvnVod(CBaseHostClass):
                                 SetIPTVPlayerLastHostError("DRM protection.")
                             #    url = self._getJItemStr(video, 'src', '')
                             if '' != url:
-                                url = strwithmeta(url, {'tvn_platform':pl})
+                                url = strwithmeta(url, {'tvn_platform': pl})
                                 qualityName = self._getJItemStr(video, 'profile_name', '')
-                                videoUrls.append({'name':qualityName, 'profile_name':qualityName, 'url':url, 'need_resolve':1})
+                                videoUrls.append({'name': qualityName, 'profile_name': qualityName, 'url': url, 'need_resolve': 1})
                     if 1 < len(videoUrls):
                         max_bitrate = int(config.plugins.iptvplayer.TVNDefaultformat.value)
                         def __getLinkQuality(itemLink):
@@ -477,11 +477,11 @@ class TvnVod(CBaseHostClass):
         elif category in ["search", "search_next_page"]:
             pattern = urllib.quote_plus(searchPattern)
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, pattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
     #KATEGORIE
         else:
             self.listsCategories(self.currItem)

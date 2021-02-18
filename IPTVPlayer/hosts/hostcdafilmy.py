@@ -29,16 +29,16 @@ def gettytul():
 class CdaFilmy(CBaseHostClass):
     
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'cda-filmy.online', 'cookie':'cda-filmy.online.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'cda-filmy.online', 'cookie': 'cda-filmy.online.cookie'})
         self.USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0'
         self.MAIN_URL = 'https://cda-filmy.online/'
         self.DEFAULT_ICON_URL = 'https://cda-filmy.online/wp-content/uploads/cda-filmy.png'
-        self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Origin':self.getMainUrl()}
+        self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT': '1', 'Accept': 'text/html', 'Accept-Encoding': 'gzip, deflate', 'Referer': self.getMainUrl(), 'Origin': self.getMainUrl()}
         self.AJAX_HEADER = dict(self.HTTP_HEADER)
-        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
+        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'Accept': 'application/json, text/javascript, */*; q=0.01'})
         
         self.cacheLinks = {}
-        self.defaultParams = {'header':self.HTTP_HEADER, 'with_metadata':True, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
+        self.defaultParams = {'header': self.HTTP_HEADER, 'with_metadata': True, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         
         self.cacheSeriesLetter = []
         self.cacheSetiesByLetter = {}
@@ -55,7 +55,7 @@ class CdaFilmy(CBaseHostClass):
                 return url
             else:
                 return urlparse.urljoin(baseUrl, url)
-        addParams['cloudflare_params'] = {'domain':self.up.getDomain(baseUrl), 'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT, 'full_url_handle':_getFullUrl}
+        addParams['cloudflare_params'] = {'domain': self.up.getDomain(baseUrl), 'cookie_file': self.COOKIE_FILE, 'User-Agent': self.USER_AGENT, 'full_url_handle': _getFullUrl}
         return self.cm.getPageCFProtection(baseUrl, addParams, post_data)
         
     def setMainUrl(self, url):
@@ -67,15 +67,15 @@ class CdaFilmy(CBaseHostClass):
         #sts, data = self.getPage(self.getMainUrl())
         #if not sts: return
         #self.setMainUrl(data.meta['url'])
-        MAIN_CAT_TAB = [{'category':'list_items', 'title': 'Filmy', 'url':self.getFullUrl('/filmy-online/')},
-                        {'category':'list_items', 'title': 'Seriale', 'url':self.getFullUrl('/seriale-online/')},
-                        {'category':'list_items', 'title': 'Premiery', 'url':self.getFullUrl('/gatunek/premiery/')},
-                        {'category':'list_items', 'title': 'Popularne', 'url':self.getFullUrl('/najpopularniejsze-filmy-online/')},
-                        {'category':'list_items', 'title': 'Najlepiej oceniane','url':self.getFullUrl('/najwyzej-oceniane-filmy-online/')},
+        MAIN_CAT_TAB = [{'category': 'list_items', 'title': 'Filmy', 'url': self.getFullUrl('/filmy-online/')},
+                        {'category': 'list_items', 'title': 'Seriale', 'url': self.getFullUrl('/seriale-online/')},
+                        {'category': 'list_items', 'title': 'Premiery', 'url': self.getFullUrl('/gatunek/premiery/')},
+                        {'category': 'list_items', 'title': 'Popularne', 'url': self.getFullUrl('/najpopularniejsze-filmy-online/')},
+                        {'category': 'list_items', 'title': 'Najlepiej oceniane', 'url': self.getFullUrl('/najwyzej-oceniane-filmy-online/')},
 #                        {'category':'a_z',            'title': _('By years'),       'url':self.getMainUrl()},
-                        {'category':'cats', 'title': _('Categories'), 'url':self.getMainUrl()},
-                        {'category':'search', 'title': _('Search'), 'search_item':True}, 
-                        {'category':'search_history', 'title': _('Search history')},]
+                        {'category': 'cats', 'title': _('Categories'), 'url': self.getMainUrl()},
+                        {'category': 'search', 'title': _('Search'), 'search_item': True}, 
+                        {'category': 'search_history', 'title': _('Search history')}, ]
         self.listsTab(MAIN_CAT_TAB, cItem)
     
 
@@ -98,7 +98,7 @@ class CdaFilmy(CBaseHostClass):
             if title == '':
                 continue
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'category':nextCategory, 'title':title, 'desc':'', 'url':url})
+            params.update({'good_for_fav': False, 'category': nextCategory, 'title': title, 'desc': '', 'url': url})
             self.addDir(params)
                     
     def listItems(self, cItem):
@@ -121,15 +121,15 @@ class CdaFilmy(CBaseHostClass):
 #            tmp = self.cm.ph.getDataBeetwenNodes(data, ('<p', '>', 'Info'), ('</p', '>'))[1]
             desc = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('<div', '>', 'Description'), ('</p', '>'))[1])
             if 'serial' in cItem['url']:
-                params = {'good_for_fav':True,'category':'list_series', 'url':url, 'title':title, 'desc':desc, 'icon':icon}
+                params = {'good_for_fav': True, 'category': 'list_series', 'url': url, 'title': title, 'desc': desc, 'icon': icon}
                 self.addDir(params)
             else:
-                params = {'good_for_fav':True, 'url':url, 'title':title, 'desc':desc, 'icon':icon}
+                params = {'good_for_fav': True, 'url': url, 'title': title, 'desc': desc, 'icon': icon}
                 self.addVideo(params)
             
         if nextPage != '':
             params = dict(cItem)
-            params.update({'title':_('Next page'), 'url':nextPage, 'page':page + 1})
+            params.update({'title': _('Next page'), 'url': nextPage, 'page': page + 1})
             self.addDir(params)
 
     def listSeries(self, cItem):
@@ -152,7 +152,7 @@ class CdaFilmy(CBaseHostClass):
                     continue
                 icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(unescapeHTML(item), '''src=['"]([^"^']+?)['"]''')[0])
                 title = season + ' - ' + self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('<td', '>', 'MvTbTtl'), ('</td', '>'))[1])
-                params = {'good_for_fav':True, 'url':url, 'title':title, 'icon':icon}
+                params = {'good_for_fav': True, 'url': url, 'title': title, 'icon': icon}
                 self.addVideo(params)
 
     def listAZ(self, cItem, nextCategory):
@@ -173,7 +173,7 @@ class CdaFilmy(CBaseHostClass):
             if title == '':
                 continue
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'category':nextCategory, 'title':letter, 'desc':'', 'url':url})
+            params.update({'good_for_fav': False, 'category': nextCategory, 'title': letter, 'desc': '', 'url': url})
             self.addDir(params)
         
     def listByLetter(self, cItem, nextCategory):
@@ -181,13 +181,13 @@ class CdaFilmy(CBaseHostClass):
         letter = cItem['f_letter']
         tab = self.cacheSetiesByLetter[letter]
         cItem = dict(cItem)
-        cItem.update({'good_for_fav':True, 'category':nextCategory, 'desc':''})
+        cItem.update({'good_for_fav': True, 'category': nextCategory, 'desc': ''})
         self.listsTab(tab, cItem)
         
     def listSearchResult(self, cItem, searchPattern, searchType):
         printDBG("cda-filmy.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         url = self.getFullUrl('/?s=%s') % urllib.quote_plus(searchPattern)
-        params = {'name':'category', 'category':'list_items', 'good_for_fav':False, 'url':url}
+        params = {'name': 'category', 'category': 'list_items', 'good_for_fav': False, 'url': url}
         self.listItems(params)
         
     def getLinksForVideo(self, cItem):
@@ -226,7 +226,7 @@ class CdaFilmy(CBaseHostClass):
             if not sts:
                 continue
             playerUrl = self.cm.ph.getSearchGroups(data, '''src=['"]([^"^']+?)['"]''', 1, True)[0]
-            retTab.append({'name':self.up.getHostName(playerUrl), 'url':strwithmeta(playerUrl, {'Referer':url}), 'need_resolve':1})
+            retTab.append({'name': self.up.getHostName(playerUrl), 'url': strwithmeta(playerUrl, {'Referer': url}), 'need_resolve': 1})
              
         if len(retTab):
             self.cacheLinks[cacheKey] = retTab
@@ -273,7 +273,7 @@ class CdaFilmy(CBaseHostClass):
         if desc == '':
             desc = cItem.get('desc', '')
 
-        return [{'title':self.cleanHtmlStr(title), 'text': self.cleanHtmlStr(desc), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
+        return [{'title': self.cleanHtmlStr(title), 'text': self.cleanHtmlStr(desc), 'images': [{'title': '', 'url': self.getFullUrl(icon)}], 'other_info': {'custom_items_list': itemsList}}]
         
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
@@ -291,7 +291,7 @@ class CdaFilmy(CBaseHostClass):
     #MAIN MENU
         if name == None and category == '':
             rm(self.COOKIE_FILE)
-            self.listMainMenu({'name':'category'})
+            self.listMainMenu({'name': 'category'})
         elif category == 'list_items':
             self.listItems(self.currItem)            
         elif category == 'list_series':
@@ -306,11 +306,11 @@ class CdaFilmy(CBaseHostClass):
     #SEARCH
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         

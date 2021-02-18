@@ -27,9 +27,9 @@ class AlltubeTV(CBaseHostClass):
     SRCH_URL = MAIN_URL + 'szukaj'
     DEFAULT_ICON_URL = 'http://alltube.pl/static/main/newlogoall.png'
     #{'category':'latest_added',       'title': _('Latest added'),  'url':MAIN_URL,                   'icon':DEFAULT_ICON},
-    MAIN_CAT_TAB = [{'category': 'genres_movies', 'title': _('Movies'), 'url': MAIN_URL + 'filmy-online/',},
+    MAIN_CAT_TAB = [{'category': 'genres_movies', 'title': _('Movies'), 'url': MAIN_URL + 'filmy-online/', },
                     {'category': 'cat_series', 'title': _('Series'), 'url': MAIN_URL + 'seriale-online/', },
-                    {'category': 'list_movies', 'title': _('Junior'), 'url': MAIN_URL + 'dla-dzieci/',},
+                    {'category': 'list_movies', 'title': _('Junior'), 'url': MAIN_URL + 'dla-dzieci/', },
                     {'category': 'search', 'title': _('Search'), 'search_item': True, },
                     {'category': 'search_history', 'title': _('Search history'), }]
                       
@@ -38,7 +38,7 @@ class AlltubeTV(CBaseHostClass):
                       {'category': 'list_series', 'title': _('All'), 'letter': 'all', 'url': MAIN_URL + 'seriale-online/', }]
  
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'AlltubeTV', 'cookie':'alltubetv.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'AlltubeTV', 'cookie': 'alltubetv.cookie'})
         self.defaultParams = {'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         
         self.filterCache = {}
@@ -51,7 +51,7 @@ class AlltubeTV(CBaseHostClass):
     def getPage(self, baseUrl, params={}, post_data=None):
         if params == {}:
             params = dict(self.defaultParams)
-        params['cloudflare_params'] = {'domain':'alltube.pl', 'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT, 'full_url_handle':self.getFullUrl}
+        params['cloudflare_params'] = {'domain': 'alltube.pl', 'cookie_file': self.COOKIE_FILE, 'User-Agent': self.USER_AGENT, 'full_url_handle': self.getFullUrl}
         return self.cm.getPageCFProtection(baseUrl, params, post_data)
         
     def getFullIconUrl(self, url):
@@ -59,7 +59,7 @@ class AlltubeTV(CBaseHostClass):
         if url == '':
             return ''
         cookieHeader = self.cm.getCookieHeader(self.COOKIE_FILE, ['PHPSESSID', 'cf_clearance'])
-        return strwithmeta(url, {'Cookie':cookieHeader, 'User-Agent':self.USER_AGENT})
+        return strwithmeta(url, {'Cookie': cookieHeader, 'User-Agent': self.USER_AGENT})
         
     def _listFilters(self, cItem, data):
         printDBG("AlltubeTV._listFilters")
@@ -72,7 +72,7 @@ class AlltubeTV(CBaseHostClass):
             if filter != '' and title != '':
                 ret = True
                 params = dict(cItem)
-                params.update({'title':title, 'check_filter':False, 'post_data':{'filter':filter}})
+                params.update({'title': title, 'check_filter': False, 'post_data': {'filter': filter}})
                 self.addDir(params)
         return ret
             
@@ -136,7 +136,7 @@ class AlltubeTV(CBaseHostClass):
                 desc = item.split('<p>')[-1]
             
             params = dict(cItem)
-            params.update({'good_for_fav': True, 'title': self.cleanHtmlStr(title), 'url':self.getFullUrl(url), 'desc': self.cleanHtmlStr(desc), 'icon':self.getFullUrl(icon)})
+            params.update({'good_for_fav': True, 'title': self.cleanHtmlStr(title), 'url': self.getFullUrl(url), 'desc': self.cleanHtmlStr(desc), 'icon': self.getFullUrl(icon)})
             if category != 'video': #or '/serial/' in params['url']:
                 params['category'] = category
                 self.addDir(params)
@@ -145,7 +145,7 @@ class AlltubeTV(CBaseHostClass):
             
         if nextPage:
             params = dict(cItem)
-            params.update({'title':_('Next page'), 'page':page + 1})
+            params.update({'title': _('Next page'), 'page': page + 1})
             self.addDir(params)
     
     def fillFilterCache(self, url):
@@ -157,9 +157,9 @@ class AlltubeTV(CBaseHostClass):
             dat = self.cm.ph.getDataBeetwenMarkers(data, m1, m2, False)[1]
             dat = re.compile('<li[^>]*?data-id="([^>]+?)"[^>]*?>([^>]+?)</li>').findall(dat)
             for item in dat:
-                tab.append({key:item[0], 'title':item[1]})
+                tab.append({key: item[0], 'title': item[1]})
             if len(tab):
-                tab.insert(0, {'title':_('All')})
+                tab.insert(0, {'title': _('All')})
             return tab
         self.filterCache['category'] = _getFilters('filter-category">', '</ul>', 'cat')
         self.filterCache['version'] = _getFilters('id="filter-version">', '</ul>', 'ver')
@@ -198,8 +198,8 @@ class AlltubeTV(CBaseHostClass):
             title = item[2]
             if letter not in self.seriesCache:
                 self.seriesCache[letter] = []
-                self.seriesLetters.append({'title':letter, 'letter':letter})
-            self.seriesCache[letter].append({'good_for_fav':True, 'title': self.cleanHtmlStr(title), 'url':self.getFullUrl(url)})
+                self.seriesLetters.append({'title': letter, 'letter': letter})
+            self.seriesCache[letter].append({'good_for_fav': True, 'title': self.cleanHtmlStr(title), 'url': self.getFullUrl(url)})
         for idx in range(len(self.seriesLetters)):
             letter = self.seriesLetters[idx]['letter']
             self.seriesLetters[idx]['title'] = letter + ' [%d]' % len(self.seriesCache[letter]) 
@@ -243,7 +243,7 @@ class AlltubeTV(CBaseHostClass):
             url = self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0]
             icon = ''
             params = dict(cItem)
-            params.update({'title': self.cleanHtmlStr(item), 'url':self.getFullUrl(url), 'desc': '', 'icon':self.getFullUrl(icon)})
+            params.update({'title': self.cleanHtmlStr(item), 'url': self.getFullUrl(url), 'desc': '', 'icon': self.getFullUrl(icon)})
             params['category'] = category
             self.addDir(params)
             
@@ -295,13 +295,13 @@ class AlltubeTV(CBaseHostClass):
                     season = 0
                     episode = 0
                     sort = False
-                episodesList.append({'good_for_fav': True, 'title': seriesTitle + ': ' + self.cleanHtmlStr(item[1]), 'url':self.getFullUrl(item[0]), 'desc': desc, 'icon':icon, 'season':season, 'episode':episode})
+                episodesList.append({'good_for_fav': True, 'title': seriesTitle + ': ' + self.cleanHtmlStr(item[1]), 'url': self.getFullUrl(item[0]), 'desc': desc, 'icon': icon, 'season': season, 'episode': episode})
             if sort:
                 episodesList.sort(key=lambda item: item['season'] * 1000 + item['episode'])#, reverse=True)
                 #episodesList.reverse()
             if len(episodesList):
                 params = dict(cItem)
-                params.update({'good_for_fav': False, 'category':category, 'season_idx':len(self.episodesCache), 'title':seasonTitle, 'desc': desc, 'icon':icon})
+                params.update({'good_for_fav': False, 'category': category, 'season_idx': len(self.episodesCache), 'title': seasonTitle, 'desc': desc, 'icon': icon})
                 self.addDir(params)
                 self.episodesCache.append(episodesList)
         
@@ -317,8 +317,8 @@ class AlltubeTV(CBaseHostClass):
         printDBG("AlltubeTV.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         
         params = dict(self.defaultParams)
-        params['header'] = {'User-Agent':self.USER_AGENT, 'Content-Type':'application/x-www-form-urlencoded'}
-        sts, data = self.getPage(self.SRCH_URL, params, post_data={'search':searchPattern})
+        params['header'] = {'User-Agent': self.USER_AGENT, 'Content-Type': 'application/x-www-form-urlencoded'}
+        sts, data = self.getPage(self.SRCH_URL, params, post_data={'search': searchPattern})
         if not sts:
             return
         
@@ -364,7 +364,7 @@ class AlltubeTV(CBaseHostClass):
                 desc = item.split('<p>')[-1]
             
             params = dict(cItem)
-            params.update({'good_for_fav': True, 'title':self.cleanHtmlStr(title), 'url':self.getFullUrl(url), 'icon':self.getFullUrl(icon), 'desc':self.cleanHtmlStr(desc)})
+            params.update({'good_for_fav': True, 'title': self.cleanHtmlStr(title), 'url': self.getFullUrl(url), 'icon': self.getFullUrl(icon), 'desc': self.cleanHtmlStr(desc)})
             if searchType == 'series':
                 params['category'] = 'list_seasons'
                 self.addDir(params)
@@ -396,7 +396,7 @@ class AlltubeTV(CBaseHostClass):
                 else:
                     url = self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']*?link/[^"^']+?)['"]''')[0]
                 name = self.cleanHtmlStr(item)
-                urlTab.append({'name':name, 'url':strwithmeta(url, {'cache_key':cacheKey}), 'need_resolve':1})
+                urlTab.append({'name': name, 'url': strwithmeta(url, {'cache_key': cacheKey}), 'need_resolve': 1})
             except Exception:
                 printExc()
                 
@@ -421,7 +421,7 @@ class AlltubeTV(CBaseHostClass):
                 tmp = 'ZGVmIHphcmF6YShpbl9hYmMpOg0KICAgIGRlZiByaGV4KGEpOg0KICAgICAgICBoZXhfY2hyID0gJzAxMjM0NTY3ODlhYmNkZWYnDQogICAgICAgIHJldCA9ICcnDQogICAgICAgIGZvciBpIGluIHJhbmdlKDQpOg0KICAgICAgICAgICAgcmV0ICs9IGhleF9jaHJbKGEgPj4gKGkgKiA4ICsgNCkpICYgMHgwRl0gKyBoZXhfY2hyWyhhID4+IChpICogOCkpICYgMHgwRl0NCiAgICAgICAgcmV0dXJuIHJldA0KICAgIGRlZiBoZXgodGV4dCk6DQogICAgICAgIHJldCA9ICcnDQogICAgICAgIGZvciBpIGluIHJhbmdlKGxlbih0ZXh0KSk6DQogICAgICAgICAgICByZXQgKz0gcmhleCh0ZXh0W2ldKQ0KICAgICAgICByZXR1cm4gcmV0DQogICAgZGVmIGFkZDMyKGEsIGIpOg0KICAgICAgICByZXR1cm4gKGEgKyBiKSAmIDB4RkZGRkZGRkYNCiAgICBkZWYgY21uKGEsIGIsIGMsIGQsIGUsIGYpOg0KICAgICAgICBiID0gYWRkMzIoYWRkMzIoYiwgYSksIGFkZDMyKGQsIGYpKTsNCiAgICAgICAgcmV0dXJuIGFkZDMyKChiIDw8IGUpIHwgKGIgPj4gKDMyIC0gZSkpLCBjKQ0KICAgIGRlZiBmZihhLCBiLCBjLCBkLCBlLCBmLCBnKToNCiAgICAgICAgcmV0dXJuIGNtbigoYiAmIGMpIHwgKCh+YikgJiBkKSwgYSwgYiwgZSwgZiwgZykNCiAgICBkZWYgZ2coYSwgYiwgYywgZCwgZSwgZiwgZyk6DQogICAgICAgIHJldHVybiBjbW4oKGIgJiBkKSB8IChjICYgKH5kKSksIGEsIGIsIGUsIGYsIGcpDQogICAgZGVmIGhoKGEsIGIsIGMsIGQsIGUsIGYsIGcpOg0KICAgICAgICByZXR1cm4gY21uKGIgXiBjIF4gZCwgYSwgYiwgZSwgZiwgZykNCiAgICBkZWYgaWkoYSwgYiwgYywgZCwgZSwgZiwgZyk6DQogICAgICAgIHJldHVybiBjbW4oYyBeIChiIHwgKH5kKSksIGEsIGIsIGUsIGYsIGcpDQogICAgZGVmIGNyeXB0Y3ljbGUodGFiQSwgdGFiQik6DQogICAgICAgIGEgPSB0YWJBWzBdDQogICAgICAgIGIgPSB0YWJBWzFdDQogICAgICAgIGMgPSB0YWJBWzJdDQogICAgICAgIGQgPSB0YWJBWzNdDQogICAgICAgIGEgPSBmZihhLCBiLCBjLCBkLCB0YWJCWzBdLCA3LCAtNjgwODc2OTM2KTsNCiAgICAgICAgZCA9IGZmKGQsIGEsIGIsIGMsIHRhYkJbMV0sIDEyLCAtMzg5NTY0NTg2KTsNCiAgICAgICAgYyA9IGZmKGMsIGQsIGEsIGIsIHRhYkJbMl0sIDE3LCA2MDYxMDU4MTkpOw0KICAgICAgICBiID0gZmYoYiwgYywgZCwgYSwgdGFiQlszXSwgMjIsIC0xMDQ0NTI1MzMwKTsNCiAgICAgICAgYSA9IGZmKGEsIGIsIGMsIGQsIHRhYkJbNF0sIDcsIC0xNzY0MTg4OTcpOw0KICAgICAgICBkID0gZmYoZCwgYSwgYiwgYywgdGFiQls1XSwgMTIsIDEyMDAwODA0MjYpOw0KICAgICAgICBjID0gZmYoYywgZCwgYSwgYiwgdGFiQls2XSwgMTcsIC0xNDczMjMxMzQxKTsNCiAgICAgICAgYiA9IGZmKGIsIGMsIGQsIGEsIHRhYkJbN10sIDIyLCAtNDU3MDU5ODMpOw0KICAgICAgICBhID0gZmYoYSwgYiwgYywgZCwgdGFiQls4XSwgNywgMTc3MDAzNTQxNik7DQogICAgICAgIGQgPSBmZihkLCBhLCBiLCBjLCB0YWJCWzldLCAxMiwgLTE5NTg0MTQ0MTcpOw0KICAgICAgICBjID0gZmYoYywgZCwgYSwgYiwgdGFiQlsxMF0sIDE3LCAtNDIwNjMpOw0KICAgICAgICBiID0gZmYoYiwgYywgZCwgYSwgdGFiQlsxMV0sIDIyLCAtMTk5MDQwNDE2Mik7DQogICAgICAgIGEgPSBmZihhLCBiLCBjLCBkLCB0YWJCWzEyXSwgNywgMTgwNDYwMzY4Mik7DQogICAgICAgIGQgPSBmZihkLCBhLCBiLCBjLCB0YWJCWzEzXSwgMTIsIC00MDM0MTEwMSk7DQogICAgICAgIGMgPSBmZihjLCBkLCBhLCBiLCB0YWJCWzE0XSwgMTcsIC0xNTAyMDAyMjkwKTsNCiAgICAgICAgYiA9IGZmKGIsIGMsIGQsIGEsIHRhYkJbMTVdLCAyMiwgMTIzNjUzNTMyOSk7DQogICAgICAgIGEgPSBnZyhhLCBiLCBjLCBkLCB0YWJCWzFdLCA1LCAtMTY1Nzk2NTEwKTsNCiAgICAgICAgZCA9IGdnKGQsIGEsIGIsIGMsIHRhYkJbNl0sIDksIC0xMDY5NTAxNjMyKTsNCiAgICAgICAgYyA9IGdnKGMsIGQsIGEsIGIsIHRhYkJbMTFdLCAxNCwgNjQzNzE3NzEzKTsNCiAgICAgICAgYiA9IGdnKGIsIGMsIGQsIGEsIHRhYkJbMF0sIDIwLCAtMzczODk3MzAyKTsNCiAgICAgICAgYSA9IGdnKGEsIGIsIGMsIGQsIHRhYkJbNV0sIDUsIC03MDE1NTg2OTEpOw0KICAgICAgICBkID0gZ2coZCwgYSwgYiwgYywgdGFiQlsxMF0sIDksIDM4MDE2MDgzKTsNCiAgICAgICAgYyA9IGdnKGMsIGQsIGEsIGIsIHRhYkJbMTVdLCAxNCwgLTY2MDQ3ODMzNSk7DQogICAgICAgIGIgPSBnZyhiLCBjLCBkLCBhLCB0YWJCWzRdLCAyMCwgLTQwNTUzNzg0OCk7DQogICAgICAgIGEgPSBnZyhhLCBiLCBjLCBkLCB0YWJCWzldLCA1LCA1Njg0NDY0MzgpOw0KICAgICAgICBkID0gZ2coZCwgYSwgYiwgYywgdGFiQlsxNF0sIDksIC0xMDE5ODAzNjkwKTsNCiAgICAgICAgYyA9IGdnKGMsIGQsIGEsIGIsIHRhYkJbM10sIDE0LCAtMTg3MzYzOTYxKTsNCiAgICAgICAgYiA9IGdnKGIsIGMsIGQsIGEsIHRhYkJbOF0sIDIwLCAxMTYzNTMxNTAxKTsNCiAgICAgICAgYSA9IGdnKGEsIGIsIGMsIGQsIHRhYkJbMTNdLCA1LCAtMTQ0NDY4MTQ2Nyk7DQogICAgICAgIGQgPSBnZyhkLCBhLCBiLCBjLCB0YWJCWzJdLCA5LCAtNTE0MDM3ODQpOw0KICAgICAgICBjID0gZ2coYywgZCwgYSwgYiwgdGFiQls3XSwgMTQsIDE3MzUzMjg0NzMpOw0KICAgICAgICBiID0gZ2coYiwgYywgZCwgYSwgdGFiQlsxMl0sIDIwLCAtMTkyNjYwNzczNCk7DQogICAgICAgIGEgPSBoaChhLCBiLCBjLCBkLCB0YWJCWzVdLCA0LCAtMzc4NTU4KTsNCiAgICAgICAgZCA9IGhoKGQsIGEsIGIsIGMsIHRhYkJbOF0sIDExLCAtMjAyMjU3NDQ2Myk7DQogICAgICAgIGMgPSBoaChjLCBkLCBhLCBiLCB0YWJCWzExXSwgMTYsIDE4MzkwMzA1NjIpOw0KICAgICAgICBiID0gaGgoYiwgYywgZCwgYSwgdGFiQlsxNF0sIDIzLCAtMzUzMDk1NTYpOw0KICAgICAgICBhID0gaGgoYSwgYiwgYywgZCwgdGFiQlsxXSwgNCwgLTE1MzA5OTIwNjApOw0KICAgICAgICBkID0gaGgoZCwgYSwgYiwgYywgdGFiQls0XSwgMTEsIDEyNzI4OTMzNTMpOw0KICAgICAgICBjID0gaGgoYywgZCwgYSwgYiwgdGFiQls3XSwgMTYsIC0xNTU0OTc2MzIpOw0KICAgICAgICBiID0gaGgoYiwgYywgZCwgYSwgdGFiQlsxMF0sIDIzLCAtMTA5NDczMDY0MCk7DQogICAgICAgIGEgPSBoaChhLCBiLCBjLCBkLCB0YWJCWzEzXSwgNCwgNjgxMjc5MTc0KTsNCiAgICAgICAgZCA9IGhoKGQsIGEsIGIsIGMsIHRhYkJbMF0sIDExLCAtMzU4NTM3MjIyKTsNCiAgICAgICAgYyA9IGhoKGMsIGQsIGEsIGIsIHRhYkJbM10sIDE2LCAtNzIyNTIxOTc5KTsNCiAgICAgICAgYiA9IGhoKGIsIGMsIGQsIGEsIHRhYkJbNl0sIDIzLCA3NjAyOTE4OSk7DQogICAgICAgIGEgPSBoaChhLCBiLCBjLCBkLCB0YWJCWzldLCA0LCAtNjQwMzY0NDg3KTsNCiAgICAgICAgZCA9IGhoKGQsIGEsIGIsIGMsIHRhYkJbMTJdLCAxMSwgLTQyMTgxNTgzNSk7DQogICAgICAgIGMgPSBoaChjLCBkLCBhLCBiLCB0YWJCWzE1XSwgMTYsIDUzMDc0MjUyMCk7DQogICAgICAgIGIgPSBoaChiLCBjLCBkLCBhLCB0YWJCWzJdLCAyMywgLTk5NTMzODY1MSk7DQogICAgICAgIGEgPSBpaShhLCBiLCBjLCBkLCB0YWJCWzBdLCA2LCAtMTk4NjMwODQ0KTsNCiAgICAgICAgZCA9IGlpKGQsIGEsIGIsIGMsIHRhYkJbN10sIDEwLCAxMTI2ODkxNDE1KTsNCiAgICAgICAgYyA9IGlpKGMsIGQsIGEsIGIsIHRhYkJbMTRdLCAxNSwgLTE0MTYzNTQ5MDUpOw0KICAgICAgICBiID0gaWkoYiwgYywgZCwgYSwgdGFiQls1XSwgMjEsIC01NzQzNDA1NSk7DQogICAgICAgIGEgPSBpaShhLCBiLCBjLCBkLCB0YWJCWzEyXSwgNiwgMTcwMDQ4NTU3MSk7DQogICAgICAgIGQgPSBpaShkLCBhLCBiLCBjLCB0YWJCWzNdLCAxMCwgLTE4OTQ5ODY2MDYpOw0KICAgICAgICBjID0gaWkoYywgZCwgYSwgYiwgdGFiQlsxMF0sIDE1LCAtMTA1MTUyMyk7DQogICAgICAgIGIgPSBpaShiLCBjLCBkLCBhLCB0YWJCWzFdLCAyMSwgLTIwNTQ5MjI3OTkpOw0KICAgICAgICBhID0gaWkoYSwgYiwgYywgZCwgdGFiQls4XSwgNiwgMTg3MzMxMzM1OSk7DQogICAgICAgIGQgPSBpaShkLCBhLCBiLCBjLCB0YWJCWzE1XSwgMTAsIC0zMDYxMTc0NCk7DQogICAgICAgIGMgPSBpaShjLCBkLCBhLCBiLCB0YWJCWzZdLCAxNSwgLTE1NjAxOTgzODApOw0KICAgICAgICBiID0gaWkoYiwgYywgZCwgYSwgdGFiQlsxM10sIDIxLCAxMzA5MTUxNjQ5KTsNCiAgICAgICAgYSA9IGlpKGEsIGIsIGMsIGQsIHRhYkJbNF0sIDYsIC0xNDU1MjMwNzApOw0KICAgICAgICBkID0gaWkoZCwgYSwgYiwgYywgdGFiQlsxMV0sIDEwLCAtMTEyMDIxMDM3OSk7DQogICAgICAgIGMgPSBpaShjLCBkLCBhLCBiLCB0YWJCWzJdLCAxNSwgNzE4Nzg3MjU5KTsNCiAgICAgICAgYiA9IGlpKGIsIGMsIGQsIGEsIHRhYkJbOV0sIDIxLCAtMzQzNDg1NTUxKTsNCiAgICAgICAgdGFiQVswXSA9IGFkZDMyKGEsIHRhYkFbMF0pOw0KICAgICAgICB0YWJBWzFdID0gYWRkMzIoYiwgdGFiQVsxXSk7DQogICAgICAgIHRhYkFbMl0gPSBhZGQzMihjLCB0YWJBWzJdKTsNCiAgICAgICAgdGFiQVszXSA9IGFkZDMyKGQsIHRhYkFbM10pDQogICAgZGVmIGNyeXB0YmxrKHRleHQpOg0KICAgICAgICByZXQgPSBbXQ0KICAgICAgICBmb3IgaSBpbiByYW5nZSgwLCA2NCwgNCk6DQogICAgICAgICAgICByZXQuYXBwZW5kKG9yZCh0ZXh0W2ldKSArIChvcmQodGV4dFtpKzFdKSA8PCA4KSArIChvcmQodGV4dFtpKzJdKSA8PCAxNikgKyAob3JkKHRleHRbaSszXSkgPDwgMjQpKQ0KICAgICAgICByZXR1cm4gcmV0DQogICAgZGVmIGpjc3lzKHRleHQpOg0KICAgICAgICB0eHQgPSAnJzsNCiAgICAgICAgdHh0TGVuID0gbGVuKHRleHQpDQogICAgICAgIHJldCA9IFsxNzMyNTg0MTkzLCAtMjcxNzMzODc5LCAtMTczMjU4NDE5NCwgMjcxNzMzODc4XQ0KICAgICAgICBpID0gNjQNCiAgICAgICAgd2hpbGUgaSA8PSBsZW4odGV4dCk6DQogICAgICAgICAgICBjcnlwdGN5Y2xlKHJldCwgY3J5cHRibGsodGV4dFsnc3Vic3RyaW5nJ10oaSAtIDY0LCBpKSkpDQogICAgICAgICAgICBpICs9IDY0DQogICAgICAgIHRleHQgPSB0ZXh0W2kgLSA2NDpdDQogICAgICAgIHRtcCA9IFswLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwLCAwXQ0KICAgICAgICBpID0gMA0KICAgICAgICB3aGlsZSBpIDwgbGVuKHRleHQpOg0KICAgICAgICAgICAgdG1wW2kgPj4gMl0gfD0gb3JkKHRleHRbaV0pIDw8ICgoaSAlIDQpIDw8IDMpDQogICAgICAgICAgICBpICs9IDENCiAgICAgICAgdG1wW2kgPj4gMl0gfD0gMHg4MCA8PCAoKGkgJSA0KSA8PCAzKQ0KICAgICAgICBpZiBpID4gNTU6DQogICAgICAgICAgICBjcnlwdGN5Y2xlKHJldCwgdG1wKTsNCiAgICAgICAgICAgIGZvciBpIGluIHJhbmdlKDE2KToNCiAgICAgICAgICAgICAgICB0bXBbaV0gPSAwDQogICAgICAgIHRtcFsxNF0gPSB0eHRMZW4gKiA4Ow0KICAgICAgICBjcnlwdGN5Y2xlKHJldCwgdG1wKTsNCiAgICAgICAgcmV0dXJuIHJldA0KICAgIGRlZiByZXplZG93YSh0ZXh0KToNCiAgICAgICAgcmV0dXJuIGhleChqY3N5cyh0ZXh0KSkNCiAgICByZXR1cm4gcmV6ZWRvd2EoaW5fYWJjKQ0K'
                 tmp = base64.b64decode(tmp).replace('\r', '')
                 _myFun = compile(tmp, '', 'exec')
-                vGlobals = {"__builtins__": None, 'len': len, 'list': list, 'ord':ord, 'range':range}
+                vGlobals = {"__builtins__": None, 'len': len, 'list': list, 'ord': ord, 'range': range}
                 vLocals = {'zaraza': ''}
                 exec _myFun in vGlobals, vLocals
                 self._myFun = vLocals['zaraza']
@@ -440,7 +440,7 @@ class AlltubeTV(CBaseHostClass):
             for k in sorted(d.keys()):
                 tmp += d[k]
             cookieHeader += ' tmvh=%s;' % self._myFun(tmp)
-            params = {'header':{'Cookie':cookieHeader, 'User-Agent':self.USER_AGENT}}
+            params = {'header': {'Cookie': cookieHeader, 'User-Agent': self.USER_AGENT}}
         except Exception:
             params = {}
             printExc()
@@ -480,7 +480,7 @@ class AlltubeTV(CBaseHostClass):
         self.cm.clearCookie(self.COOKIE_FILE, ['PHPSESSID', '__cfduid', 'cf_clearance'])
     #MAIN MENU
         if name == None:
-            self.listsTab(self.MAIN_CAT_TAB, {'name':'category'})
+            self.listsTab(self.MAIN_CAT_TAB, {'name': 'category'})
     #MOVIES
         elif category == 'genres_movies':
             self.listFilters(self.currItem, 'category', 'list_version_filter')
@@ -492,7 +492,7 @@ class AlltubeTV(CBaseHostClass):
             self.listMovies(self.currItem)
     #SERIES
         elif category == 'cat_series':
-            self.listsTab(self.SERIES_CAT_TAB, {'name':'category'})
+            self.listsTab(self.SERIES_CAT_TAB, {'name': 'category'})
         elif category == 'list_series_abc':
             self.listSeriesABC(self.currItem, 'list_series')
         elif category == 'list_series':
@@ -506,11 +506,11 @@ class AlltubeTV(CBaseHostClass):
     #SEARCH
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         

@@ -46,13 +46,13 @@ def gettytul():
 class AllBoxTV(CBaseHostClass):
     
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'allbox.tv', 'cookie':'allbox.tv.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'allbox.tv', 'cookie': 'allbox.tv.cookie'})
         self.USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0'
         self.MAIN_URL = 'https://allbox.tv/'
         self.DEFAULT_ICON_URL = 'https://allbox.tv/static/img/seriale_brak_foto.jpg?v=1'
-        self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Origin':self.getMainUrl()}
+        self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT': '1', 'Accept': 'text/html', 'Accept-Encoding': 'gzip, deflate', 'Referer': self.getMainUrl(), 'Origin': self.getMainUrl()}
         self.AJAX_HEADER = dict(self.HTTP_HEADER)
-        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
+        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'Accept': 'application/json, text/javascript, */*; q=0.01'})
         
         self.cacheSearch = {}
         self.cacheEpisodes = {}
@@ -63,16 +63,16 @@ class AllBoxTV(CBaseHostClass):
         self.cacheCartoonsByLetter = {}
         
         self.cacheLinks = {}
-        self.defaultParams = {'header':self.HTTP_HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
+        self.defaultParams = {'header': self.HTTP_HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         
-        self.MAIN_CAT_TAB = [{'category':'list_filters', 'title': _('Movies'), 'url':self.getFullUrl('/filmy-online')},
-                             {'category':'list_items', 'title': _('Premieres'), 'url':self.getFullUrl('/premiery')},
-                             {'category':'list_series_az', 'title': _('TV series'), 'url':self.getFullUrl('/seriale-online')},
-                             {'category':'list_cartoons_az', 'title': _('Cartoons'), 'url':self.getFullUrl('/bajki-online')},
-                             {'category':'list_filters', 'title': _('Ranking'), 'url':self.getFullUrl('/filmy-online,wszystkie,top')},
+        self.MAIN_CAT_TAB = [{'category': 'list_filters', 'title': _('Movies'), 'url': self.getFullUrl('/filmy-online')},
+                             {'category': 'list_items', 'title': _('Premieres'), 'url': self.getFullUrl('/premiery')},
+                             {'category': 'list_series_az', 'title': _('TV series'), 'url': self.getFullUrl('/seriale-online')},
+                             {'category': 'list_cartoons_az', 'title': _('Cartoons'), 'url': self.getFullUrl('/bajki-online')},
+                             {'category': 'list_filters', 'title': _('Ranking'), 'url': self.getFullUrl('/filmy-online,wszystkie,top')},
                              
-                             {'category':'search', 'title': _('Search'), 'search_item':True}, 
-                             {'category':'search_history', 'title': _('Search history')},
+                             {'category': 'search', 'title': _('Search'), 'search_item': True}, 
+                             {'category': 'search_history', 'title': _('Search history')},
                             ]
         self.loggedIn = None
         self.login = ''
@@ -89,7 +89,7 @@ class AllBoxTV(CBaseHostClass):
                 return url
             else:
                 return urlparse.urljoin(baseUrl, url)
-        addParams['cloudflare_params'] = {'domain':self.up.getDomain(baseUrl), 'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT, 'full_url_handle':_getFullUrl}
+        addParams['cloudflare_params'] = {'domain': self.up.getDomain(baseUrl), 'cookie_file': self.COOKIE_FILE, 'User-Agent': self.USER_AGENT, 'full_url_handle': _getFullUrl}
         return self.cm.getPageCFProtection(baseUrl, addParams, post_data)
         
     def base64Decode(self, data):
@@ -130,11 +130,11 @@ class AllBoxTV(CBaseHostClass):
                 if letter not in cacheLetter:
                     cacheLetter.append(letter)
                     cacheByLetter[letter] = []
-                cacheByLetter[letter].append({'title':title, 'url':url, 'desc':'', 'icon':url + '?fake=need_resolve.jpeg'})
+                cacheByLetter[letter].append({'title': title, 'url': url, 'desc': '', 'icon': url + '?fake=need_resolve.jpeg'})
             
         for letter in cacheLetter:
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'category':nextCategory, 'title':letter, 'desc':'', 'f_letter':letter})
+            params.update({'good_for_fav': False, 'category': nextCategory, 'title': letter, 'desc': '', 'f_letter': letter})
             self.addDir(params)
             
     def listByLetter(self, cItem, nextCategory, cacheByLetter):
@@ -143,7 +143,7 @@ class AllBoxTV(CBaseHostClass):
         letter = cItem['f_letter']
         tab = cacheByLetter[letter]
         cItem = dict(cItem)
-        cItem.update({'good_for_fav':True, 'category':nextCategory, 'desc':''})
+        cItem.update({'good_for_fav': True, 'category': nextCategory, 'desc': ''})
         self.listsTab(tab, cItem)
         
     def listFilters(self, cItem, nextCategory, nextNextCategory):
@@ -165,11 +165,11 @@ class AllBoxTV(CBaseHostClass):
                     continue
                 title = ph.clean_html(item)
                 params = dict(cItem)
-                params.update({'title':title, 'url':url, 'f_idx':f_idx, 'desc':''})
+                params.update({'title': title, 'url': url, 'f_idx': f_idx, 'desc': ''})
                 self.addDir(params)
         else:
             params = dict(cItem)
-            params.update({'category':nextCategory})
+            params.update({'category': nextCategory})
             self.listItems(params, nextNextCategory)
 
     def _listItems(self, data):
@@ -206,7 +206,7 @@ class AllBoxTV(CBaseHostClass):
                 
             desc = ' | '.join(desc)
             desc += '[/br]' + ph.clean_html(ph.find(item, ('<p', '>'), '</p>')[1])
-            retTab.append({'title':title, 'url':url, 'icon':icon, 'desc':desc})
+            retTab.append({'title': title, 'url': url, 'icon': icon, 'desc': desc})
         return retTab
     
     def listItems(self, cItem, nextCategory):
@@ -219,7 +219,7 @@ class AllBoxTV(CBaseHostClass):
         params = dict(self.defaultParams)
         params['header'] = dict(self.AJAX_HEADER)
         
-        sts, data = self.getPage(url, params, post_data={'page':page})
+        sts, data = self.getPage(url, params, post_data={'page': page})
         if not sts:
             return
         
@@ -236,12 +236,12 @@ class AllBoxTV(CBaseHostClass):
             printDBG(data['html'])
             itemsTab = self._listItems(data['html'])
             params = dict(cItem)
-            params.update({'good_for_fav':True, 'category':nextCategory})
+            params.update({'good_for_fav': True, 'category': nextCategory})
             self.listsTab(itemsTab, params)
             
             if nextPage:
                 params = dict(cItem)
-                params.update({'good_for_fav':False, 'title':_("Next page"), 'page':page + 1, 'movies_count':moviesCount})
+                params.update({'good_for_fav': False, 'title': _("Next page"), 'page': page + 1, 'movies_count': moviesCount})
                 self.addDir(params)
             
         except Exception:
@@ -262,7 +262,7 @@ class AllBoxTV(CBaseHostClass):
             icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(item, 'url\(([^"^\)]+?\.(:?jpe?g|png)(:?\?[^"^\)]+?)?)\);')[0].strip())
             title = ph.clean_html(item)
             params = dict(cItem)
-            params.update({'good_for_fav':True, 'title':title, 'url':url, 'icon':icon})
+            params.update({'good_for_fav': True, 'title': title, 'url': url, 'icon': icon})
             if nextCategory == 'video':
                 self.addVideo(params)
             else:
@@ -295,7 +295,7 @@ class AllBoxTV(CBaseHostClass):
             if not self.cm.isValidUrl(url):
                 continue
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'url':url, 'direct_link':direct, 'title':'%s - %s %s' % (seriesTitle, _('trailer'), num), 'icon':icon})
+            params.update({'good_for_fav': False, 'url': url, 'direct_link': direct, 'title': '%s - %s %s' % (seriesTitle, _('trailer'), num), 'icon': icon})
             self.addVideo(params)
             num += 1
         
@@ -311,8 +311,8 @@ class AllBoxTV(CBaseHostClass):
                 title = '%s - %s' % (seriesTitle, title)
                 if tmp[0] not in self.cacheEpisodes:
                     self.cacheEpisodes[tmp[0]] = []
-                    seasonsTab.append({'good_for_fav':False, 'category':nextCategory, 's_num':tmp[0], 'title':_('Season %s') % tmp[0]})
-                self.cacheEpisodes[tmp[0]].append({'good_for_fav':False, 'url':url, 'title':title, 'icon':url + '?fake=need_resolve.jpeg'})
+                    seasonsTab.append({'good_for_fav': False, 'category': nextCategory, 's_num': tmp[0], 'title': _('Season %s') % tmp[0]})
+                self.cacheEpisodes[tmp[0]].append({'good_for_fav': False, 'url': url, 'title': title, 'icon': url + '?fake=need_resolve.jpeg'})
         
         if len(seasonsTab) == 1:
             params = dict(cItem)
@@ -329,7 +329,7 @@ class AllBoxTV(CBaseHostClass):
         
         episodesTable = self.cacheEpisodes[cItem['s_num']]
         params = dict(cItem)
-        params.update({'good_for_fav':False})
+        params.update({'good_for_fav': False})
         self.listsTab(episodesTable, params, 'video')
         
     def _getM3uIcon(self, item, cItem):
@@ -366,7 +366,7 @@ class AllBoxTV(CBaseHostClass):
         if not sts:
             return
 
-        nameMap = {'movies':_('Movies'), 'serials':_('TV series')}
+        nameMap = {'movies': _('Movies'), 'serials': _('TV series')}
 
         data = ph.find(data, ('<div', '>', 'tab-content'), ('<div', '>', 'sidebarTitle'))[1]
         data = re.compile('<div([^>]+?tabpanel[^>]+?)>').split(data)
@@ -379,7 +379,7 @@ class AllBoxTV(CBaseHostClass):
             if not itemsTab:
                 continue
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'category':'list_search_items', 'f_search_type':name, 'desc':'', 'title':'%s (%s)' % (nameMap[name], len(itemsTab))})
+            params.update({'good_for_fav': False, 'category': 'list_search_items', 'f_search_type': name, 'desc': '', 'title': '%s (%s)' % (nameMap[name], len(itemsTab))})
             self.addDir(params)
             self.cacheSearch[name] = itemsTab
 
@@ -388,7 +388,7 @@ class AllBoxTV(CBaseHostClass):
         
         itemsTab = self.cacheSearch[cItem['f_search_type']]
         params = dict(cItem)
-        params.update({'good_for_fav':True, 'category':nextCategory})
+        params.update({'good_for_fav': True, 'category': nextCategory})
         self.listsTab(itemsTab, params)
         
     def getLinksForVideo(self, cItem):
@@ -399,7 +399,7 @@ class AllBoxTV(CBaseHostClass):
             videoUrl = cItem['url'].replace('youtu.be/', 'youtube.com/watch?v=')
             return self.up.getVideoLinkExt(videoUrl)
         elif cItem.get('direct_link') == True:
-            return [{'name':'trailer', 'url':cItem['url'], 'need_resolve':0}]
+            return [{'name': 'trailer', 'url': cItem['url'], 'need_resolve':0}]
         
         cacheKey = cItem['url']
         cacheTab = self.cacheLinks.get(cacheKey, [])
@@ -426,12 +426,12 @@ class AllBoxTV(CBaseHostClass):
                 if t != '':
                     name.append(t)
             name = ' | '.join(name)
-            retTab.append({'name':name, 'url':self.getFullUrl(url), 'need_resolve':1})
+            retTab.append({'name': name, 'url': self.getFullUrl(url), 'need_resolve': 1})
         
         if len(retTab):
             self.cacheLinks[cacheKey] = retTab
         else:
-            retTab.append({'name':'one', 'url':cItem['url'], 'need_resolve':1})
+            retTab.append({'name': 'one', 'url': cItem['url'], 'need_resolve': 1})
         return retTab
         
     def getVideoLinks(self, baseUrl):
@@ -475,14 +475,14 @@ class AllBoxTV(CBaseHostClass):
                         url = self.cm.meta['url']
                         printDBG("++++++++++++++++++++++++++> " + url)
                         cookieHeader = self.cm.getCookieHeader(self.COOKIE_FILE)
-                        return [{'name':'', 'url':strwithmeta(url, {'Cookie':cookieHeader, 'User-Agent':self.USER_AGENT}), 'need_resolve':0}]
+                        return [{'name': '', 'url': strwithmeta(url, {'Cookie': cookieHeader, 'User-Agent': self.USER_AGENT}), 'need_resolve': 0}]
                     except Exception:
                         printExc()
                 tmp = self.cm.ph.getDataBeetwenMarkers(data, 'setup(', '});')[1]
                 url = self.getFullUrl(self.cm.ph.getSearchGroups(data, '''['"]?file['"]?\s*:\s*['"]([^'^"]+?)['"]''')[0])
                 if 'mp4' in tmp and self.cm.isValidUrl(url):
                     cookieHeader = self.cm.getCookieHeader(self.COOKIE_FILE)
-                    return [{'name':'', 'url':strwithmeta(url, {'Cookie':cookieHeader, 'User-Agent':self.USER_AGENT}), 'Referer':baseUrl, 'need_resolve':0}]
+                    return [{'name': '', 'url': strwithmeta(url, {'Cookie': cookieHeader, 'User-Agent': self.USER_AGENT}), 'Referer': baseUrl, 'need_resolve': 0}]
         return self.up.getVideoLinkExt(videoUrl)
     
     def tryTologin(self):
@@ -527,7 +527,7 @@ class AllBoxTV(CBaseHostClass):
                 value = self.cm.ph.getSearchGroups(item, '''value=['"]([^'^"]+?)['"]''')[0]
                 post_data[name] = value
             
-            post_data.update({'email':self.login, 'password':self.password, 'form_login_rememberme':'on'})
+            post_data.update({'email': self.login, 'password': self.password, 'form_login_rememberme': 'on'})
             
             httpParams = dict(self.defaultParams)
             httpParams['header'] = dict(httpParams['header'])
@@ -573,7 +573,7 @@ class AllBoxTV(CBaseHostClass):
         
     #MAIN MENU
         if name == None:
-            self.listMainMenu({'name':'category'}, 'list_genres')
+            self.listMainMenu({'name': 'category'}, 'list_genres')
         elif category == 'list_filters':
             self.listFilters(self.currItem, 'list_items', 'explore_item')
         elif category == 'list_items':
@@ -597,13 +597,13 @@ class AllBoxTV(CBaseHostClass):
     #SEARCH
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
         elif category == 'list_search_items':
             self.listSearchItems(self.currItem, 'explore_item')
     #HISTORIA SEARCH
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         

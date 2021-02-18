@@ -32,15 +32,15 @@ class SerialeNet(CBaseHostClass):
     
     def __init__(self):
         printDBG("SerialeNet.__init__")
-        CBaseHostClass.__init__(self, {'history':'SerialeNet', 'cookie':'serialenet.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'SerialeNet', 'cookie': 'serialenet.cookie'})
         
         self.DEFAULT_ICON_URL = 'http://3.bp.blogspot.com/_Gm9qKcXSvaM/S3X4VtoRfjI/AAAAAAAAAHw/I3ZTIK_DZlY/s200/MCj04421470000%5B1%5D.png'
         self.MAIN_URL = "http://serialnet.pl/"
-        self.CAT_TAB = [{'category':'abc_menu', 'title':'Alfabetycznie', 'url':self.getMainUrl()},
-                         {'category':'last_update', 'title':'Ostatnio uzupełnione', 'url':self.getMainUrl()},
+        self.CAT_TAB = [{'category': 'abc_menu', 'title': 'Alfabetycznie', 'url': self.getMainUrl()},
+                         {'category': 'last_update', 'title': 'Ostatnio uzupełnione', 'url': self.getMainUrl()},
                          
-                         {'category':'search', 'title':_('Search'), 'search_item':True},
-                         {'category':'search_history', 'title':_('Search history')}]
+                         {'category': 'search', 'title': _('Search'), 'search_item': True},
+                         {'category': 'search_history', 'title': _('Search history')}]
         self.seasonsCache = []
         
     def _getStr(self, v, default=''):
@@ -109,7 +109,7 @@ class SerialeNet(CBaseHostClass):
                         t2 = self.cleanHtmlStr(tmp[1])
                     else:
                         t2 = ''
-                    retTab.append({'t1':t1, 't2':t2, 'url':self.getFullUrl(item[0])})
+                    retTab.append({'t1': t1, 't2': t2, 'url': self.getFullUrl(item[0])})
             return retTab
         return []
 
@@ -117,7 +117,7 @@ class SerialeNet(CBaseHostClass):
        abcTab = self.cm.makeABCList()
        for item in abcTab:
             params = dict(cItem)
-            params.update({'title':item, 'letter':item, 'category':category})
+            params.update({'title': item, 'letter': item, 'category': category})
             self.addDir(params)
     
     def listsSeriesByLetter(self, cItem, category):
@@ -144,7 +144,7 @@ class SerialeNet(CBaseHostClass):
                 params = dict(cItem)
                 if len(t2):
                     t1 += ' (%s)' % t2
-                params.update({'good_for_fav': True, 'category':category, 'title':t1, 'url':item['url']})
+                params.update({'good_for_fav': True, 'category': category, 'title': t1, 'url': item['url']})
                 self.addDir(params)
         self.currList.sort(key=lambda item: item['title'])
 
@@ -174,7 +174,7 @@ class SerialeNet(CBaseHostClass):
             
             sNum = self.cm.ph.getSearchGroups(seasonName, '''\s*?([0-9]+)''')[0]
             
-            self.seasonsCache.append({'title':seasonName, 'episodes':[]})
+            self.seasonsCache.append({'title': seasonName, 'episodes': []})
             episodes = self.cm.ph.getAllItemsBeetwenMarkers(item, '<a', '</a>')
             re.findall('<a title="([^"]*?)"[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>', item)
             for e in episodes:
@@ -192,17 +192,17 @@ class SerialeNet(CBaseHostClass):
                         num = ''
                     title = '%s%s, %s' % (num, seasonName, title)
                 title = '%s - %s' % (serieTitle, title)
-                self.seasonsCache[-1]['episodes'].append({'good_for_fav': True, 'title':title, 'url':url, 'desc':desc})
+                self.seasonsCache[-1]['episodes'].append({'good_for_fav': True, 'title': title, 'url': url, 'desc': desc})
         
         if 1 < len(self.seasonsCache):
             seasonsId = 0
             for item in self.seasonsCache:
                 params = dict(cItem)
-                params.update({'good_for_fav': False, 'seasons_id':seasonsId, 'title':item['title'], 'category':category, 'icon':icon, 'desc':desc})
+                params.update({'good_for_fav': False, 'seasons_id': seasonsId, 'title': item['title'], 'category': category, 'icon': icon, 'desc': desc})
                 self.addDir(params)
                 seasonsId += 1
         elif 1 == len(self.seasonsCache):
-            cItem.update({'seasons_id':0})
+            cItem.update({'seasons_id': 0})
             self.listEpisodes(cItem)
     
     def listEpisodes(self, cItem):
@@ -228,7 +228,7 @@ class SerialeNet(CBaseHostClass):
                 title = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(item, '<p id="s_title">', '</p>', False)[1])
                 url = self.getFullUrl(self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0])
                 params = dict(cItem)
-                params.update({'good_for_fav': True, 'category':category, 'title':title, 'icon':icon, 'desc':desc, 'url':url})
+                params.update({'good_for_fav': True, 'category': category, 'title': title, 'icon': icon, 'desc': desc, 'url': url})
                 self.addDir(params)
                     
     def listSearchResult(self, cItem, searchPattern, searchType):
@@ -251,7 +251,7 @@ class SerialeNet(CBaseHostClass):
                     if len(item['t2']):
                         title += ' (%s)' % item['t2']
                     params = dict(cItem)
-                    params.update({'title':title, 'url':item['url'], 'matches':matches})
+                    params.update({'title': title, 'url': item['url'], 'matches': matches})
                     self.addDir(params)
             self.currList.sort(key=lambda item: item.get('matches', 0), reverse=True)
     
@@ -271,9 +271,9 @@ class SerialeNet(CBaseHostClass):
                 for item in data:
                     name = self.cm.ph.getSearchGroups(item, 'name="([^"]+?)"')[0]
                     value = self.cm.ph.getSearchGroups(item, 'value="([^"]+?)"')[0]
-                    versions.append({'title':value, 'url': verUrl + ('&wi=va&%s=%s' % (name, value))})
+                    versions.append({'title': value, 'url': verUrl + ('&wi=va&%s=%s' % (name, value))})
             else:
-                versions.append({'title':'', 'url': verUrl + '&wi=va'})
+                versions.append({'title': '', 'url': verUrl + '&wi=va'})
             for item in versions:
                 try:
                     url = item['url']
@@ -305,7 +305,7 @@ class SerialeNet(CBaseHostClass):
                         data2 = None
                     if videoUrl.startswith('http') and videoUrl != 'http://serialnet.pl/':
                         videoUrl = byteify(json.loads('"%s"' % videoUrl))
-                        videoUrlTab.append({'name':item['title'], 'url':videoUrl})
+                        videoUrlTab.append({'name': item['title'], 'url': videoUrl})
                     else:
                         msg = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<div id="errorbox"', '</div>')[1])
                         if msg == '': 
@@ -357,7 +357,7 @@ class SerialeNet(CBaseHostClass):
         self.currList = [] 
 
         if None == name:
-            self.listsTab(self.CAT_TAB, {'name':'category'})
+            self.listsTab(self.CAT_TAB, {'name': 'category'})
     #ABC
         elif category == 'abc_menu':
             self.listABC(self.currItem, 'series_by_letter')
@@ -376,11 +376,11 @@ class SerialeNet(CBaseHostClass):
     #WYSZUKAJ
         elif category == "search":
             cItem = dict(self.currItem)
-            cItem.update({'good_for_fav': True, 'category':'seasons', 'search_item':False, 'name':'category'}) 
+            cItem.update({'good_for_fav': True, 'category': 'seasons', 'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA WYSZUKIWANIA
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         CBaseHostClass.endHandleService(self, index, refresh)

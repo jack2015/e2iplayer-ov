@@ -33,13 +33,13 @@ class DarshowCom(CBaseHostClass):
     DEFAULT_ICON = "http://www.darshow.com/templates/style/images/logo.png"
     
     MAIN_CAT_TAB = [
-                    {'category':'list_items', 'title': _('New series'), 'url':MAIN_URL + 'newseries.html', 'icon':DEFAULT_ICON},
-                    {'category':'top', 'title': _('Top'), 'url':MAIN_URL + 'topseries.html', 'icon':DEFAULT_ICON},
-                    {'category':'search', 'title': _('Search'), 'search_item':True, 'icon':DEFAULT_ICON},
-                    {'category':'search_history', 'title': _('Search history'), 'icon':DEFAULT_ICON}]
+                    {'category': 'list_items', 'title': _('New series'), 'url': MAIN_URL + 'newseries.html', 'icon': DEFAULT_ICON},
+                    {'category': 'top', 'title': _('Top'), 'url': MAIN_URL + 'topseries.html', 'icon': DEFAULT_ICON},
+                    {'category': 'search', 'title': _('Search'), 'search_item': True, 'icon': DEFAULT_ICON},
+                    {'category': 'search_history', 'title': _('Search history'), 'icon': DEFAULT_ICON}]
  
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'  DarshowCom.tv', 'cookie':'darshowcom.cookie'})
+        CBaseHostClass.__init__(self, {'history': '  DarshowCom.tv', 'cookie': 'darshowcom.cookie'})
         self.defaultParams = {'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         self.cacheSubCategory = {}
         self.cacheLinks = {}
@@ -95,12 +95,12 @@ class DarshowCom(CBaseHostClass):
             if title == '':
                 title = self.cleanHtmlStr(self.cm.ph.getSearchGroups(item, 'title="([^"]+?)"')[0])
             params = dict(cItem)
-            params.update({'category':nextCategory, 'title':title, 'url':url, 'desc':desc, 'icon':icon})
+            params.update({'category': nextCategory, 'title': title, 'url': url, 'desc': desc, 'icon': icon})
             self.addDir(params)
         
     def listsMainMenu(self, cItem, nextCategory):
         printDBG("DarshowCom.listsMainMenu")
-        self.cacheSubCategory = {'maincat':{'title':_('Categories'), 'tab':[]}, 'genres':{'title':_('Genres'), 'tab':[]}}
+        self.cacheSubCategory = {'maincat': {'title': _('Categories'), 'tab': []}, 'genres': {'title': _('Genres'), 'tab': []}}
         sts, data = self.cm.getPage(cItem['url'])
         if not sts:
             return
@@ -116,12 +116,12 @@ class DarshowCom(CBaseHostClass):
                 key = 'maincat'
             else:
                 key = 'genres'
-            self.cacheSubCategory[key]['tab'].append({'title':title, 'url':url})
+            self.cacheSubCategory[key]['tab'].append({'title': title, 'url': url})
 
         for key in self.cacheSubCategory:
             if len(self.cacheSubCategory[key]['tab']):
                 params = dict(cItem)
-                params.update({'category':nextCategory, 'cat_key':key, 'title':self.cacheSubCategory[key]['title']})
+                params.update({'category': nextCategory, 'cat_key': key, 'title': self.cacheSubCategory[key]['title']})
                 self.addDir(params)
         
     def listCategories(self, cItem, nextCategory):
@@ -178,7 +178,7 @@ class DarshowCom(CBaseHostClass):
             url = self._getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
             if url.startswith('http'):
                 params = {}
-                params.update({'good_for_fav':False, 'title':self.cleanHtmlStr(title), 'url':url, 'icon':icon, 'desc':self.cleanHtmlStr(item)})
+                params.update({'good_for_fav': False, 'title': self.cleanHtmlStr(title), 'url': url, 'icon': icon, 'desc': self.cleanHtmlStr(item)})
                 if nextCategory != 'video':
                     params['category'] = nextCategory
                     params['good_for_fav'] = True
@@ -188,7 +188,7 @@ class DarshowCom(CBaseHostClass):
         
         if nextPageUrl != '#':
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'title':_('Next page'), 'url':nextPageUrl, 'page':page + 1})
+            params.update({'good_for_fav': False, 'title': _('Next page'), 'url': nextPageUrl, 'page': page + 1})
             self.addDir(params)
             
     def exploreItem(self, cItem, category):
@@ -198,7 +198,7 @@ class DarshowCom(CBaseHostClass):
             return
         
         params = dict(cItem)
-        params.update({'good_for_fav':False, 'title':_('Trailer'), 'trailer':True})
+        params.update({'good_for_fav': False, 'title': _('Trailer'), 'trailer': True})
         self.addVideo(params)
         
         tmp = self.cm.ph.getDataBeetwenMarkers(data, '<div class="leftxlbar">', '<div class="fullin', False)[1]
@@ -211,12 +211,12 @@ class DarshowCom(CBaseHostClass):
                 title = self.cleanHtmlStr(item)
                 url = self._getFullUrl(self.cm.ph.getSearchGroups(item, '''<a[^>]+?href=['"](https?://on\.[^"^']+?)['"]''')[0])
                 params = dict(cItem)
-                params.update({'good_for_fav':False, 'title':title, 'serie_title': cItem['title'], 'url':url, 'category':category, 'icon':icon, 'desc':desc})
+                params.update({'good_for_fav': False, 'title': title, 'serie_title': cItem['title'], 'url': url, 'category': category, 'icon': icon, 'desc': desc})
                 self.addDir(params)
         else:
             url = self._getFullUrl(self.cm.ph.getSearchGroups(data, '''<a[^>]+?href=['"](https?://on\.[^"^']+?)['"][^>]*?btn_showmore1''')[0])
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'title':_('Episodes'), 'serie_title': cItem['title'], 'url':url, 'category':category, 'icon':icon, 'desc':desc})
+            params.update({'good_for_fav': False, 'title': _('Episodes'), 'serie_title': cItem['title'], 'url': url, 'category': category, 'icon': icon, 'desc': desc})
             self.listItems(params, 'video')
             #self.addDir(params)
     
@@ -272,7 +272,7 @@ class DarshowCom(CBaseHostClass):
                     url = self._getFullUrl(server[0])
                     title = tabName + ' ' + self.cleanHtmlStr(server[1])
                     if url.startswith('http'):
-                        urlTab.append({'name':title, 'url':strwithmeta(url, {'Referer':cItem['url']}), 'need_resolve':1})
+                        urlTab.append({'name': title, 'url': strwithmeta(url, {'Referer': cItem['url']}), 'need_resolve': 1})
                 url = ''
             elif 'iframe' in item:
                 url = self.cm.ph.getSearchGroups(item, '''<iframe[^>]+?src=['"]([^"^']+?)['"]''', 1, True)[0]
@@ -282,7 +282,7 @@ class DarshowCom(CBaseHostClass):
             if url.startswith('http'):
                 if title == 'ERROR':
                     title = self.up.getHostName(url, nameOnly=True)
-                params = {'name':title, 'url':strwithmeta(url, {'Referer':cItem['url']}), 'need_resolve':1}
+                params = {'name': title, 'url': strwithmeta(url, {'Referer': cItem['url']}), 'need_resolve': 1}
                 if 'الإفتراضي' in title:
                     #when default insert as first
                     urlTab.insert(0, params)
@@ -318,14 +318,14 @@ class DarshowCom(CBaseHostClass):
         
         urlTab = []
         if videoUrl.startswith('http'):
-            urlTab = self.up.getVideoLinkExt(strwithmeta(videoUrl, {'Referer':Referer}))
+            urlTab = self.up.getVideoLinkExt(strwithmeta(videoUrl, {'Referer': Referer}))
         return urlTab
         
     def listSearchResult(self, cItem, searchPattern, searchType):
         printDBG("DarshowCom.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         cItem = dict(cItem)
         cItem['url'] = self.SEARCH_URL
-        cItem['post_data'] = {'do':'search', 'subaction':'search', 'story':searchPattern}
+        cItem['post_data'] = {'do': 'search', 'subaction': 'search', 'story': searchPattern}
         if cItem.get('page', 1) > 1:
             cItem['post_data']['search_start'] = cItem['page']
         self.listItems(cItem)
@@ -344,8 +344,8 @@ class DarshowCom(CBaseHostClass):
         
     #MAIN MENU
         if name == None:
-            self.listsMainMenu({'url':self.MAIN_URL, 'icon':self.DEFAULT_ICON}, 'categories')
-            self.listsTab(self.MAIN_CAT_TAB, {'name':'category'})
+            self.listsMainMenu({'url': self.MAIN_URL, 'icon': self.DEFAULT_ICON}, 'categories')
+            self.listsTab(self.MAIN_CAT_TAB, {'name': 'category'})
             
         elif category == 'top':
             self.listTop(self.currItem, 'explore_item')
@@ -361,11 +361,11 @@ class DarshowCom(CBaseHostClass):
     #SEARCH
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         

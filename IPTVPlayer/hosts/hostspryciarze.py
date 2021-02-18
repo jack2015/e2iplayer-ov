@@ -28,7 +28,7 @@ class Spryciarze(CBaseHostClass):
     SEARCH_RES_PER_PAGE = 30
     
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'spryciarze.org', 'cookie':'spryciarze.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'spryciarze.org', 'cookie': 'spryciarze.cookie'})
         self.catTree = []
         self.currList = []
         
@@ -327,7 +327,7 @@ class Spryciarze(CBaseHostClass):
                     player = player['mediaFiles']
                     for item in player:
                         if 'mp4' in item['type']:
-                            linkstTab.append({'name':'Native player', 'url':item['src']})
+                            linkstTab.append({'name': 'Native player', 'url': item['src']})
                 except Exception:
                     printExc()
             else:
@@ -341,7 +341,7 @@ class Spryciarze(CBaseHostClass):
                 for item in data:
                     if item[1] not in tmp:
                         tmp.append(item[1])
-                        linkstTab.append({'name':'Native player %s' % item[0], 'url':item[1]})
+                        linkstTab.append({'name': 'Native player %s' % item[0], 'url': item[1]})
             if len(linkstTab):
                 break
         return linkstTab

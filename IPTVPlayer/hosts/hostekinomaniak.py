@@ -33,17 +33,17 @@ def gettytul():
 class eKinomaniak(CBaseHostClass):
     
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'ekinomaniak.online', 'cookie':'ekinomaniak.online.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'ekinomaniak.online', 'cookie': 'ekinomaniak.online.cookie'})
         self.USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0'
         self.MAIN_URL = 'https://ekinomaniak.net/'
         self.DEFAULT_ICON_URL = 'https://ekinomaniak.net/img/video.png'
-        self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Origin':self.getMainUrl()}
+        self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT': '1', 'Accept': 'text/html', 'Accept-Encoding': 'gzip, deflate', 'Referer': self.getMainUrl(), 'Origin': self.getMainUrl()}
         self.AJAX_HEADER = dict(self.HTTP_HEADER)
-        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
+        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding': 'gzip, deflate', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'Accept': 'application/json, text/javascript, */*; q=0.01'})
 
-        self.cacheMovieFilters = {'cats':[], 'sort':[], 'years':[], 'az':[]}        
+        self.cacheMovieFilters = {'cats': [], 'sort': [], 'years': [], 'az': []}        
         self.cacheLinks = {}
-        self.defaultParams = {'header':self.HTTP_HEADER, 'with_metadata':True, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
+        self.defaultParams = {'header': self.HTTP_HEADER, 'with_metadata': True, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
 
     def getPage(self, baseUrl, addParams={}, post_data=None):
         if addParams == {}:
@@ -58,7 +58,7 @@ class eKinomaniak(CBaseHostClass):
             else:
                 return urlparse.urljoin(baseUrl, url)
             
-        addParams['cloudflare_params'] = {'domain':self.up.getDomain(baseUrl), 'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT, 'full_url_handle':_getFullUrl}
+        addParams['cloudflare_params'] = {'domain': self.up.getDomain(baseUrl), 'cookie_file': self.COOKIE_FILE, 'User-Agent': self.USER_AGENT, 'full_url_handle': _getFullUrl}
         
         url = baseUrl
         urlParams = deepcopy(addParams)
@@ -110,18 +110,18 @@ class eKinomaniak(CBaseHostClass):
     def listMainMenu(self, cItem):
         printDBG("eKinomaniak.listMainMenu")
 
-        MAIN_CAT_TAB = [{'category':'list_sort', 'title': _('Movies'), 'url':self.getFullUrl('/watch/movies/')},
-                        {'category':'list_sort', 'title': _('Series'), 'url':self.getFullUrl('/watch/tv-shows')},
-                        {'category':'list_years', 'title': _('Movies by year'), 'url':self.MAIN_URL},
-                        {'category':'list_cats', 'title': _('Movies genres'), 'url':self.MAIN_URL},
-                        {'category':'list_az', 'title': _('Alphabetically'), 'url':self.MAIN_URL},
-                        {'category':'search', 'title': _('Search'), 'search_item':True}, 
-                        {'category':'search_history', 'title': _('Search history')},]
+        MAIN_CAT_TAB = [{'category': 'list_sort', 'title': _('Movies'), 'url': self.getFullUrl('/watch/movies/')},
+                        {'category': 'list_sort', 'title': _('Series'), 'url': self.getFullUrl('/watch/tv-shows')},
+                        {'category': 'list_years', 'title': _('Movies by year'), 'url': self.MAIN_URL},
+                        {'category': 'list_cats', 'title': _('Movies genres'), 'url': self.MAIN_URL},
+                        {'category': 'list_az', 'title': _('Alphabetically'), 'url': self.MAIN_URL},
+                        {'category': 'search', 'title': _('Search'), 'search_item': True}, 
+                        {'category': 'search_history', 'title': _('Search history')}, ]
         self.listsTab(MAIN_CAT_TAB, cItem)
     
     ###################################################
     def _fillMovieFilters(self):
-        self.cacheMovieFilters = {'cats':[], 'sort':[], 'years':[], 'az':[]}
+        self.cacheMovieFilters = {'cats': [], 'sort': [], 'years': [], 'az': []}
 
         sts, data = self.getPage(self.getFullUrl('/watch/movies/'))
         if not sts:
@@ -211,15 +211,15 @@ class eKinomaniak(CBaseHostClass):
             title = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('</a', '>'), ('</a', '>'), False)[1])
             desc = self.cleanHtmlStr(item)
             if 'watch-tv-shows' in url:
-                params = {'good_for_fav':True,'category':'list_series', 'url':url, 'title':title, 'desc':desc, 'icon':icon}
+                params = {'good_for_fav': True, 'category': 'list_series', 'url': url, 'title': title, 'desc': desc, 'icon': icon}
                 self.addDir(params)
             else:
-                params = {'good_for_fav':True, 'url':url, 'title':title, 'desc':desc, 'icon':icon}
+                params = {'good_for_fav': True, 'url': url, 'title': title, 'desc': desc, 'icon': icon}
                 self.addVideo(params)
             
         if nextPage != '':
             params = dict(cItem)
-            params.update({'title':_('Next page'), 'url':self.getFullUrl(nextPage), 'page':page + 1})
+            params.update({'title': _('Next page'), 'url': self.getFullUrl(nextPage), 'page': page + 1})
             self.addDir(params)
 
     def listSeries(self, cItem):
@@ -240,13 +240,13 @@ class eKinomaniak(CBaseHostClass):
                     continue
 #                title = season + ' - ' + self.cleanHtmlStr(item)
                 title = self.cleanHtmlStr(item)
-                params = {'good_for_fav':True, 'url':url, 'title':title, 'icon':cItem['icon']}
+                params = {'good_for_fav': True, 'url': url, 'title': title, 'icon': cItem['icon']}
                 self.addVideo(params)
 
     def listSearchResult(self, cItem, searchPattern, searchType):
         printDBG("eKinomaniak.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         url = self.getFullUrl('/ajax/search?search_term=%s') % urllib.quote_plus(searchPattern)
-        params = {'name':'category', 'category':'list_items', 'good_for_fav':False, 'url':url}
+        params = {'name': 'category', 'category': 'list_items', 'good_for_fav': False, 'url': url}
         self.listItems(params)
         
     def getLinksForVideo(self, cItem):
@@ -291,7 +291,7 @@ class eKinomaniak(CBaseHostClass):
 #            else:
 #                continue
             playerUrl = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''data-plyr=['"]([^"^']+?)['"]''')[0])
-            retTab.append({'name':self.up.getHostName(playerUrl), 'url':strwithmeta(playerUrl, {'Referer':url}), 'need_resolve':1})
+            retTab.append({'name': self.up.getHostName(playerUrl), 'url': strwithmeta(playerUrl, {'Referer': url}), 'need_resolve': 1})
              
         if len(retTab):
             self.cacheLinks[cacheKey] = retTab
@@ -340,7 +340,7 @@ class eKinomaniak(CBaseHostClass):
         if desc == '':
             desc = cItem.get('desc', '')
 
-        return [{'title':self.cleanHtmlStr(title), 'text': self.cleanHtmlStr(desc), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
+        return [{'title': self.cleanHtmlStr(title), 'text': self.cleanHtmlStr(desc), 'images': [{'title': '', 'url': self.getFullUrl(icon)}], 'other_info': {'custom_items_list': itemsList}}]
         
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
@@ -358,7 +358,7 @@ class eKinomaniak(CBaseHostClass):
     #MAIN MENU
         if name == None and category == '':
             rm(self.COOKIE_FILE)
-            self.listMainMenu({'name':'category'})
+            self.listMainMenu({'name': 'category'})
         elif 'list_cats' == category:
             self.listMovieFilters(self.currItem, 'list_sort')
         elif 'list_years' == category:
@@ -375,11 +375,11 @@ class eKinomaniak(CBaseHostClass):
     #SEARCH
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         

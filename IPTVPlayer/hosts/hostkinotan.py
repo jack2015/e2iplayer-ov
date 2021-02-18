@@ -39,19 +39,19 @@ class Kinotan(CBaseHostClass):
         self.DEFAULT_ICON_URL = 'http://ipic.su/img/img7/fs/logo2.1460442551.png'
 
 
-        self.MAIN_CAT_TAB = [{'category':'cat_serials', 'title':_('Serials'), 'url':self.getFullUrl('/serial/')},
-                             {'category':'cat_tv_shows', 'title':_('TV shows'), 'url':self.getFullUrl('/tv-shou/')},
-                             {'category':'cat_mult', 'title':_('Cartoons'), 'url':self.getFullUrl('/multserial/')},
+        self.MAIN_CAT_TAB = [{'category': 'cat_serials', 'title': _('Serials'), 'url': self.getFullUrl('/serial/')},
+                             {'category': 'cat_tv_shows', 'title': _('TV shows'), 'url': self.getFullUrl('/tv-shou/')},
+                             {'category': 'cat_mult', 'title': _('Cartoons'), 'url': self.getFullUrl('/multserial/')},
                              
-                             {'category':'search', 'title':_('Search'), 'search_item':True},
-                             {'category':'search_history', 'title':_('Search history')}
+                             {'category': 'search', 'title': _('Search'), 'search_item': True},
+                             {'category': 'search_history', 'title': _('Search history')}
                              ]
 
-        self.SERIALS_CAT_TAB = [{'category':'genre', 'title':_('Genre selection'), 'url':self.getFullUrl('/serial/')},
-                                {'category':'country', 'title':_('By country'), 'url':self.getFullUrl('/serial/')},
-                                {'category':'trans', 'title':_('Translations'), 'url':self.getFullUrl('/serial/')},
-                                {'category':'sel', 'title':_('Collections'), 'url':self.getFullUrl('/serial/')},
-                                {'category':'years', 'title':_('By Year'), 'url':self.getFullUrl('/serial/')}
+        self.SERIALS_CAT_TAB = [{'category': 'genre', 'title': _('Genre selection'), 'url': self.getFullUrl('/serial/')},
+                                {'category': 'country', 'title': _('By country'), 'url': self.getFullUrl('/serial/')},
+                                {'category': 'trans', 'title': _('Translations'), 'url': self.getFullUrl('/serial/')},
+                                {'category': 'sel', 'title': _('Collections'), 'url': self.getFullUrl('/serial/')},
+                                {'category': 'years', 'title': _('By Year'), 'url': self.getFullUrl('/serial/')}
                                ]
         self.cacheContentTab = {}
 
@@ -195,7 +195,7 @@ class Kinotan(CBaseHostClass):
             if url == '':
                 continue
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'category':nextCategory, 'title':title, 'url':url})
+            params.update({'good_for_fav': False, 'category': nextCategory, 'title': title, 'url': url})
             self.addDir(params)
             
         if len(self.currList) < 2:
@@ -222,8 +222,8 @@ class Kinotan(CBaseHostClass):
             tab_page = self.cm.ph.getSearchGroups(item, '''re_page="([0-9]+?)"''')[0]
             printDBG('>>>>>>>>> tab_block[%s] tab_id[%s] tab_page[%s]' % (tab_block, tab_id, tab_page))
             if '' != tab_block and '' != tab_id and '' != tab_page:
-                post_data = {'block':tab_block, 'id':tab_id, 'page':tab_page}
-                tabs.append({'title':title, 'url':self.getFullUrl('/engine/ajax/re_video_part.php'), 'post_data':post_data})
+                post_data = {'block': tab_block, 'id': tab_id, 'page': tab_page}
+                tabs.append({'title': title, 'url': self.getFullUrl('/engine/ajax/re_video_part.php'), 'post_data': post_data})
         
         if len(tabs):
             params = dict(cItem)
@@ -249,12 +249,12 @@ class Kinotan(CBaseHostClass):
                             sortVal = int(self.cm.ph.getSearchGroups(' %s ' % title, '''[^0-9]([0-9]+?)[^0-9]''')[0])
                         except Exception:
                             sortVal = 0
-                        tabs.append({'title':title, 'sort_value':sortVal, 'url':url})
+                        tabs.append({'title': title, 'sort_value': sortVal, 'url': url})
                     
                     if len(tabs):
                         tabs.sort(key=lambda item: item['sort_value'])
                         params = dict(cItem)
-                        params.update({'category':'list_tab_content', 'title':sTitle, 'tab_id':sId})
+                        params.update({'category': 'list_tab_content', 'title': sTitle, 'tab_id': sId})
                         self.addDir(params)
                         self.cacheContentTab[sId] = tabs
             except Exception:
@@ -290,7 +290,7 @@ class Kinotan(CBaseHostClass):
                 self.addDir(param)
             return
         elif hostName == 'hdgo.cc':
-            url = strwithmeta(url, {'Referer':cItem['url']})
+            url = strwithmeta(url, {'Referer': cItem['url']})
             seasons = self.hdgocc.getSeasonsList(url)
             for item in seasons:
                 param = dict(params)
@@ -359,7 +359,7 @@ class Kinotan(CBaseHostClass):
     def listSearchResult(self, cItem, searchPattern, searchType):
         #searchPattern = 'сезон'
         
-        post_data = {'do':'search', 'titleonly':3, 'subaction':'search', 'story':searchPattern}
+        post_data = {'do': 'search', 'titleonly': 3, 'subaction': 'search', 'story': searchPattern}
         
         sts, data = self.getPage(self.getMainUrl(), post_data=post_data)
         if not sts:

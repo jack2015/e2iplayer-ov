@@ -49,7 +49,7 @@ class PagingEntropyCollector:
         return randomBit
 
 def intToParity(integer):
-    s = struct.pack('i',integer)
+    s = struct.pack('i', integer)
     parity = 0
     for character in s:
         byte = ord(character)
@@ -57,7 +57,7 @@ def intToParity(integer):
     return parity
 
 def floatToParity(float):
-    s = struct.pack('d',float)
+    s = struct.pack('d', float)
     parity = 0
     for character in s:
         byte = ord(character)

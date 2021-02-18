@@ -31,8 +31,8 @@ import codecs
 import datetime
 from boxbranding import getImageArch
 
-SERVER_DOMAINS = {'vline':'http://iptvplayer.vline.pl/', 'gitlab':'http://zadmario.gitlab.io/'}
-SERVER_UPDATE_PATH = {'vline':'download/update2/', 'gitlab':'update2/'}
+SERVER_DOMAINS = {'vline': 'http://iptvplayer.vline.pl/', 'gitlab': 'http://zadmario.gitlab.io/'}
+SERVER_UPDATE_PATH = {'vline': 'download/update2/', 'gitlab': 'update2/'}
 
 def GetServerKey(serverNum=None):
     if serverNum == None:
@@ -164,7 +164,7 @@ def GetPolishSubEncoding(filePath):
     return encoding
     
 def MapUcharEncoding(encoding):
-    ENCODING_MAP = {'X-MAC-CYRILLIC':"MAC-CYRILLIC", "ASCII":"UTF-8"}
+    ENCODING_MAP = {'X-MAC-CYRILLIC': "MAC-CYRILLIC", "ASCII": "UTF-8"}
     printDBG("MapUcharEncoding in encoding[%s]" % encoding)
     try:
         encoding = ENCODING_MAP.get(encoding.strip().upper(), encoding.strip())
@@ -1158,9 +1158,9 @@ class CSearchHistoryHelper():
         for histItem in historyList:
             fields = histItem.split(self.TYPE_SEP)
             if 2 == len(fields):
-                newList.append({'pattern':fields[0], 'type':fields[1]})
+                newList.append({'pattern': fields[0], 'type': fields[1]})
             elif self.storeTypes:
-                newList.append({'pattern':fields[0]})
+                newList.append({'pattern': fields[0]})
         
         if len(newList) > 0:
             return newList
@@ -1275,7 +1275,7 @@ class CMoviePlayerPerHost():
             else:
                 data = {}
                 data['buffering'] = self.activePlayer['buffering']
-                data['player'] = {'value':self.activePlayer['player'].value, 'text':self.activePlayer['player'].getText()}
+                data['player'] = {'value': self.activePlayer['player'].value, 'text': self.activePlayer['player'].getText()}
                 data = json_dumps(data).encode('utf-8')
                 file = codecs.open(self.filePath, 'w', 'utf-8', 'replace')
                 file.write(data)

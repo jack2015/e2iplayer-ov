@@ -9,7 +9,7 @@
 
 class CryptoError(Exception):
     """ Base class for crypto exceptions """
-    def __init__(self,errorMessage='Error!'):
+    def __init__(self, errorMessage='Error!'):
         self.message = errorMessage
     def __str__(self):
         return self.message

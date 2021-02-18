@@ -81,7 +81,7 @@ class Favourites(CBaseHostClass):
         if not sts:
             return
         data = self.helper.getGroups()
-        self.listsTab(data, {'category':category})
+        self.listsTab(data, {'category': category})
         
     def listFavourites(self, cItem):
         printDBG("Favourites.listFavourites")
@@ -98,7 +98,7 @@ class Favourites(CBaseHostClass):
         for idx in range(len(data)):
             item = data[idx]
             addFun = typesMap.get(item.type, None)
-            params = {'name':'item', 'title':item.name, 'host':item.hostName, 'icon':item.iconimage, 'desc':item.description, 'group_id':cItem['group_id'], 'item_idx':idx}
+            params = {'name': 'item', 'title': item.name, 'host': item.hostName, 'icon': item.iconimage, 'desc': item.description, 'group_id': cItem['group_id'], 'item_idx': idx}
             if None != addFun:
                 addFun(params)
         
@@ -258,9 +258,9 @@ class IPTVHost(CHostBase):
                 tmp = self.getItemHashData(Index, ret.value[Index])
                 if tmp != '':
                     if self.cachedRet.value[Index].isWatched:
-                        params = IPTVChoiceBoxItem(_('Unset watched'), "", {'action':'unset_watched_flag', 'item_index':Index, 'hash_data':tmp})
+                        params = IPTVChoiceBoxItem(_('Unset watched'), "", {'action': 'unset_watched_flag', 'item_index': Index, 'hash_data': tmp})
                     else:
-                        params = IPTVChoiceBoxItem(_('Set watched'), "", {'action':'set_watched_flag', 'item_index':Index, 'hash_data':tmp})
+                        params = IPTVChoiceBoxItem(_('Set watched'), "", {'action': 'set_watched_flag', 'item_index': Index, 'hash_data': tmp})
                     retlist.append(params)
                 retCode = RetHost.OK
         return RetHost(retCode, value=retlist)

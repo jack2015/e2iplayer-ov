@@ -39,10 +39,10 @@ def gettytul():
 class PlanetStreaming(CBaseHostClass):
  
     def __init__(self):
-        CBaseHostClass.__init__(self, {'history':'planet-streaming.com', 'cookie':'planet-streaming.com.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'planet-streaming.com', 'cookie': 'planet-streaming.com.cookie'})
         
         self.DEFAULT_ICON_URL = 'http://cdn-thumbshot.pearltrees.com/4d/72/4d725324089e9adab59eee4aa32f548f-pearlsquare.jpg'
-        self.HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', 'DNT':'1', 'Accept': 'text/html'}
+        self.HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', 'DNT': '1', 'Accept': 'text/html'}
         self.AJAX_HEADER = dict(self.HEADER)
         self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest'})
         self.MAIN_URL = None
@@ -50,7 +50,7 @@ class PlanetStreaming(CBaseHostClass):
         self.MAIN_SERIES_URL = None
         self.cacheFilters = {}
         self.cacheLinks = {}
-        self.defaultParams = {'header':self.HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE, 'with_metadata':True}
+        self.defaultParams = {'header': self.HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE, 'with_metadata': True}
         
     def getPage(self, url, addParams={}, post_data=None):
         if addParams == {}:
@@ -63,7 +63,7 @@ class PlanetStreaming(CBaseHostClass):
             else:
                 proxy = config.plugins.iptvplayer.alternative_proxy2.value
             addParams = dict(addParams)
-            addParams.update({'http_proxy':proxy})
+            addParams.update({'http_proxy': proxy})
         
         return self.cm.getPage(url, addParams, post_data)
         
@@ -75,7 +75,7 @@ class PlanetStreaming(CBaseHostClass):
                 proxy = config.plugins.iptvplayer.alternative_proxy1.value
             else:
                 proxy = config.plugins.iptvplayer.alternative_proxy2.value
-            url = strwithmeta(url, {'iptv_http_proxy':proxy})
+            url = strwithmeta(url, {'iptv_http_proxy': proxy})
         return url
         
     def selectDomain(self):
@@ -106,8 +106,8 @@ class PlanetStreaming(CBaseHostClass):
     def listMainMenu(self, cItem):
         printDBG("PlanetStreaming.listMainMenu")
         MAIN_CAT_TAB = [
-                        {'category': 'search', 'title': _('Search'), 'search_item': True,},
-                        {'category': 'search_history', 'title': _('Search history'),} 
+                        {'category': 'search', 'title': _('Search'), 'search_item': True, },
+                        {'category': 'search_history', 'title': _('Search history'), } 
                        ]
         
         sts, data = self.getPage(self.getMainUrl())
@@ -139,14 +139,14 @@ class PlanetStreaming(CBaseHostClass):
                 if 'list' not in item:
                     if self.cm.isValidUrl(url) and title != '':
                         params = dict(cItem)
-                        params.update({'good_for_fav':False, 'category':nextCategory, 'title':title, 'url':url})
+                        params.update({'good_for_fav': False, 'category': nextCategory, 'title': title, 'url': url})
                         self.addDir(params)
                 elif (len(item['list']) == 1 or 'Genre' in title) and title != '':
                     myItem = item['list'][0]
                     for idx in range(1, len(item['list']), 1):
                         myItem['list'].extend(item['list'][idx].get('list', []))
                     params = dict(cItem)
-                    params.update({'good_for_fav':False, 'c_tree':myItem, 'title':title, 'url':url})
+                    params.update({'good_for_fav': False, 'c_tree': myItem, 'title': title, 'url': url})
                     self.addDir(params)
         except Exception:
             printExc()
@@ -160,7 +160,7 @@ class PlanetStreaming(CBaseHostClass):
         pageUrl = data.meta['url']
         self.MAIN_URL = self.cm.getBaseUrl(pageUrl)
         
-        directionsTitle = {'asc':'\xe2\x86\x91', 'desc':'\xe2\x86\x93'}
+        directionsTitle = {'asc': '\xe2\x86\x91', 'desc': '\xe2\x86\x93'}
         
         items = [[], []]
         data = self.cm.ph.getDataBeetwenNodes(data, ('<form', '>', 'news_set_sort'), ('<input', '>'), False)[1]
@@ -175,15 +175,15 @@ class PlanetStreaming(CBaseHostClass):
                         direction = 'asc'
                 
                 title = '%s %s' % (directionsTitle.get(direction, ''), item[2])
-                post_data = {'dlenewssortby':item[0], 'dledirection':direction, 'set_new_sort':'dle_sort_cat', 'set_direction_sort':'dle_direction_cat'}
-                params = {'url':pageUrl, 'title':title, 'post_data':post_data}
+                post_data = {'dlenewssortby': item[0], 'dledirection': direction, 'set_new_sort': 'dle_sort_cat', 'set_direction_sort': 'dle_direction_cat'}
+                params = {'url': pageUrl, 'title': title, 'post_data': post_data}
                 items[idx].append(params)
         
         for idx in range(len(items)):
             for item in items[idx]:
                 params = dict(cItem)
                 params.update(item)
-                params.update({'good_for_fav':False, 'category':nextCategory})
+                params.update({'good_for_fav': False, 'category': nextCategory})
                 self.addDir(params)
                 
     def listItems(self, cItem, nextCategory):
@@ -224,7 +224,7 @@ class PlanetStreaming(CBaseHostClass):
                     desc.append(t.replace(' , ', ', ').replace(' : ', ': '))
             
             params = dict(cItem)
-            params.update({'good_for_fav':True, 'title':title, 'url':url, 'icon':icon, 'desc':'[/br]'.join(desc)})
+            params.update({'good_for_fav': True, 'title': title, 'url': url, 'icon': icon, 'desc': '[/br]'.join(desc)})
             if '-saison-' not in url and ' Saison ' not in title:
                 self.addVideo(params)
             else:
@@ -233,7 +233,7 @@ class PlanetStreaming(CBaseHostClass):
         
         if nextPage != '':
             params = dict(cItem)
-            params.update({'title':_('Next page'), 'page':page + 1, 'url':nextPage})
+            params.update({'title': _('Next page'), 'page': page + 1, 'url': nextPage})
             self.addDir(params)
     
     def listEpisodes(self, cItem):
@@ -264,20 +264,20 @@ class PlanetStreaming(CBaseHostClass):
                 if eNum not in episodeKeys:
                     episodeKeys.append(eNum)
                     episodeLinks[eNum] = []
-                episodeLinks[eNum].append({'name':'[%s] %s' % (langTitle, self.up.getHostName(url)), 'url':url, 'need_resolve':1})
+                episodeLinks[eNum].append({'name': '[%s] %s' % (langTitle, self.up.getHostName(url)), 'url': url, 'need_resolve': 1})
         
         for eNum in episodeKeys:
             title = '%s - s%se%s' % (cItem['title'], sNum.zfill(2), eNum.zfill(2))
             url = cItem['url'] + '#EPS=' + eNum
             self.cacheLinks[url] = episodeLinks.get(eNum, [])
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'title':title, 'url':url})
+            params.update({'good_for_fav': False, 'title': title, 'url': url})
             self.addVideo(params)
 
     def listSearchResult(self, cItem, searchPattern, searchType):
         printDBG("PlanetStreaming.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         
-        post_data = {'do':'search', 'subaction':'search', 'search_start':'0', 'full_search':'0', 'result_from':'1', 'story':searchPattern}
+        post_data = {'do': 'search', 'subaction': 'search', 'search_start': '0', 'full_search': '0', 'result_from': '1', 'story': searchPattern}
         
         if searchType == 'movies':
             url = self.MAIN_MOVIES_URL
@@ -292,7 +292,7 @@ class PlanetStreaming(CBaseHostClass):
         url = self.getFullUrl('/index.php?do=search')
         
         cItem = dict(cItem)
-        cItem.update({'url':url, 'post_data':post_data})
+        cItem.update({'url': url, 'post_data': post_data})
         self.listItems(cItem, 'list_episodes')
     
     def getLinksForVideo(self, cItem, forEpisodes=False):
@@ -316,7 +316,7 @@ class PlanetStreaming(CBaseHostClass):
                 if url == '':
                     continue
                 title = self.cleanHtmlStr(item)
-                linksTab.append({'name':'[%s] %s' % (langTitle, title), 'url':url, 'need_resolve':1})
+                linksTab.append({'name': '[%s] %s' % (langTitle, title), 'url': url, 'need_resolve': 1})
         
         return linksTab
         
@@ -352,7 +352,7 @@ class PlanetStreaming(CBaseHostClass):
         
     #MAIN MENU
         if name == None:
-            self.listMainMenu({'name':'category'})
+            self.listMainMenu({'name': 'category'})
         elif category == 'list_categories':
             self.listCategories(self.currItem, 'list_sort_filter')
         elif category.startswith('list_sort_filter'):
@@ -364,11 +364,11 @@ class PlanetStreaming(CBaseHostClass):
     #SEARCH
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category'}) 
+            cItem.update({'search_item': False, 'name': 'category'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA SEARCH
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         

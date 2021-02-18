@@ -50,7 +50,7 @@ class ARDmediathek(CBaseHostClass):
     
     def __init__(self):
         printDBG("ARDmediathek.__init__")
-        CBaseHostClass.__init__(self, {'history':'ARDmediathek.tv', 'cookie':'zdfde.cookie'})
+        CBaseHostClass.__init__(self, {'history': 'ARDmediathek.tv', 'cookie': 'zdfde.cookie'})
         self.HOST = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110621 Mandriva Linux/1.9.2.18-0.1mdv2010.2 (2010.2) Firefox/3.6.18'
         self.HEADER = {'User-Agent': self.HOST, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
         self.AJAX_HEADER = dict(self.HEADER)
@@ -59,16 +59,16 @@ class ARDmediathek(CBaseHostClass):
         self.MAIN_URL = 'http://www.ardmediathek.de/'
         self.MAIN_API_URL = 'http://www.ardmediathek.de/'
         self.DEFAULT_ICON_URL = 'http://www.fluentu.com/german/blog/wp-content/uploads/sites/5/2014/12/how-to-hack-through-geoblocking-and-watch-german-tv-online1.png' # 'http://www.ardmediathek.de/ard/static/img/base/icon/ardlogo_weiss.png'
-        self.MAIN_CAT_TAB = [{'category':'list_items', 'title':_('Start'), 'url': self.getFullUrl('appdata/servlet/tv?json')},
-                             {'category':'list_items', 'title':_('Missed the show?'), 'url': self.getFullUrl('appdata/servlet/tv/sendungVerpasst?json')},
-                             {'category':'list_items', 'title':_('Program A-Z'), 'url': self.getFullUrl('appdata/servlet/tv/sendungAbisZ?json')},
-                             {'category':'list_items', 'title':_('Live TV'), 'url': self.getFullUrl('appdata/servlet/tv/live?json')},
-                             {'category':'list_items', 'title':_('Live Radio'), 'url': self.getFullUrl('appdata/servlet/radio/live?json')},
-                             {'category':'search', 'title':_('Search'), 'search_item':True},
-                             {'category':'search_history', 'title':_('Search history')}]
+        self.MAIN_CAT_TAB = [{'category': 'list_items', 'title': _('Start'), 'url': self.getFullUrl('appdata/servlet/tv?json')},
+                             {'category': 'list_items', 'title': _('Missed the show?'), 'url': self.getFullUrl('appdata/servlet/tv/sendungVerpasst?json')},
+                             {'category': 'list_items', 'title': _('Program A-Z'), 'url': self.getFullUrl('appdata/servlet/tv/sendungAbisZ?json')},
+                             {'category': 'list_items', 'title': _('Live TV'), 'url': self.getFullUrl('appdata/servlet/tv/live?json')},
+                             {'category': 'list_items', 'title': _('Live Radio'), 'url': self.getFullUrl('appdata/servlet/radio/live?json')},
+                             {'category': 'search', 'title': _('Search'), 'search_item': True},
+                             {'category': 'search_history', 'title': _('Search history')}]
         
-        self.ICON_QUALITY_MAP = {'large':1080, 'medium':640, 'small':240}
-        self.STREAM_QUALITY_MAP = {'hd':4, 'veryhigh':3, 'high':2, 'med':1, 'low':0}
+        self.ICON_QUALITY_MAP = {'large': 1080, 'medium': 640, 'small': 240}
+        self.STREAM_QUALITY_MAP = {'hd': 4, 'veryhigh': 3, 'high': 2, 'med': 1, 'low': 0}
         
     def _getQualityName(self, qualityValue):
         for key in self.STREAM_QUALITY_MAP:
@@ -195,7 +195,7 @@ class ARDmediathek(CBaseHostClass):
                                 continue
                             if len(filters) and (url.endswith('quelle.radio') or url.endswith('quelle.tv')):
                                 continue # some workaround 
-                            filters.append({'good_for_fav':True, 'title':mainTitle + title, 'url':self.getFullUrl(url), 'desc':desc, 'skip_buttons':skipButtons})
+                            filters.append({'good_for_fav': True, 'title': mainTitle + title, 'url': self.getFullUrl(url), 'desc': desc, 'skip_buttons': skipButtons})
                 
                 # if there are filter buttons add them as subcategories
                 if len(filters) > 1:
@@ -225,7 +225,7 @@ class ARDmediathek(CBaseHostClass):
                                     params = self._mapClip(item)
                                     tab.append(params)
                             if len(tab):
-                                params = {'good_for_fav':False, 'title':mainTitle, 'category':'list_tab', 'clips_tab':tab}
+                                params = {'good_for_fav': False, 'title': mainTitle, 'category': 'list_tab', 'clips_tab': tab}
                                 params = self._copy(cItem, params)
                                 self.addDir(params)
                         elif teaser['teaserTyp'].endswith('Clip'):
@@ -298,7 +298,7 @@ class ARDmediathek(CBaseHostClass):
                             except Exception:
                                 printExc()
                             
-                            params = self._copy(cItem, {'good_for_fav':True, 'title':title, 'url':url})
+                            params = self._copy(cItem, {'good_for_fav': True, 'title': title, 'url': url})
                             self.addDir(params)
                             processed = True
                     if not processed:
@@ -309,7 +309,7 @@ class ARDmediathek(CBaseHostClass):
         
         if nextPage != '':
             params = deepcopy(cItem)
-            params.update({'good_for_fav':False, 'url':nextPage, 'title':_('Next page'), 'page':page + 1})
+            params.update({'good_for_fav': False, 'url': nextPage, 'title': _('Next page'), 'page': page + 1})
             self.addDir(params)
 
     def listTab(self, cItem):
@@ -318,7 +318,7 @@ class ARDmediathek(CBaseHostClass):
         for item in tab:
             if 'typ' not in item:
                 params = self._copy(cItem, item)
-                params.update({'category':'list_items'})
+                params.update({'category': 'list_items'})
                 self.addDir(params)
             elif item['typ'] == 'video':
                 self.addVideo(item)
@@ -378,7 +378,7 @@ class ARDmediathek(CBaseHostClass):
                             
                         if url.startswith('https://'):
                             url = 'http' + url[5:]
-                        for type in [{'pattern':'.m3u8', 'name':'m3u8'}, {'pattern':'.mp4', 'name':'mp4'}]:
+                        for type in [{'pattern': '.m3u8', 'name': 'm3u8'}, {'pattern': '.mp4', 'name': 'mp4'}]:
                             if itemType == 'audio':
                                 typeName = 'mp4'
                             elif not url.endswith(type['pattern']):
@@ -390,7 +390,7 @@ class ARDmediathek(CBaseHostClass):
                                 qualityVal = self.STREAM_QUALITY_MAP.get(quality, 10)
                                 qualityPref = abs(qualityVal - preferedQuality)
                                 formatPref = formatMap.get(typeName, 10)
-                                tmpUrlTab.append({'url':url, 'quality_name':quality, 'quality':qualityVal, 'quality_pref':qualityPref, 'format_name':typeName, 'format_pref':formatPref})
+                                tmpUrlTab.append({'url': url, 'quality_name': quality, 'quality': qualityVal, 'quality_pref': qualityPref, 'format_name': typeName, 'format_pref': formatPref})
                             elif typeName == 'm3u8':
                                 if quality != 'auto':
                                     break
@@ -412,7 +412,7 @@ class ARDmediathek(CBaseHostClass):
                                     qualityVal = self.STREAM_QUALITY_MAP.get(quality, 10)
                                     qualityPref = abs(qualityVal - preferedQuality)
                                     formatPref = formatMap.get(typeName, 10)
-                                    tmpUrlTab.append({'url':tmpItem['url'], 'quality_name':quality + ' {0}x{1}'.format(tmpItem['with'], tmpItem['heigth']), 'quality':qualityVal, 'quality_pref':qualityPref, 'format_name':type['name'], 'format_pref':formatPref})
+                                    tmpUrlTab.append({'url': tmpItem['url'], 'quality_name': quality + ' {0}x{1}'.format(tmpItem['with'], tmpItem['heigth']), 'quality': qualityVal, 'quality_pref': qualityPref, 'format_name': type['name'], 'format_pref': formatPref})
             except Exception:
                 printExc()
             def _cmpLinks(it1, it2):
@@ -457,10 +457,10 @@ class ARDmediathek(CBaseHostClass):
                 url = item['url']
                 name = item['quality_name'] + ' ' + item['format_name']
                 if self.cm.isValidUrl(url):
-                    decorateParams = {'iptv_livestream':live}
+                    decorateParams = {'iptv_livestream': live}
                     if self.cm.isValidUrl(subtitleUrl):
-                        decorateParams['external_sub_tracks'] = [{'title':_('German'), 'url':subtitleUrl, 'lang':_('de'), 'format':'ttml'}]
-                    urlTab.append({'need_resolve':0, 'name':name, 'url':self.up.decorateUrl(url, decorateParams)})
+                        decorateParams['external_sub_tracks'] = [{'title': _('German'), 'url': subtitleUrl, 'lang': _('de'), 'format': 'ttml'}]
+                    urlTab.append({'need_resolve': 0, 'name': name, 'url': self.up.decorateUrl(url, decorateParams)})
                     if onelinkmode:
                         break
             printDBG(tmpUrlTab)
@@ -479,7 +479,7 @@ class ARDmediathek(CBaseHostClass):
         self.currList = [] 
 
         if None == name:
-            self.listsTab(self.MAIN_CAT_TAB, {'name':'category'})
+            self.listsTab(self.MAIN_CAT_TAB, {'name': 'category'})
         elif 'list_items' == category:
             self.listItems(self.currItem)
         elif 'list_tab' == category:
@@ -497,11 +497,11 @@ class ARDmediathek(CBaseHostClass):
     #WYSZUKAJ
         elif category in ["search", "search_next_page"]:
             cItem = dict(self.currItem)
-            cItem.update({'search_item':False, 'name':'category', 'category':'search_next_page'}) 
+            cItem.update({'search_item': False, 'name': 'category', 'category': 'search_next_page'}) 
             self.listSearchResult(cItem, searchPattern, searchType)
     #HISTORIA WYSZUKIWANIA
         elif category == "search_history":
-            self.listsHistory({'name':'history', 'category': 'search'}, 'desc', _("Type: "))
+            self.listsHistory({'name': 'history', 'category': 'search'}, 'desc', _("Type: "))
         else:
             printExc()
         CBaseHostClass.endHandleService(self, index, refresh)
