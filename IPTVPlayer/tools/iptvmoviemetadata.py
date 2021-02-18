@@ -12,8 +12,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, by
 # FOREIGN import
 ###################################################
 import codecs
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 from copy import deepcopy
 ###################################################
 #{
@@ -114,7 +116,8 @@ class IPTVMovieMetaDataHandler():
             sts = True
         except Exception:
             printExc()
-        if sts: self.isModified = True
+        if sts:
+            self.isModified = True
         return sts
         
     ##################################################
@@ -137,7 +140,8 @@ class IPTVMovieMetaDataHandler():
             sts = True
         except Exception:
             printExc()
-        if sts: self.isModified = True
+        if sts:
+            self.isModified = True
         return sts
     
     ##################################################
@@ -184,7 +188,8 @@ class IPTVMovieMetaDataHandler():
             sts = True
         except Exception:
             printExc()
-        if sts: self.isModified = True
+        if sts:
+            self.isModified = True
         return sts
         
     def getSubtitleTrackDelay(self):
@@ -215,7 +220,8 @@ class IPTVMovieMetaDataHandler():
                 sts = True
         except Exception:
             printExc()
-        if sts: self.isModified = True
+        if sts:
+            self.isModified = True
         return sts
         
     def addSubtitleTrack(self, subtitlesTrack):
@@ -229,7 +235,8 @@ class IPTVMovieMetaDataHandler():
             idx = len(self.data['tracks']['subtitles']['tracks']) - 1
         except Exception:
             printExc()
-        if idx > -1: self.isModified = True
+        if idx > -1:
+            self.isModified = True
         return idx
         
     def removeSubtitleTrack(self, idx):
@@ -242,7 +249,8 @@ class IPTVMovieMetaDataHandler():
                 self.setSubtitleIdx(-1)
         except Exception:
             printExc()
-        if sts: self.isModified = True
+        if sts:
+            self.isModified = True
         return sts
         
     ##################################################
@@ -268,7 +276,8 @@ class IPTVMovieMetaDataHandler():
             sts = True
         except Exception:
             printExc()
-        if sts: self.isModified = True
+        if sts:
+            self.isModified = True
         return sts
         
     ##################################################
@@ -291,5 +300,6 @@ class IPTVMovieMetaDataHandler():
             sts = True
         except Exception:
             printExc()
-        if sts: self.isModified = True
+        if sts:
+            self.isModified = True
         return sts

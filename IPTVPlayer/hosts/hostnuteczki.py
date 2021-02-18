@@ -70,7 +70,8 @@ class NuteczkiEU(CBaseHostClass):
         printDBG("NuteczkiEU.listMainMenu")
         
         sts, data = self.getPage(self.getMainUrl())
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(self.cm.meta['url'])
         
         
@@ -105,8 +106,10 @@ class NuteczkiEU(CBaseHostClass):
             for item in cTree['list']:
                 title = self.cleanHtmlStr(item['dat'])
                 url = self.cm.ph.getSearchGroups(item['dat'], '''href=['"]([^'^"]+?)['"]''')[0]
-                if url == '#': url = ''
-                else: url = self.getFullUrl(url)
+                if url == '#':
+                    url = ''
+                else:
+                    url = self.getFullUrl(url)
                 if 'list' not in item:
                     if self.cm.isValidUrl(url) and title != '':
                         params = dict(cItem)
@@ -125,7 +128,8 @@ class NuteczkiEU(CBaseHostClass):
     def top10Types(self, cItem, nextCategory):
         printDBG("NuteczkiEU.top10Types")
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         
         data = self.cm.ph.getDataBeetwenNodes(data, ('<ul', '>', 'nav-top10'), ('<footer', '>'))[1]
         
@@ -137,7 +141,8 @@ class NuteczkiEU(CBaseHostClass):
         for item in tmp:
             title = self.cleanHtmlStr(item)
             marker = self.cm.ph.getSearchGroups(item, '''href=['"]\#([^'^"]+?)['"]''')[0]
-            if marker != '': mainMap[marker] = title
+            if marker != '':
+                mainMap[marker] = title
         
         data = re.compile('''<div[^>]+?id=['"](%s)['"][^>]*?>''' % '|'.join(mainMap.keys())).split(data)
         for mainIdx in range(1, len(data), 2):
@@ -149,7 +154,8 @@ class NuteczkiEU(CBaseHostClass):
             for item in tmp:
                 title = self.cleanHtmlStr(item)
                 marker = self.cm.ph.getSearchGroups(item, '''href=['"]\#([^'^"]+?)['"]''')[0]
-                if marker != '': subMap[marker] = title
+                if marker != '':
+                    subMap[marker] = title
             
             subItems = []
             subData = re.compile('''<div[^>]+?id=['"](%s)['"][^>]*?>''' % '|'.join(subMap.keys())).split(data[mainIdx+1])
@@ -164,7 +170,8 @@ class NuteczkiEU(CBaseHostClass):
                     if url == '#': 
                         url = self.cm.ph.getSearchGroups(item, '''(<div[^>]+?getPlayer[^>]+?>)''')[0]
                         url = self.cm.ph.getSearchGroups(url, '''\sid=['"]([^"^']+?)['"]''')[0]
-                        if url != '': url = '/getPlayer.php?id=' + url
+                        if url != '':
+                            url = '/getPlayer.php?id=' + url
                     url = self.getFullUrl( url )
                     
                     title = self.cleanHtmlStr( self.cm.ph.getSearchGroups(item, '''alt="([^"]+?)"''')[0] )
@@ -193,14 +200,16 @@ class NuteczkiEU(CBaseHostClass):
         self.cacheFiltersKeys = []
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(self.cm.meta['url'])
         
         def addFilter(data, marker, baseKey):
             self.cacheFilters[key] = []
             for item in data:
                 value = self.cm.ph.getSearchGroups(item, marker + '''="([^"]+?)"''')[0]
-                if value == '': continue
+                if value == '':
+                    continue
                 title = self.cleanHtmlStr(item)
                 self.cacheFilters[key].append({'title':title, 'post_data':{key:value}})
                 
@@ -212,7 +221,8 @@ class NuteczkiEU(CBaseHostClass):
         
         for tmp in filtersData:
             key = self.cm.ph.getSearchGroups(tmp, '''name="([^"]+?)"''')[0]
-            if key == '': continue
+            if key == '':
+                continue
             tmp = self.cm.ph.getAllItemsBeetwenMarkers(tmp, '<option', '</option>')
             addFilter(tmp, 'value', key)
         
@@ -223,9 +233,11 @@ class NuteczkiEU(CBaseHostClass):
         cItem = dict(cItem)
         
         f_idx = cItem.get('f_idx', 0)
-        if f_idx == 0: self.fillCacheFilters(cItem)
+        if f_idx == 0:
+            self.fillCacheFilters(cItem)
         
-        if f_idx >= len(self.cacheFiltersKeys): return
+        if f_idx >= len(self.cacheFiltersKeys):
+            return
         
         filter = self.cacheFiltersKeys[f_idx]
         f_idx += 1
@@ -247,13 +259,15 @@ class NuteczkiEU(CBaseHostClass):
 
         postData = cItem.get('post_data')
         sts, data = self.getPage(cItem['url'], post_data = postData)
-        if not sts: return
+        if not sts:
+            return
 
         nextPage = ''
         tmp = self.cm.ph.getAllItemsBeetwenNodes(data, ('<div', '>', 'pagination'), ('</div', '>'), False)
         for item in tmp:
             nextPage = self.cm.ph.getSearchGroups(item, '''<a[^>]+?href=['"]([^'^"]+?)['"][^>]*?>%s</a>''' % (page + 1))[0]
-            if nextPage != '': break
+            if nextPage != '':
+                break
 
         data = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'dle-content'), ('<div', '>', 'clearfix'), False)[1]
         data = self.cm.ph.rgetAllItemsBeetwenNodes(data, ('</div', '>'), ('<div', '>', 'row'), False)
@@ -271,7 +285,8 @@ class NuteczkiEU(CBaseHostClass):
             if url == '#': 
                 url = self.cm.ph.getSearchGroups(item, '''(<div[^>]+?getPlayer[^>]+?>)''')[0]
                 url = self.cm.ph.getSearchGroups(url, '''\sid=['"]([^"^']+?)['"]''')[0]
-                if url != '': url = '/getPlayer.php?id=' + url
+                if url != '':
+                    url = '/getPlayer.php?id=' + url
             url = self.getFullUrl( url )
             
             desc = []
@@ -321,7 +336,8 @@ class NuteczkiEU(CBaseHostClass):
         urlTab = []
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
         self.setMainUrl(self.cm.meta['url'])
         
         tmp = self.cm.ph.getAllItemsBeetwenNodes(data, ('<div', '>', 'frame-fixer'), ('</div', '>'), caseSensitive=False)
@@ -334,10 +350,12 @@ class NuteczkiEU(CBaseHostClass):
                     if 'src=' in jsItem.lower():
                         scriptUrl = self.getFullUrl(self.cm.ph.getSearchGroups(jsItem, '''<script[^>]+?src=['"]([^'^"]*?krakenfiles[^'^"]+?)['"]''', 1, True)[0], self.cm.meta['url'])
                         sts, jsItem = self.getPage(scriptUrl)
-                        if sts and jsItem != '': jscode.append(jsItem)
+                        if sts and jsItem != '':
+                            jscode.append(jsItem)
                     else:
                         sts, jsItem = self.cm.ph.getDataBeetwenNodes(jsItem, ('<script', '>'), ('</script', '>'), False, caseSensitive=False)
-                        if sts: jscode.append(jsItem)
+                        if sts:
+                            jscode.append(jsItem)
                 if len(jscode):
                     jscode.insert(0, 'window={}; window.location={}; window.location.protocol="%s"; var document={}; document.write=function(txt){print(txt);}' % self.getMainUrl().split('//', 1)[0])
                     ret = js_execute('\n'.join(jscode), {'timeout_sec':15})
@@ -352,7 +370,8 @@ class NuteczkiEU(CBaseHostClass):
         tmp = self.cm.ph.getAllItemsBeetwenMarkers(data, '<iframe', '</iframe>', caseSensitive=False)
         for idx in range(len(tmp)):
             url = self.getFullUrl(self.cm.ph.getSearchGroups(tmp[idx], '''\ssrc=['"]([^"^']+?)['"]''', 1, True)[0])
-            if url == '' or 'facebook' in url.lower(): continue
+            if url == '' or 'facebook' in url.lower():
+                continue
             name = _('Player %s') % (idx + 1)
             urlTab.append({'url':url, 'name':name, 'need_resolve':1})
         
@@ -366,7 +385,8 @@ class NuteczkiEU(CBaseHostClass):
 
         urlTab = []
         sts, data = self.getPage(videoUrl)
-        if not sts: return []
+        if not sts:
+            return []
 
         printDBG(data)
 
@@ -374,10 +394,12 @@ class NuteczkiEU(CBaseHostClass):
         data = re.compile('''['"]([^'^"]*?/music[^'^"]+?\.mp3(?:\?[^'^"]*?)?)['"]''', re.I).findall(data)
         for url in data:
             url = self.getFullUrl(url)
-            if url == '' or url in urls: continue
+            if url == '' or url in urls:
+                continue
             urls.append(url)
             name = self.cm.ph.getSearchGroups(url, '''/music([^'^"]*?)/''')[0]
-            if name == '': name = 'SD'
+            if name == '':
+                name = 'SD'
             urlTab.append({'name':name, 'url':url})
         urlTab.sort(key=lambda item: item['name'])
         return urlTab
@@ -399,7 +421,8 @@ class NuteczkiEU(CBaseHostClass):
                 return False
             
             sts, data = self.getPage(self.getMainUrl())
-            if not sts: return False
+            if not sts:
+                return False
             self.setMainUrl(self.cm.meta['url'])
             
             actionUrl = self.cm.meta['url']
@@ -414,7 +437,8 @@ class NuteczkiEU(CBaseHostClass):
                 self.loggedIn = True
             else:
                 msgTab = [_('Login failed.')]
-                if sts: msgTab.append(self.cleanHtmlStr(self.cm.ph.getAllItemsBeetwenNodes(data, ('<div', '>', 'alert'), ('</div', '>'), False)[1])) 
+                if sts:
+                    msgTab.append(self.cleanHtmlStr(self.cm.ph.getAllItemsBeetwenNodes(data, ('<div', '>', 'alert'), ('</div', '>'), False)[1])) 
                 self.sessionEx.open(MessageBox, '\n'.join(msgTab), type = MessageBox.TYPE_ERROR, timeout = 10)
                 printDBG('tryTologin failed')
         return self.loggedIn

@@ -16,8 +16,10 @@ from Plugins.Extensions.IPTVPlayer.components.ihost import CBaseHostClass
 # FOREIGN import
 ###################################################
 from Components.config import config, ConfigText, getConfigListEntry
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 
 from os import path as os_path
 ############################################
@@ -85,7 +87,8 @@ class GoldVodTVApi:
         channelsTab = []
 
         sts, data = self.cm.getPage(self.MAIN_URL + 'channels.html?show=on', self.http_params)
-        if not sts: return []
+        if not sts:
+            return []
         
         sts, data = self.cm.ph.getDataBeetwenMarkers(data, '<div class="row">', "<div id='footer'>")
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<a ', '</a>')
@@ -99,8 +102,10 @@ class GoldVodTVApi:
                 params['url']   = self.getFullUrl(url)
                 params['icon']  = self.getFullUrl(icon)
                 params['title'] = self.cm.ph.getSearchGroups(item, '''title=['"]([^"^']+?)['"]''')[0]
-                if '' == params['title']: params['title'] = self.cm.ph.getSearchGroups(item, '''alt=['"]([^"^']+?)['"]''')[0]
-                if '' == params['title']: params['title'] = url.replace('.html', '').replace(',', ' ').title()
+                if '' == params['title']:
+                    params['title'] = self.cm.ph.getSearchGroups(item, '''alt=['"]([^"^']+?)['"]''')[0]
+                if '' == params['title']:
+                    params['title'] = url.replace('.html', '').replace(',', ' ').title()
                 params['desc']  = params['url']
                 channelsTab.append(params)
             
@@ -121,7 +126,8 @@ class GoldVodTVApi:
         params = dict(self.http_params)
         params['load_cookie'] = False
         sts, data = self.cm.getPage(loginUrl, params)
-        if not sts: return False
+        if not sts:
+            return False
         
         HTTP_HEADER= dict(GoldVodTVApi.HTTP_HEADER)
         HTTP_HEADER.update( {'Referer':loginUrl} )

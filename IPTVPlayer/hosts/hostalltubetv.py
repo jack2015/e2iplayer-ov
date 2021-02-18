@@ -49,13 +49,15 @@ class AlltubeTV(CBaseHostClass):
         self._myFun = None
 
     def getPage(self, baseUrl, params={}, post_data=None):
-        if params == {}: params = dict(self.defaultParams)
+        if params == {}:
+            params = dict(self.defaultParams)
         params['cloudflare_params'] = {'domain':'alltube.pl', 'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT, 'full_url_handle':self.getFullUrl}
         return self.cm.getPageCFProtection(baseUrl, params, post_data)
         
     def getFullIconUrl(self, url):
         url = CBaseHostClass.getFullIconUrl(self, url.strip())
-        if url == '': return ''
+        if url == '':
+            return ''
         cookieHeader = self.cm.getCookieHeader(self.COOKIE_FILE, ['PHPSESSID', 'cf_clearance'])
         return strwithmeta(url, {'Cookie':cookieHeader, 'User-Agent':self.USER_AGENT})
         
@@ -88,31 +90,39 @@ class AlltubeTV(CBaseHostClass):
         if page > 1:
             if category == 'video':
                 url += 'strona[%s]+' % page
-            else: url += '/%s' % page
+            else:
+                url += '/%s' % page
             
         if 'filter' in cItem:
             filter = cItem['filter']
-        else: filter = None
+        else:
+            filter = None
             
         post_data = cItem.get('post_data', None)
         
         sts, data = self.getPage(url, {}, post_data)
-        if not sts: return 
+        if not sts:
+            return 
         
         if cItem.get('check_filter', True):
-            if self._listFilters(cItem, data): return
-            else: cItem['check_filter'] = False
+            if self._listFilters(cItem, data):
+                return
+            else:
+                cItem['check_filter'] = False
             
         pageM1 = '<div id="pager"'
         
         if ('strona[%s]+' % (page + 1)) in data or 'Następna strona' in data:
             nextPage = True
-        else: nextPage = False
+        else:
+            nextPage = False
         
         data = self.cm.ph.getDataBeetwenMarkers(data, m1, m2, False)[1]
         data = data.split(sp)
-        if len(data) and m1 != sp: del data[0]
-        if len(data): data[-1] = data[-1].split(pageM1)[0]
+        if len(data) and m1 != sp:
+            del data[0]
+        if len(data):
+            data[-1] = data[-1].split(pageM1)[0]
         for item in data:
             url    = self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0]
             icon   = self.cm.ph.getSearchGroups(item, 'src="([^"]+?)"')[0]
@@ -130,7 +140,8 @@ class AlltubeTV(CBaseHostClass):
             if category != 'video': #or '/serial/' in params['url']:
                 params['category'] = category
                 self.addDir(params)
-            else: self.addVideo(params)
+            else:
+                self.addVideo(params)
             
         if nextPage:
             params = dict(cItem)
@@ -139,7 +150,8 @@ class AlltubeTV(CBaseHostClass):
     
     def fillFilterCache(self, url):
         sts, data = self.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         def _getFilters(m1, m2, key):
             tab = []
             dat = self.cm.ph.getDataBeetwenMarkers(data, m1, m2, False)[1]
@@ -176,7 +188,8 @@ class AlltubeTV(CBaseHostClass):
         self.seriesCache = {}
         self.seriesLetters = []
         sts, data = self.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         data = CParsingHelper.getDataBeetwenMarkers(data, 'term-list clearfix">', '</ul>', False)[1]
         data = re.compile('<li[^>]*?data-letter="([^"]+)"[^>]*?>[^<]*?<a[^>]*?href="([^"]+?)"[^>]*?>([^<]+?)<').findall(data)
         for item in data:
@@ -218,11 +231,13 @@ class AlltubeTV(CBaseHostClass):
         
     def listAllSeries(self, category):
         sts, data = self.getPage(cItem['url'])
-        if not sts: return 
+        if not sts:
+            return 
 
         data = CParsingHelper.getDataBeetwenMarkers(data, '<ul class="term-list">', '</ul>', False)[1]
         data = data.split('</li>')
-        if len(data): del data[-1]
+        if len(data):
+            del data[-1]
 
         for item in data:
             url    = self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0]
@@ -237,7 +252,8 @@ class AlltubeTV(CBaseHostClass):
         self.episodesCache = []
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return 
+        if not sts:
+            return 
         
         if 'episode-list' in data:
             tmp = self.cm.ph.getDataBeetwenNodes(data, ('<h2', '>', 'headline'), ('</h2', '>'), False)[1]
@@ -245,18 +261,22 @@ class AlltubeTV(CBaseHostClass):
             if tmp != '':
                 tmp = self.getFullUrl(tmp)
                 sts, tmp = self.getPage(tmp)
-                if sts: data = tmp 
+                if sts:
+                    data = tmp 
         
         seriesTitle =  self.cleanHtmlStr( self.cm.ph.getDataBeetwenMarkers(data, '<div class="col-xs-12 col-sm-9">', '</h3>', False)[1] )
-        if '' == seriesTitle: seriesTitle = cItem['title']    
+        if '' == seriesTitle:
+            seriesTitle = cItem['title']    
         
         desc = self.cm.ph.getDataBeetwenMarkers(data, '<div class="custome-panel clearfix">', '</div>', False)[1]
         icon = self.cm.ph.getSearchGroups(desc, 'src="([^"]+?)"')[0]
         desc = self.cleanHtmlStr( desc )
         icon = self.getFullUrl( icon )
         
-        if '' == icon: icon = cItem.get('icon', '')
-        if '' == desc: desc = cItem.get('desc', '')
+        if '' == icon:
+            icon = cItem.get('icon', '')
+        if '' == desc:
+            desc = cItem.get('desc', '')
         
         data = self.cm.ph.getDataBeetwenMarkers(data, 'ta odcin', '<script>', False)[1]
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<h3 class="headline">', '</div>')
@@ -299,13 +319,15 @@ class AlltubeTV(CBaseHostClass):
         params = dict(self.defaultParams)
         params['header'] = {'User-Agent':self.USER_AGENT, 'Content-Type':'application/x-www-form-urlencoded'}
         sts, data = self.getPage(self.SRCH_URL, params, post_data={'search':searchPattern})
-        if not sts: return
+        if not sts:
+            return
         
         printDBG(data)
         
         data = self.cm.ph.rgetDataBeetwenMarkers(data, '<div class="container-fluid">', 'Regulamin')[1]
         data = data.split('<h2 class="headline">')
-        if len(data): del data[0]
+        if len(data):
+            del data[0]
         
         if searchType == 'series':
             marker = 'Seriale'
@@ -320,20 +342,26 @@ class AlltubeTV(CBaseHostClass):
                 found = True
                 break
                 
-        if not found: return
+        if not found:
+            return
         data = data[idx]
         data = data.split('<div class="item-block clearfix">')
-        if len(data): del data[0]
+        if len(data):
+            del data[0]
 
         for item in data:
             url    = self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0]
-            if 'alltube.com.pl' in url: continue
+            if 'alltube.com.pl' in url:
+                continue
             icon   = self.cm.ph.getSearchGroups(item, 'src="([^"]+?)"')[0]
             title  = self.cm.ph.getDataBeetwenMarkers(item, '<div class="title">', '</div>', False)[1]
-            if '' == title: title = self.cm.ph.getDataBeetwenMarkers(item, '<h3>', '</h3>', False)[1]
-            if '' == title:  title = self.cm.ph.getSearchGroups(item, 'alt="([^"]+?)"')[0]
+            if '' == title:
+                title = self.cm.ph.getDataBeetwenMarkers(item, '<h3>', '</h3>', False)[1]
+            if '' == title:
+                title = self.cm.ph.getSearchGroups(item, 'alt="([^"]+?)"')[0]
             desc   = self.cm.ph.getDataBeetwenMarkers(item, '<div class="description">', '</div>', False)[1]
-            if '' == desc: desc = item.split('<p>')[-1]
+            if '' == desc:
+                desc = item.split('<p>')[-1]
             
             params = dict(cItem)
             params.update({'good_for_fav': True, 'title':self.cleanHtmlStr( title ), 'url':self.getFullUrl( url ), 'icon':self.getFullUrl( icon ), 'desc':self.cleanHtmlStr( desc )})
@@ -353,16 +381,20 @@ class AlltubeTV(CBaseHostClass):
             return urlTab
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return urlTab
+        if not sts:
+            return urlTab
         
         data = self.cm.ph.getDataBeetwenNodes(data, ('<table', '>'), ('</table', '>'), False)[1]
         data = data.split('</tr>')
-        if len(data): del data[-1]
+        if len(data):
+            del data[-1]
         for item in data:
             try:
                 url  = self.cm.ph.getSearchGroups(item, '''data\-iframe=['"]([^"^']+?)['"]''')[0]
-                if url != '': url  = base64.b64decode(url)
-                else: url = self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']*?link/[^"^']+?)['"]''')[0]
+                if url != '':
+                    url  = base64.b64decode(url)
+                else:
+                    url = self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']*?link/[^"^']+?)['"]''')[0]
                 name = self.cleanHtmlStr(item)
                 urlTab.append({'name':name, 'url':strwithmeta(url, {'cache_key':cacheKey}), 'need_resolve':1})
             except Exception:
@@ -401,10 +433,10 @@ class AlltubeTV(CBaseHostClass):
         try:
             data = json_loads(data)
             cookieHeader = self.cm.getCookieHeader(self.COOKIE_FILE, ['PHPSESSID'])
-            d = {};
+            d = {}
             for i in range(len(data['key'])):
                 d[data['key'][i]] = data['hash'][i]
-            tmp = '';
+            tmp = ''
             for k in sorted(d.keys()):
                 tmp += d[k]
             cookieHeader += ' tmvh=%s;' % self._myFun(tmp)
@@ -417,7 +449,8 @@ class AlltubeTV(CBaseHostClass):
         url = ''
         if 'alltube' in self.up.getDomain(baseUrl):
             sts, data = self.getPage(baseUrl, params)
-            if not sts: return []
+            if not sts:
+                return []
             data = self.cm.ph.getDataBeetwenNodes(data, ('<section', '>', 'player'), ('</section', '>'), False)[1]
             url = self.getFullUrl(self.cm.ph.getSearchGroups(data, '''<iframe[^>]+?src=['"]([^"^']+?)['"]''', 1, True)[0])
             #url = self.cm.ph.getDataBeetwenMarkers(data, 'src="', '"', False, False)[1]

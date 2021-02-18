@@ -92,7 +92,8 @@ class IPTVSubDownloaderWidget(Screen):
                 with open(path, "r") as f:
                     self.skin = f.read()
                     f.close()
-            except Exception: printExc("Skin read error: " + path)
+            except Exception:
+                printExc("Skin read error: " + path)
                 
         Screen.__init__(self, session)
         
@@ -118,9 +119,11 @@ class IPTVSubDownloaderWidget(Screen):
         try:
             for idx in range(5):
                 spinnerName = "spinner"
-                if idx: spinnerName += '_%d' % idx 
+                if idx:
+                    spinnerName += '_%d' % idx 
                 self[spinnerName] = Cover3()
-        except Exception: printExc()
+        except Exception:
+            printExc()
 
         self.spinnerPixmap = [LoadPixmap(GetIconDir('radio_button_on.png')), LoadPixmap(GetIconDir('radio_button_off.png'))]
         self.showHostsErrorMessage = True
@@ -220,7 +223,8 @@ class IPTVSubDownloaderWidget(Screen):
             for button in buttons:
                 self['icon_'+button].hide()
                 self['label_'+button].hide()
-        except Exception: printExc()
+        except Exception:
+            printExc()
             
     def red_pressed(self):
         self.close(None)
@@ -242,7 +246,8 @@ class IPTVSubDownloaderWidget(Screen):
                     self.workThread = None
                     self["statustext"].setText(_("Operation aborted!"))
                 return
-        except Exception: return    
+        except Exception:
+            return    
         if self.visible:
             if len(self.prevSelList) > 0:
                 self.nextSelIndex = self.prevSelList.pop()
@@ -328,7 +333,8 @@ class IPTVSubDownloaderWidget(Screen):
                 for idx in range(4):
                     spinnerName = 'spinner_%d' % (idx + 1)
                     self[spinnerName].setPixmap(self.spinnerPixmap[1])
-        except Exception: printExc()
+        except Exception:
+            printExc()
         
     def showSpinner(self):
         if None != self.spinnerTimer:
@@ -344,9 +350,11 @@ class IPTVSubDownloaderWidget(Screen):
             if "spinner" in self:
                 for idx in range(5):
                     spinnerName = "spinner"
-                    if idx: spinnerName += '_%d' % idx
+                    if idx:
+                        spinnerName += '_%d' % idx
                     self[spinnerName].visible = visible
-        except Exception: printExc()
+        except Exception:
+            printExc()
         
     def updateSpinner(self):
         try:
@@ -368,7 +376,8 @@ class IPTVSubDownloaderWidget(Screen):
                     message += _('\nYou can also report problem here: \nhttps://github.com/persianpros/e2iplayer/issues')
                     self.session.openWithCallback(self.reportHostCrash, MessageBox, text=message, type=MessageBox.TYPE_YESNO)
             self.hideSpinner()
-        except Exception: printExc()
+        except Exception:
+            printExc()
         
     def reportHostCrash(self, ret):
         try:
@@ -384,7 +393,8 @@ class IPTVSubDownloaderWidget(Screen):
             self.workThread = None
             self.prevSelList = []
             self.back_pressed()
-        except Exception: printExc()
+        except Exception:
+            printExc()
 
     def processProxyQueue(self):
         if None != self.mainTimer:
@@ -395,17 +405,22 @@ class IPTVSubDownloaderWidget(Screen):
     def doProcessProxyQueueItem(self, item):
         try:
             if None == item.retValue[0] or self.workThread == item.retValue[0]:
-                if isinstance(item.retValue[1], asynccall.CPQParamsWrapper): getattr(self, method)(*item.retValue[1])
-                else: getattr(self, item.clientFunName)(item.retValue[1])
+                if isinstance(item.retValue[1], asynccall.CPQParamsWrapper):
+                    getattr(self, method)(*item.retValue[1])
+                else:
+                    getattr(self, item.clientFunName)(item.retValue[1])
             else:
                 printDBG('>>>>>>>>>>>>>>> doProcessProxyQueueItem callback from old workThread[%r][%s]' % (self.workThread, item.retValue))
-        except Exception: printExc()
+        except Exception:
+            printExc()
     
     def getCategoryPath(self):
         def _getCat(cat, num):
-            if '' == cat: return ''
+            if '' == cat:
+                return ''
             cat = ' > ' + cat
-            if 1 < num: cat += (' (x%d)' % num)
+            if 1 < num:
+                cat += (' (x%d)' % num)
             return cat
 
         if len(self.categoryList):
@@ -419,7 +434,8 @@ class IPTVSubDownloaderWidget(Screen):
                 str += _getCat(prevCat, prevNum) 
                 prevCat = cat
                 prevNum = 1
-            else: prevNum += 1
+            else:
+                prevNum += 1
         str += _getCat(prevCat, prevNum) 
         return str
         
@@ -522,7 +538,8 @@ class IPTVSubDownloaderWidget(Screen):
                 item = self.downloadedSubItems[-1]
                 track = {'title':item.name, 'lang':item.lang, 'path':item.path, 'id':item.imdbid}
                 self.close(track)
-        except Exception: printExc()
+        except Exception:
+            printExc()
         
     def reloadList(self, params):
         printDBG("IPTVSubDownloaderWidget.reloadList")

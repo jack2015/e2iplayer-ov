@@ -62,7 +62,8 @@ class WagasWorldApi(CBaseHostClass):
         printDBG("WagasWorldApi.getGroups")
         list = []
         sts, data = self.cm.getPage(cItem['url'], self.http_params)
-        if not sts: return list
+        if not sts:
+            return list
         data = ph.find(data, ('<div', '>', 'form-item'), '<select', flags=0)[1]
         data = re.compile('<a[^>]+?href="([^"]+?)"[^>]*?>([^<]+?)</a>').findall(data)
         for item in data:
@@ -75,18 +76,22 @@ class WagasWorldApi(CBaseHostClass):
         page = cItem.get('page', 0)
         url  = cItem['url']
         if page > 0:
-            if '?' in url: url += '&'
-            else: url += '?'
+            if '?' in url:
+                url += '&'
+            else:
+                url += '?'
             url += 'page={0}'.format(page)
         sts, data = self.cm.getPage(url, self.http_params)
-        if not sts: return list
+        if not sts:
+            return list
         
         nextPage = False
         if '&amp;page={0}"'.format(page+1) in data:
             nextPage = True
         data = ph.find(data, '<div class="view-content">', '</section>')[1]
         data = data.split('</span>')
-        if len(data): del data[-1]
+        if len(data):
+            del data[-1]
         for item in data:
             title = ph.search(item, '>([^<]+?)</a>')[0]
             url   = self.getFullUrl( ph.getattr(item, 'href') )
@@ -136,7 +141,8 @@ class WagasWorldApi(CBaseHostClass):
         HTTP_HEADER['Referer'] = baseUrl
         HTTP_HEADER['X-Requested-With'] = 'XMLHttpRequest'
         sts, data = self.cm.getPage(url, {'header':HTTP_HEADER})
-        if not sts: return []
+        if not sts:
+            return []
         
         ret = None
         errorMsg = ''
@@ -153,7 +159,8 @@ class WagasWorldApi(CBaseHostClass):
     def exploreItem(self, cItem):
         printDBG("WagasWorldApi.exploreItem url[%s]" % cItem['url'])
         sts, data = self.cm.getPage(cItem['url'], self.http_params)
-        if not sts: return []
+        if not sts:
+            return []
 
         desc = ph.clean_html(ph.find(data, ('<div', '>', 'alert-danger'), '</div>', flags=0)[1])
         data = self.cm.ph.getDataBeetwenMarkers(data, '<div class="videoWrapper">', ' </section>', False)[1]
@@ -207,7 +214,8 @@ class WagasWorldApi(CBaseHostClass):
                 return [{'name':data['title'], 'url':data['url']}]
         else:
             sts, data = self.cm.getPage(baseUrl, self.http_params)
-            if not sts: return []
+            if not sts:
+                return []
             data = self.cm.ph.getDataBeetwenMarkers(data, '<div class="videoWrapper">', '</section>', False)[1]
             return self.up.getAutoDetectedStreamLink(baseUrl, data)
         return []
@@ -219,7 +227,8 @@ class WagasWorldApi(CBaseHostClass):
         params = dict(self.http_params)
         params['load_cookie'] = False
         sts, data = self.cm.getPage(loginUrl, params)
-        if not sts: return False
+        if not sts:
+            return False
         
         data = self.cm.ph.getDataBeetwenMarkers(data, '<form', '</form>', False, False)[1]
         action = self.cm.ph.getSearchGroups(data, '''action=['"]([^'^"]+?)['"]''')[0]

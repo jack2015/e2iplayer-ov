@@ -82,7 +82,8 @@ class PlanetStreaming(CBaseHostClass):
         domains = ['http://ww4.planet-streaming.com/']
         domain = config.plugins.iptvplayer.planetstreaming_alt_domain.value.strip()
         if self.cm.isValidUrl(domain):
-            if domain[-1] != '/': domain += '/'
+            if domain[-1] != '/':
+                domain += '/'
             domains.insert(0, domain)
         
         for domain in domains:
@@ -132,7 +133,8 @@ class PlanetStreaming(CBaseHostClass):
             for item in cTree['list']:
                 title = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(item['dat'], '<a', '</a>')[1])
                 url = self.cm.ph.getSearchGroups(item['dat'], '''href=['"]([^'^"]+?)['"]''')[0]
-                if url == '#': continue
+                if url == '#':
+                    continue
                 url = self.getFullUrl(url)
                 if 'list' not in item:
                     if self.cm.isValidUrl(url) and title != '':
@@ -153,7 +155,8 @@ class PlanetStreaming(CBaseHostClass):
         printDBG("PlanetStreaming.listSortFilters")
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         pageUrl = data.meta['url']
         self.MAIN_URL = self.cm.getBaseUrl(pageUrl)
         
@@ -166,8 +169,10 @@ class PlanetStreaming(CBaseHostClass):
             for idx in range(len(items)):
                 direction = item[1].lower()
                 if idx == 1:
-                    if direction == 'asc': direction = 'desc'
-                    else: direction = 'asc'
+                    if direction == 'asc':
+                        direction = 'desc'
+                    else:
+                        direction = 'asc'
                 
                 title = '%s %s' % (directionsTitle.get(direction, ''), item[2])
                 post_data = {'dlenewssortby':item[0], 'dledirection':direction, 'set_new_sort':'dle_sort_cat', 'set_direction_sort':'dle_direction_cat'}
@@ -189,7 +194,8 @@ class PlanetStreaming(CBaseHostClass):
         params = dict(self.defaultParams)
         params['header']['Referer'] = self.cm.getBaseUrl(pageUrl)
         sts, data = self.getPage(pageUrl, params, cItem.get('post_data', None))
-        if not sts: return
+        if not sts:
+            return
         
         printDBG(data)
         
@@ -214,7 +220,8 @@ class PlanetStreaming(CBaseHostClass):
             tmp  = reDescObj2.split(reDescObj.split(item)[-1])
             for t in tmp:
                 t = self.cleanHtmlStr(t)
-                if t != '': desc.append(t.replace(' , ', ', ').replace(' : ', ': '))
+                if t != '':
+                    desc.append(t.replace(' , ', ', ').replace(' : ', ': '))
             
             params = dict(cItem)
             params.update({'good_for_fav':True, 'title':title, 'url':url, 'icon':icon, 'desc':'[/br]'.join(desc)})
@@ -235,7 +242,8 @@ class PlanetStreaming(CBaseHostClass):
         self.cacheLinks = {}
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
         
         episodeKeys = []
         episodeLinks = {}
@@ -249,7 +257,8 @@ class PlanetStreaming(CBaseHostClass):
             langItem = self.cm.ph.getAllItemsBeetwenMarkers(langItem, '<a', '</a>')
             for item in langItem:
                 url = self.getFullUrl( self.cm.ph.getSearchGroups(item, '''\shref=['"]([^'^"]+?)['"]''')[0] )
-                if url == '': continue
+                if url == '':
+                    continue
                 title = self.cleanHtmlStr(item)
                 eNum = self.cm.ph.getSearchGroups(item, '''EPS\s+?([0-9]+?)\s+?''', 1, True)[0]
                 if eNum not in episodeKeys:
@@ -270,11 +279,14 @@ class PlanetStreaming(CBaseHostClass):
         
         post_data = {'do':'search', 'subaction':'search', 'search_start':'0', 'full_search':'0', 'result_from':'1', 'story':searchPattern}
         
-        if searchType == 'movies': url = self.MAIN_MOVIES_URL
-        else: url = self.MAIN_SERIES_URL
+        if searchType == 'movies':
+            url = self.MAIN_MOVIES_URL
+        else:
+            url = self.MAIN_SERIES_URL
         
         sts, data = self.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         
         self.MAIN_URL = data.meta['url']
         url = self.getFullUrl('/index.php?do=search')
@@ -290,7 +302,8 @@ class PlanetStreaming(CBaseHostClass):
             return self.cacheLinks.get(cItem['url'],  [])
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
         
         linksTab = []
         data = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', '-tab'), ('<script', '>'))[1]
@@ -300,7 +313,8 @@ class PlanetStreaming(CBaseHostClass):
             langItem = self.cm.ph.getAllItemsBeetwenMarkers(langItem, '<a', '</a>')
             for item in langItem:
                 url = self.getFullUrl( self.cm.ph.getSearchGroups(item, '''\shref=['"]([^'^"]+?)['"]''')[0] )
-                if url == '': continue
+                if url == '':
+                    continue
                 title = self.cleanHtmlStr(item)
                 linksTab.append({'name':'[%s] %s' % (langTitle, title), 'url':url, 'need_resolve':1})
         

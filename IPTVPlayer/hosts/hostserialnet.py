@@ -14,8 +14,10 @@ from Plugins.Extensions.IPTVPlayer.libs.youtube_dl.utils import clean_html
 # FOREIGN import
 ###################################################
 import re
-try:    import simplejson as json
-except Exception: import json
+try:
+    import simplejson as json
+except Exception:
+    import json
 import string
 import base64
 import binascii
@@ -45,9 +47,12 @@ class SerialeNet(CBaseHostClass):
         return clean_html(self._encodeStr(v, default))
         
     def _encodeStr(self, v, default=''):
-        if isinstance(v, type(u'')): return v.encode('utf-8')
-        elif isinstance(v, type('')): return v
-        else: return default
+        if isinstance(v, type(u'')):
+            return v.encode('utf-8')
+        elif isinstance(v, type('')):
+            return v
+        else:
+            return default
         
     def decodeJS(self, s):
         ret = ''
@@ -60,7 +65,8 @@ class SerialeNet(CBaseHostClass):
                match = re.compile("\('(.+?)'").findall(eval(js))
                if len(match) > 0:
                   ret = base64.b64decode(binascii.unhexlify(match[0].replace("/x", "")))
-        except Exception: printExc()
+        except Exception:
+            printExc()
         return ret
 
     def unpack(self, p, a, c, k, e=None, d=None):
@@ -71,9 +77,12 @@ class SerialeNet(CBaseHostClass):
         
     def int2base(self, x, base):
         digs = string.digits + string.lowercase + string.uppercase
-        if x < 0: sign = -1
-        elif x==0: return '0'
-        else: sign = 1
+        if x < 0:
+            sign = -1
+        elif x==0:
+            return '0'
+        else:
+            sign = 1
         x *= sign
         digits = []
         while x:
@@ -96,8 +105,10 @@ class SerialeNet(CBaseHostClass):
                 tmp = item[1].split('<p>')
                 t1 = self.cleanHtmlStr(tmp[0])
                 if len(t1):
-                    if 1 < len(tmp): t2 = self.cleanHtmlStr(tmp[1])
-                    else: t2 = ''
+                    if 1 < len(tmp):
+                        t2 = self.cleanHtmlStr(tmp[1])
+                    else:
+                        t2 = ''
                     retTab.append({'t1':t1, 't2':t2, 'url':self.getFullUrl(item[0])})
             return retTab
         return []
@@ -131,7 +142,8 @@ class SerialeNet(CBaseHostClass):
                     t1, t2 = t2, t1
             if match:
                 params = dict(cItem)
-                if len(t2): t1 += ' (%s)' % t2
+                if len(t2):
+                    t1 += ' (%s)' % t2
                 params.update({'good_for_fav': True, 'category':category, 'title':t1, 'url':item['url']})
                 self.addDir(params)
         self.currList.sort(key=lambda item: item['title'])
@@ -142,7 +154,8 @@ class SerialeNet(CBaseHostClass):
         self.seasonsCache = []
         
         sts, data = self.cm.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         
         serieTitle = cItem.get('title', '')
         
@@ -152,10 +165,12 @@ class SerialeNet(CBaseHostClass):
         
         data = self.cm.ph.getDataBeetwenReMarkers(data, re.compile('<div[^>]+?id="wrp1"[^>]*?></?br[^>]*?>'), re.compile('<script>'), False)[1]
         data = data.split('<div')
-        if len(data): del data[0]
+        if len(data):
+            del data[0]
         for item in data:
             seasonName = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(item, '<h3>', '</h3>', False)[1])
-            if seasonName == '': continue
+            if seasonName == '':
+                continue
             
             sNum = self.cm.ph.getSearchGroups(seasonName, '''\s*?([0-9]+)''')[0]
             
@@ -164,7 +179,8 @@ class SerialeNet(CBaseHostClass):
             re.findall('<a title="([^"]*?)"[^>]+?href="([^"]+?)"[^>]*?>(.+?)</a>', item)
             for e in episodes:
                 url = self.cm.ph.getSearchGroups(e, '''href=['"](https?://[^'^"]+?)['"]''')[0] 
-                if not self.cm.isValidUrl(url): continue
+                if not self.cm.isValidUrl(url):
+                    continue
                 title = self.cleanHtmlStr(e)
                 eNum  = self.cm.ph.getSearchGroups(title, '''\s*?([0-9]+)''')[0]
                 if 'odcinek' in title.lower() and len(url) < 20 and eNum != '' and sNum != '':
@@ -172,7 +188,8 @@ class SerialeNet(CBaseHostClass):
                 else:
                     if eNum != '' and sNum != '':
                         num = ' s%se%s, ' % (sNum.zfill(2), eNum.zfill(2))
-                    else: num = ''
+                    else:
+                        num = ''
                     title = '%s%s, %s' % (num, seasonName, title)
                 title = '%s - %s' % (serieTitle, title)
                 self.seasonsCache[-1]['episodes'].append({'good_for_fav': True, 'title':title, 'url':url, 'desc':desc})
@@ -225,11 +242,14 @@ class SerialeNet(CBaseHostClass):
                 txtTab = txt.split(' ')
                 matches = 0
                 for word in keywordList:
-                    if word in txt: matches += 1
-                    if word in txtTab: matches += 10
+                    if word in txt:
+                        matches += 1
+                    if word in txtTab:
+                        matches += 10
                 if 0 < matches:
                     title = item['t1']
-                    if len(item['t2']): title += ' (%s)' % item['t2']
+                    if len(item['t2']):
+                        title += ' (%s)' % item['t2']
                     params = dict(cItem)
                     params.update({'title':title, 'url':item['url'], 'matches':matches})
                     self.addDir(params)
@@ -246,7 +266,8 @@ class SerialeNet(CBaseHostClass):
             sts, data = self.cm.ph.getDataBeetwenMarkers(data, '<b>Wersja:</b>', '<script>', False)
             if sts:
                 data = data.split('<input')
-                if len(data): del data[0]
+                if len(data):
+                    del data[0]
                 for item in data:
                     name  = self.cm.ph.getSearchGroups(item, 'name="([^"]+?)"')[0]
                     value = self.cm.ph.getSearchGroups(item, 'value="([^"]+?)"')[0]
@@ -261,19 +282,23 @@ class SerialeNet(CBaseHostClass):
                     videoUrl = ''
                     if "url: escape('http" in data:
                         match = re.search("url: escape\('([^']+?)'", data)
-                        if match: videoUrl = match.group(1)
+                        if match:
+                            videoUrl = match.group(1)
                     elif "eval(function(p,a,c,k,e,d)" in data:
                         printDBG( 'Host resolveUrl packed' )
                         match = re.search('eval\((.+?),0,{}\)\)', data, re.DOTALL)
-                        if match: videoUrl = self.decodeJS('eval(' + match.group(1) + ',0,{}))')
+                        if match:
+                            videoUrl = self.decodeJS('eval(' + match.group(1) + ',0,{}))')
                     elif "var flm = '" in data:
                         printDBG( 'Host resolveUrl var flm' )
                         match = re.search("var flm = '([^']+?)';", data)
-                        if match: videoUrl = match.group(1)
+                        if match:
+                            videoUrl = match.group(1)
                     elif 'primary: "html5"' in data:
                         printDBG( 'Host resolveUrl html5' )
                         match = re.search('file: "([^"]+?)"', data)
-                        if match: videoUrl = match.group(1)
+                        if match:
+                            videoUrl = match.group(1)
                     elif 'sources:' in data:
                         data2 = self.cm.ph.getDataBeetwenMarkers(data, 'sources:', ']', False)[1]
                         videoUrl = self.cm.ph.getSearchGroups(data2, '''src[^'"]*?['"](http[^'"]+?)['"]''')[0]
@@ -288,8 +313,10 @@ class SerialeNet(CBaseHostClass):
                             msg = self.cleanHtmlStr(self.cm.ph.getSearchGroups(msg, "text\('([^']+?)'")[0])
                         SetIPTVPlayerLastHostError(msg)
                     printDBG("SerialeNet.getLinksForVideo >>>>>>>>>>>>>>>> videoUrl[%s]" % videoUrl)
-                except Exception: printExc()
-        except Exception: printExc()
+                except Exception:
+                    printExc()
+        except Exception:
+            printExc()
         return videoUrlTab 
         
     def getVideoLink(self, url):
@@ -305,7 +332,8 @@ class SerialeNet(CBaseHostClass):
         try:
             cItem = byteify(json.loads(fav_data))
             links = self.getLinksForVideo(cItem)
-        except Exception: printExc()
+        except Exception:
+            printExc()
         return links
         
     def setInitListFromFavouriteItem(self, fav_data):

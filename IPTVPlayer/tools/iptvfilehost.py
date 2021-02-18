@@ -36,10 +36,13 @@ class IPTVFileHost:
                 while True:
                     lineNum += 1
                     line = fp.readline()
-                    if not line: break;
+                    if not line:
+                        break
                     line = line.strip()
-                    if isinstance(line, type(u'')): line = line.encode('utf-8', 'replace')
-                    if 0 == len(line) or '#' == line[0]: continue
+                    if isinstance(line, type(u'')):
+                        line = line.encode('utf-8', 'replace')
+                    if 0 == len(line) or '#' == line[0]:
+                        continue
                     idx1 = line.find(';')
                     if -1 < idx1:
                         fullTitle = line[0:idx1].strip()
@@ -74,11 +77,15 @@ class IPTVFileHost:
         def _compare(it1, it2):
             name1 = it1.lower()
             name2 = it2.lower()
-            if name1 == name2:  return 0
-            elif '' == name2 or name1 < name2: return -1
-            elif '' == name1 or name1 > name2: return 1
+            if name1 == name2:
+                return 0
+            elif '' == name2 or name1 < name2:
+                return -1
+            elif '' == name1 or name1 > name2:
+                return 1
         tmpList = list(self.groups)
-        if sort: tmpList.sort(_compare)
+        if sort:
+            tmpList.sort(_compare)
         return tmpList
     
     def getItemsInGroup(self, group, sort=False):
@@ -86,13 +93,17 @@ class IPTVFileHost:
         def _compare(it1, it2):
             name1 = it1['title_in_group'].lower()
             name2 = it2['title_in_group'].lower()
-            if name1 < name2:   return -1
-            elif name1 > name2: return 1
-            else:               return 0
+            if name1 < name2:
+                return -1
+            elif name1 > name2:
+                return 1
+            else:
+                return 0
         for item in self.items:
             if item['group'] == group:
                 tmpList.append(item)
-        if sort: tmpList.sort(_compare)
+        if sort:
+            tmpList.sort(_compare)
         return tmpList
         
     def getAllItems(self, sort=False):
@@ -100,9 +111,13 @@ class IPTVFileHost:
         def _compare(it1, it2):
             name1 = it1['full_title'].lower()
             name2 = it2['full_title'].lower()
-            if name1 < name2:   return -1
-            elif name1 > name2: return 1
-            else:               return 0
+            if name1 < name2:
+                return -1
+            elif name1 > name2:
+                return 1
+            else:
+                return 0
         tmpList = list(self.items)
-        if sort: tmpList.sort(_compare)
+        if sort:
+            tmpList.sort(_compare)
         return tmpList

@@ -15,7 +15,8 @@ import re
 import urllib
 try:
     import gzip
-except Exception: pass
+except Exception:
+    pass
 ###################################################
 
 ###################################################
@@ -55,7 +56,8 @@ class SubtitlesGrProvider(CBaseSubProviderClass):
         
         url = self.getFullUrl(baseUrl)
         sts, data = self.cm.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         
         if ('page=%s&' % (page+1)) in data:
             nextPage = True
@@ -82,7 +84,8 @@ class SubtitlesGrProvider(CBaseSubProviderClass):
         
         url = cItem['url']
         sts, data = self.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         
         imdbid = self.cm.ph.getSearchGroups(data, '''/tt([0-9]+?)[^0-9]''')[0]
         subId  = self.cm.ph.getSearchGroups(url + '/', '''/([0-9]+?)/''')[0]
@@ -94,7 +97,8 @@ class SubtitlesGrProvider(CBaseSubProviderClass):
         
         urlParams = dict(self.defaultParams)
         tmpDIR = self.downloadAndUnpack(url, urlParams)
-        if None == tmpDIR: return
+        if None == tmpDIR:
+            return
         
         cItem = dict(cItem)
         cItem.update({'category':'', 'path':tmpDIR + '/subs', 'fps':fps, 'imdbid':imdbid, 'sub_id':subId})
@@ -103,7 +107,8 @@ class SubtitlesGrProvider(CBaseSubProviderClass):
     def _getFileName(self, title, lang, subId, imdbid, fps, ext):
         title = RemoveDisallowedFilenameChars(title).replace('_', '.')
         match = re.search(r'[^.]', title)
-        if match: title = title[match.start():]
+        if match:
+            title = title[match.start():]
 
         fileName = "{0}_{1}_0_{2}_{3}".format(title, lang, subId, imdbid)
         if fps > 0:

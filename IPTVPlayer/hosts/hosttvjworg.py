@@ -12,8 +12,10 @@ import Plugins.Extensions.IPTVPlayer.libs.urlparser as urlparser
 ###################################################
 # FOREIGN import
 ###################################################
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 from Components.config import config, ConfigSelection, ConfigYesNo, getConfigListEntry
 ###################################################
 
@@ -87,7 +89,8 @@ class TVJWORG(CBaseHostClass):
             params['name']  = 'category'
             if type == 'dir':
                 self.addDir(params)
-            else: self.addVideo(params)
+            else:
+                self.addVideo(params)
             
     def _getIcon(self, iconItem):
         icon = ''
@@ -95,14 +98,17 @@ class TVJWORG(CBaseHostClass):
             imageTypes = self.ICONS_TYPES.get(config.plugins.iptvplayer.tvjworg_icontype.value, [])
             images = iconItem['images']
             for icontype in imageTypes:
-                if icontype not in images: continue
+                if icontype not in images:
+                    continue
                 icons = images[icontype]
                 for item in self.ICONS_KEYS:
-                    if item not in icons: continue
+                    if item not in icons:
+                        continue
                     icon = str(icons[item])
                     if icon.startswith('http'):
                         break
-                    else: icon = ''
+                    else:
+                        icon = ''
                 if icon.startswith('http'):
                     break
         except Exception:
@@ -144,7 +150,8 @@ class TVJWORG(CBaseHostClass):
         url = self._getFullUrl(baseUrl)
         
         sts, data = self.cm.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         try:
             data = byteify(json.loads(data))
             if sub != '':
@@ -170,7 +177,8 @@ class TVJWORG(CBaseHostClass):
         url = self._getFullUrl(baseUrl)
         
         sts, data = self.cm.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         
         try:
             data = byteify(json.loads(data))
@@ -178,12 +186,14 @@ class TVJWORG(CBaseHostClass):
                 icon = self._getIcon(item)
                 title = item['title']
                 duration = item['durationFormattedHHMM']
-                if len(duration): title += ' [%s]' % duration
+                if len(duration):
+                    title += ' [%s]' % duration
                 type = item['type']
                 date = item['firstPublished']
                 if len(date):
                     desc = date + '[/br]'
-                else: desc = ''
+                else:
+                    desc = ''
                 desc += item['description']
                 files = item['files']
                 params = {'title':title, 'icon':icon, 'desc':desc, 'files':files}
@@ -204,7 +214,8 @@ class TVJWORG(CBaseHostClass):
         url = self._getFullUrl(baseUrl)
         
         sts, data = self.cm.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         
         try:
             data = byteify(json.loads(data))
@@ -212,12 +223,14 @@ class TVJWORG(CBaseHostClass):
                 icon = self._getIcon(item)
                 title = item['title']
                 duration = item['durationFormattedHHMM']
-                if len(duration): title += ' [%s]' % duration
+                if len(duration):
+                    title += ' [%s]' % duration
                 type = item['type']
                 date = item['firstPublished']
                 if len(date):
                     desc = date + '[/br]'
-                else: desc = ''
+                else:
+                    desc = ''
                 desc += item['description']
                 files = item['files']
                 params = {'title':title, 'icon':icon, 'desc':desc, 'files':files}
@@ -301,7 +314,8 @@ class IPTVHost(CHostBase):
     def getLinksForVideo(self, Index = 0, selItem = None):
         retCode = RetHost.ERROR
         retlist = []
-        if not self.isValidIndex(Index): return RetHost(retCode, value=retlist)
+        if not self.isValidIndex(Index):
+            return RetHost(retCode, value=retlist)
         
         urlList = self.host.getLinksForVideo(self.host.currList[Index])
         for item in urlList:

@@ -174,9 +174,12 @@ class TvnVod(CBaseHostClass):
                     if tmp.endswith('jpg') or tmp.endswith('jpeg'):
                         iconUrl = tmp
                         break
-                    if tmp.endswith('png'): pngUrl = tmp
-                if '' == iconUrl: iconUrl = pngUrl
-                if '' != iconUrl: iconUrl = TvnVod.ICON_URL % iconUrl
+                    if tmp.endswith('png'):
+                        pngUrl = tmp
+                if '' == iconUrl:
+                    iconUrl = pngUrl
+                if '' != iconUrl:
+                    iconUrl = TvnVod.ICON_URL % iconUrl
         except Exception:
             printExc()
         return iconUrl
@@ -268,7 +271,8 @@ class TvnVod(CBaseHostClass):
             if 0 != cItem.get('season', 0) or cItem.get('season', 0) == numSeasons:
                 for item in data:
                     category = self._getJItemStr(item, 'type', '')
-                    if category  in ['stream', 'catalog_with_widget', 'pauses', 'favorites']: continue
+                    if category  in ['stream', 'catalog_with_widget', 'pauses', 'favorites']:
+                        continue
                     id       = self._getJItemStr(item, 'id', '')
                     # some fix for sub-categories
                     if catalogs:
@@ -279,14 +283,19 @@ class TvnVod(CBaseHostClass):
                     
                     # get title 
                     title = self._getJItemStr(item, 'name', '')
-                    if '' == title: title = self._getJItemStr(item, 'title', '')
                     if '' == title:
-                        if category == 'recommended': continue
-                        else: title = 'Brak nazwy'
+                        title = self._getJItemStr(item, 'title', '')
+                    if '' == title:
+                        if category == 'recommended':
+                            continue
+                        else:
+                            title = 'Brak nazwy'
                     tmp = self._getJItemStr(item, 'episode', '')
-                    if tmp not in ('', '0'): title += ", odcinek " + tmp
+                    if tmp not in ('', '0'):
+                        title += ", odcinek " + tmp
                     tmp = self._getJItemStr(item, 'season', '')
-                    if tmp not in ('', '0'): title += ", sezon " + tmp
+                    if tmp not in ('', '0'):
+                        title += ", sezon " + tmp
                     try:
                         tmp = self._getJItemStr(item, 'start_date', '')
                         if '' != tmp:
@@ -381,7 +390,8 @@ class TvnVod(CBaseHostClass):
                     videoUrl =  data.encode('utf-8')
         urlTab = []
         videoUrl = strwithmeta(videoUrl, { 'header': self.getHttpHeader(pl) })
-        if self.cm.isValidUrl(videoUrl): urlTab.append({'name':'direct', 'url':videoUrl})
+        if self.cm.isValidUrl(videoUrl):
+            urlTab.append({'name':'direct', 'url':videoUrl})
         return urlTab
             
     def getLinksForVideo(self, cItem):
@@ -399,7 +409,8 @@ class TvnVod(CBaseHostClass):
             url = self.getBaseUrl(pl) + url
             
             sts, data = self.cm.getPage(url, { 'header': self.getHttpHeader(pl) })
-            if not sts: continue
+            if not sts:
+                continue
             try:
                 data = json_loads(data)
                 if 'success' == data['status']:
@@ -432,7 +443,8 @@ class TvnVod(CBaseHostClass):
                         videoUrls = CSelOneLink(videoUrls, __getLinkQuality, max_bitrate).getSortedLinks()
                         if config.plugins.iptvplayer.TVNUseDF.value:
                             videoUrls = [videoUrls[0]]
-            except Exception: printExc()
+            except Exception:
+                printExc()
             if len(videoUrls):
                 break
         return videoUrls
@@ -441,7 +453,8 @@ class TvnVod(CBaseHostClass):
         try:
             cItem = json_loads(fav_data)
             return self.getLinks(cItem['id'])
-        except Exception: printExc()
+        except Exception:
+            printExc()
         return self.getLinks(fav_data)
 
     def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):

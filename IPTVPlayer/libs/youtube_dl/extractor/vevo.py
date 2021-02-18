@@ -11,8 +11,10 @@ from Plugins.Extensions.IPTVPlayer.libs.youtube_dl.jsinterp import JSInterpreter
 from Plugins.Extensions.IPTVPlayer.libs.youtube_dl.extractor.base import InfoExtractor
 from Plugins.Extensions.IPTVPlayer.components.iptvplayerinit import TranslateTXT as _, SetIPTVPlayerLastHostError
 
-try: import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 
 from Components.config import config, ConfigSelection, ConfigYesNo, ConfigText, getConfigListEntry
 
@@ -36,8 +38,10 @@ config.plugins.iptvplayer.vevo_allow_hls           = ConfigYesNo(default = True)
 
 def _int(data):
     ret = 0
-    try: ret = int(data)
-    except Exception: pass
+    try:
+        ret = int(data)
+    except Exception:
+        pass
     return ret
 
 class VevoIE(InfoExtractor):
@@ -179,7 +183,8 @@ class VevoIE(InfoExtractor):
         mobj = re.match(self._VALID_URL, url)
         video_id = mobj.group('id')
         
-        if hls == None: hls = config.plugins.iptvplayer.vevo_allow_hls.value
+        if hls == None:
+            hls = config.plugins.iptvplayer.vevo_allow_hls.value
 
         json_url = 'http://api.vevo.com/VideoService/AuthenticateVideo?isrc=%s' % video_id
         response = self._download_json(json_url, video_id)
@@ -247,7 +252,8 @@ class VevoIE(InfoExtractor):
         mobj = re.match(self._VALID_URL, url)
         video_id = mobj.group('id')
         
-        if hls == None: hls = config.plugins.iptvplayer.vevo_allow_hls.value
+        if hls == None:
+            hls = config.plugins.iptvplayer.vevo_allow_hls.value
 
         json_url = 'http://api.vevo.com/VideoService/AuthenticateVideo?isrc=%s' % video_id
         response = None #self._download_json(json_url, video_id)

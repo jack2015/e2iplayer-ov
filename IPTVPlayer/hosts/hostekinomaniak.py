@@ -19,8 +19,10 @@ import urlparse
 import re
 import base64
 import urllib
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 from copy import deepcopy
 ###################################################
 
@@ -48,7 +50,8 @@ class eKinomaniak(CBaseHostClass):
             addParams = dict(self.defaultParams)
             
         def _getFullUrl(url):
-            if url == '': return ''
+            if url == '':
+                return ''
             
             if self.cm.isValidUrl(url):
                 return url
@@ -66,7 +69,8 @@ class eKinomaniak(CBaseHostClass):
         while tries < 20:
             tries += 1
             sts, data = self.cm.getPageCFProtection(url, urlParams, urlData)
-            if not sts: return sts, data
+            if not sts:
+                return sts, data
 
             if unloadUrl != None:
                 self.cm.getPageCFProtection(unloadUrl, urlParams)
@@ -81,7 +85,8 @@ class eKinomaniak(CBaseHostClass):
                     if ret['sts'] and 0 == ret['code']:
                         try:
                             cookies = byteify(json_loads(ret['data'].strip()))
-                            for cookie in cookies: cookieItems.update(cookie)
+                            for cookie in cookies:
+                                cookieItems.update(cookie)
                         except Exception:
                             printExc()
                 self.defaultParams['cookie_items'] = cookieItems
@@ -119,7 +124,8 @@ class eKinomaniak(CBaseHostClass):
         self.cacheMovieFilters = { 'cats':[], 'sort':[], 'years':[], 'az':[]}
 
         sts, data = self.getPage(self.getFullUrl('/watch/movies/'))
-        if not sts: return
+        if not sts:
+            return
 
         # fill sort
         dat = self.cm.ph.getDataBeetwenMarkers(data, '<ul class="dropdown-menu"', '</ul>', False)[1]
@@ -128,7 +134,8 @@ class eKinomaniak(CBaseHostClass):
             self.cacheMovieFilters['sort'].append({'title': self.cleanHtmlStr(item[1]), 'sort': item[0]})
 
         sts, data = self.getPage(self.MAIN_URL)
-        if not sts: return
+        if not sts:
+            return
         
         # fill cats
         dat = self.cm.ph.getDataBeetwenMarkers(data, '<b class="icon-hdd"', '</ul>', False)[1]
@@ -179,7 +186,8 @@ class eKinomaniak(CBaseHostClass):
             url = url + sort
 
         sts, data = self.getPage(url)
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(data.meta['url'])
             
         nextPage = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'pagination'), ('</div', '>'))[1]
@@ -194,7 +202,8 @@ class eKinomaniak(CBaseHostClass):
         for item in data:
 #            printDBG("eKinomaniak.listItems item %s" % item)
             url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
-            if '<hr style' in item or url == '': continue
+            if '<hr style' in item or url == '':
+                continue
             icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(item, '''data-src=['"]([^"^']+?)['"]''')[0])
             if icon == '':
                 icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(item, '''src=['"]([^"^']+?)['"]''')[0])
@@ -216,7 +225,8 @@ class eKinomaniak(CBaseHostClass):
     def listSeries(self, cItem):
         printDBG("eKinomaniak.listSeries %s" % cItem)
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(data.meta['url'])
 
         data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<li', '>', 'active'), ('</ul', '>'))
@@ -226,7 +236,8 @@ class eKinomaniak(CBaseHostClass):
             for item in tmp:
 #                printDBG("eKinomaniak.listSeries item %s" % item)
                 url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
-                if url == '': continue
+                if url == '':
+                    continue
 #                title = season + ' - ' + self.cleanHtmlStr(item)
                 title = self.cleanHtmlStr(item)
                 params = {'good_for_fav':True, 'url':url, 'title':title, 'icon':cItem['icon']}
@@ -243,7 +254,8 @@ class eKinomaniak(CBaseHostClass):
                 
         cacheKey = cItem['url']
         cacheTab = self.cacheLinks.get(cacheKey, [])
-        if len(cacheTab): return cacheTab
+        if len(cacheTab):
+            return cacheTab
         
         self.cacheLinks = {}
         
@@ -257,7 +269,8 @@ class eKinomaniak(CBaseHostClass):
             
         params['header']['Referer'] = cUrl
         sts, data = self.getPage(url, params)
-        if not sts: return []
+        if not sts:
+            return []
 
 #        sts, jscode = self.getPage('https://ekinomaniak.net/js/bootstrap.php', params)
 #        if not sts: return []
@@ -305,22 +318,27 @@ class eKinomaniak(CBaseHostClass):
         itemsList = []
 
         sts, data = self.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
 
         title = cItem['title']
         icon = cItem.get('icon', '')
         desc = cItem.get('desc', '')
 
         title = self.cm.ph.getDataBeetwenMarkers(data, '<title>', '</title>', True)[1]
-        if title.endswith('Online</title>'): title = title.replace('Online', '')
+        if title.endswith('Online</title>'):
+            title = title.replace('Online', '')
         icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(title, '''this\.src=['"]([^"^']+?)['"]''', 1, True)[0])
         desc = self.cm.ph.getDataBeetwenMarkers(data, '<dt>Opis:</dt>', '</dd>', True)[1]
         itemsList.append((_('Duration'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<dt>Czas trwania:</dt>', '</dd>', False)[1])))
         itemsList.append((_('Genres'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<ul class="genres">', '</ul>', True)[1])))
 
-        if title == '': title = cItem['title']
-        if icon  == '': icon  = cItem.get('icon', '')
-        if desc  == '': desc  = cItem.get('desc', '')
+        if title == '':
+            title = cItem['title']
+        if icon  == '':
+            icon  = cItem.get('icon', '')
+        if desc  == '':
+            desc  = cItem.get('desc', '')
 
         return [{'title':self.cleanHtmlStr( title ), 'text': self.cleanHtmlStr( desc ), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
         

@@ -15,8 +15,10 @@ from Plugins.Extensions.IPTVPlayer.libs import ph
 ###################################################
 import re
 import urllib
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 from Components.config import config, ConfigText, getConfigListEntry
 ###################################################
 
@@ -137,7 +139,8 @@ class OrthoBullets(CBaseHostClass):
         page = cItem.get('page', 1)
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(self.cm.meta['url'])
 
         nextPage = self.cm.ph.getDataBeetwenNodes(data, ('<div class=', '>', 'paging paging--right paging--padding'), ('</div', '>'))[1]
@@ -183,7 +186,8 @@ class OrthoBullets(CBaseHostClass):
         self.tryTologin()
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
         self.setMainUrl(self.cm.meta['url'])
         
         url = self.getFullUrl(self.cm.ph.getSearchGroups(data, '''<iframe[^>]+?src=['"]([^"^']+?)['"]''', 1, True)[0])
@@ -206,13 +210,16 @@ class OrthoBullets(CBaseHostClass):
                 return False
             
             sts, data = self.getPage(self.getFullUrl('/login'))
-            if not sts: return False
+            if not sts:
+                return False
             cUrl = self.cm.meta['url']
             
             sts, data = self.cm.ph.getDataBeetwenNodes(data, ('<form', '>'), ('</form', '>'))
-            if not sts: return False
+            if not sts:
+                return False
             actionUrl = self.cm.getFullUrl(self.cm.ph.getSearchGroups(data, '''action=['"]([^'^"]+?)['"]''')[0], self.cm.getBaseUrl(cUrl))
-            if actionUrl == '': actionUrl = cUrl
+            if actionUrl == '':
+                actionUrl = cUrl
             
             post_data = {}
             inputData = self.cm.ph.getAllItemsBeetwenMarkers(data, '<input', '>')
@@ -231,9 +238,11 @@ class OrthoBullets(CBaseHostClass):
             if sts:
                 cUrl = self.cm.meta['url']
                 sts, data = self.cm.ph.getDataBeetwenNodes(data, ('<form', '>'), ('</form', '>'))
-                if not sts: return False
+                if not sts:
+                    return False
                 actionUrl = self.cm.getFullUrl(self.cm.ph.getSearchGroups(data, '''action=['"]([^'^"]+?)['"]''')[0], self.cm.getBaseUrl(cUrl))
-                if actionUrl == '': actionUrl = cUrl
+                if actionUrl == '':
+                    actionUrl = cUrl
                 
                 post_data = {}
                 inputData = self.cm.ph.getAllItemsBeetwenMarkers(data, '<input', '>')

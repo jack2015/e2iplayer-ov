@@ -10,8 +10,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc
 from Plugins.Extensions.IPTVPlayer.libs.youtube_dl.jsinterp import JSInterpreter
 from Plugins.Extensions.IPTVPlayer.libs.youtube_dl.extractor.base import InfoExtractor
 
-try: import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 
 class MTVServicesInfoExtractor(InfoExtractor):
     _MOBILE_TEMPLATE = None
@@ -107,7 +109,8 @@ class MTVServicesInfoExtractor(InfoExtractor):
             mediagen_url += '&acceptMethods=fms'
 
         sts, mediagen_doc = self.cm.getPage(mediagen_url)
-        if not sts: return None
+        if not sts:
+            return None
 
         # This a short id that's used in the webpage urls
         mtvn_id = None

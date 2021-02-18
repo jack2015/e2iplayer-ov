@@ -13,8 +13,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtypes import strwithmeta
 # FOREIGN import
 ###################################################
 import re
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 ###################################################
 
 
@@ -42,7 +44,8 @@ class TfarjoCom(CBaseHostClass):
         self.cacheFiltersKeys = []
         
     def getPage(self, baseUrl, addParams = {}, post_data = None):
-        if addParams == {}: addParams = dict(self.defaultParams)
+        if addParams == {}:
+            addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
         addParams['cloudflare_params'] = {'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT}
@@ -54,7 +57,8 @@ class TfarjoCom(CBaseHostClass):
     
     def getFullIconUrl(self, url):
         url = CBaseHostClass.getFullIconUrl(self, url.strip())
-        if url == '': return ''
+        if url == '':
+            return ''
         cookieHeader = self.cm.getCookieHeader(self.COOKIE_FILE, ['PHPSESSID', 'cf_clearance'])
         return strwithmeta(url, {'Cookie':cookieHeader, 'User-Agent':self.USER_AGENT})
     
@@ -64,7 +68,8 @@ class TfarjoCom(CBaseHostClass):
     def listMainMenu(self, cItem):
         printDBG("InteriaTv.listMainMenu")
         sts, data = self.getPage(self.getMainUrl())
-        if not sts: return
+        if not sts:
+            return
         
         self.setMainUrl(data.meta['url'])
         MAIN_CAT_TAB = [{'category':'movies',         'title': 'Films',            'url':self.getFullUrl('/films')},
@@ -76,7 +81,8 @@ class TfarjoCom(CBaseHostClass):
     def listMovies(self, cItem, nextCategory1, nextCategory2):
         printDBG("TfarjoCom.listMovies")
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(data.meta['url'])
         
         params = dict(cItem)
@@ -94,7 +100,8 @@ class TfarjoCom(CBaseHostClass):
             for item in tmp:
                 url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
                 title = self.cleanHtmlStr(item)
-                if title == '': continue
+                if title == '':
+                    continue
                 params = {'category':nextCategory2, 'title':title, 'url':url}
                 subItems.append(params)
             
@@ -104,7 +111,8 @@ class TfarjoCom(CBaseHostClass):
     def listSeries(self, cItem, nextCategory):
         printDBG("TfarjoCom.listSeries [%s]" % cItem)
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(data.meta['url'])
         
         params = dict(cItem)
@@ -116,7 +124,8 @@ class TfarjoCom(CBaseHostClass):
         for item in tmp:
             url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
             title = self.cleanHtmlStr(item)
-            if title == '': continue
+            if title == '':
+                continue
             params = dict(cItem)
             params.update({'category':nextCategory, 'title':title, 'url':url})
             self.addDir(params)
@@ -137,7 +146,8 @@ class TfarjoCom(CBaseHostClass):
         page = cItem.get('page', 1)
         if data == None:
             sts, data = self.getPage(cItem['url'])
-            if not sts: return
+            if not sts:
+                return
             self.setMainUrl(data.meta['url'])
             
         nextPage = self.cm.ph.getDataBeetwenNodes(data, ('<ul', '>', 'pagination'), ('</ul', '>'))[1]
@@ -152,10 +162,13 @@ class TfarjoCom(CBaseHostClass):
             desc = []
             item =  self.cm.ph.getAllItemsBeetwenMarkers(item, '<span', '</span>')
             for t in item:
-                if 'VO' in t: desc.append('VO')
-                if 'VF' in t: desc.append('VF')
+                if 'VO' in t:
+                    desc.append('VO')
+                if 'VF' in t:
+                    desc.append('VF')
                 t = self.cleanHtmlStr(t)
-                if t != '': desc.append(t)
+                if t != '':
+                    desc.append(t)
             params = {'good_for_fav':True, 'priv_has_art':True, 'category':nextCategory, 'url':url, 'title':title, 'desc':' | '.join(desc), 'icon':icon}
             self.addDir(params)
         
@@ -167,12 +180,14 @@ class TfarjoCom(CBaseHostClass):
     def listSearchResult(self, cItem, searchPattern, searchType):
         printDBG("TfarjoCom.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         sts, data = self.getPage(self.getMainUrl())
-        if not sts: return
+        if not sts:
+            return
         cUrl = data.meta['url']
         self.setMainUrl(cUrl)
         
         sts, data = self.cm.ph.getDataBeetwenNodes(data, ('<form', '>', 'form-user'), ('</form', '>'))
-        if not sts: return False
+        if not sts:
+            return False
         actionUrl = self.getFullUrl(self.cm.ph.getSearchGroups(data, '''action=['"]([^'^"]+?)['"]''')[0])
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<input', '>')
         post_data = {}
@@ -187,13 +202,15 @@ class TfarjoCom(CBaseHostClass):
         paramsUrl['header']['Referer'] = cUrl
         
         sts, data = self.getPage(actionUrl, paramsUrl, post_data)
-        if not sts: return
+        if not sts:
+            return
         printDBG(data)
         
         try:
             data = byteify(json.loads(data), '', True)
             for item in data['data']['user']:
-                if not isinstance(item, dict): continue
+                if not isinstance(item, dict):
+                    continue
                 url = self.getFullUrl(item['url'])
                 icon = self.getFullIconUrl(item.get('avatar', ''))
                 title = '%s %s' % (item['name'], item['year'])
@@ -205,15 +222,18 @@ class TfarjoCom(CBaseHostClass):
     def exploreItem(self, cItem, nextCategory):
         printDBG("InteriaTv.listItems")
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         cUrl = data.meta['url']
         if '/serie/' in cUrl and '/saison' in cUrl:
             data = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'vlink'), ('</div', '>'))[1]
             data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<a', '</a>')
-            if len(data) < 3: return
+            if len(data) < 3:
+                return
             cUrl = self.getFullUrl(self.cm.ph.getSearchGroups(data[2], '''href=['"]([^"^']+?)['"]''')[0])
             sts, data = self.getPage(cUrl)
-            if not sts: return
+            if not sts:
+                return
             cUrl = data.meta['url']
         self.setMainUrl(cUrl)
         tmp = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'bdetail'), ('<div', '>', 'row'))[1]
@@ -239,8 +259,10 @@ class TfarjoCom(CBaseHostClass):
                     title = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(item, '<a', '</a>')[1])
                     desc = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('<span', '>', 'ddcheck'), ('</span', '>'))[1])
                     params = {'good_for_fav':True, 'priv_has_art':True, 'url':url, 'title':'%s - %s' % (iTitle, title), 'desc':desc, 'icon':iIcon}
-                    if 'glyphicon-time' in item: params['type'] = 'article'
-                    else: params['type'] = 'video'
+                    if 'glyphicon-time' in item:
+                        params['type'] = 'article'
+                    else:
+                        params['type'] = 'video'
                     episodesTab.append(params)
                 if len(episodesTab):
                     params = {'good_for_fav':False, 'priv_has_art':True, 'category':nextCategory, 'title':sTitle, 'url':sUrl, 'sub_items':episodesTab, 'desc':'', 'icon':iIcon}
@@ -259,20 +281,24 @@ class TfarjoCom(CBaseHostClass):
         
         cacheKey = cItem['url']
         cacheTab = self.cacheLinks.get(cacheKey, [])
-        if len(cacheTab): return cacheTab
+        if len(cacheTab):
+            return cacheTab
         
         self.cacheLinks = {}
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         
         cUrl = data.meta['url']
         self.setMainUrl(cUrl)
         
         tmp = self.cm.ph.getDataBeetwenMarkers(data, 'function getIframe', '</script>')[1]
         linkUrl = self.getFullUrl(self.cm.ph.getSearchGroups(tmp, '''['"]?url['"]?\s*?:\s*?['"]([^'^"]+?)['"]''')[0])
-        if '/film/' in cUrl: itemType = 'movie'
-        else: itemType = 'episode'
+        if '/film/' in cUrl:
+            itemType = 'movie'
+        else:
+            itemType = 'episode'
         linkTest = self.cm.ph.getSearchGroups(data, '''['"]?csrf_test_name['"]?\s*?:\s*?['"]([^'^"]+?)['"]''')[0]
         
         retTab = []
@@ -308,7 +334,8 @@ class TfarjoCom(CBaseHostClass):
         paramsUrl['header']['Referer'] = baseUrl.meta['Referer']
         post_data = {'csrf_test_name':baseUrl.meta['iptv_link_test'], baseUrl.meta['iptv_link_type']:baseUrl.meta['iptv_link_data']}
         sts, data = self.getPage(baseUrl.split('#', 1)[0], paramsUrl, post_data)
-        if not sts: return
+        if not sts:
+            return
         printDBG(data)
         try:
             data = byteify(json.loads(data), '', True)
@@ -328,7 +355,8 @@ class TfarjoCom(CBaseHostClass):
         otherInfo = {}
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
         cUrl = data.meta['url']
         self.setMainUrl(cUrl)
         
@@ -354,13 +382,17 @@ class TfarjoCom(CBaseHostClass):
         for item in tmp:
             item = reObj.split(item, 1)
             val = self.cleanHtmlStr(item[-1]).replace(' ,', ',')
-            if val == '' or val.lower() == 'n/a': continue
+            if val == '' or val.lower() == 'n/a':
+                continue
             key = self.cleanHtmlStr(item[0]).decode('utf-8').lower().encode('utf-8')
-            if key not in keysMap: continue
+            if key not in keysMap:
+                continue
             otherInfo[keysMap[key]] = val
         
-        if title == '': title = cItem['title']
-        if icon == '':  icon = cItem.get('icon', self.DEFAULT_ICON_URL)
+        if title == '':
+            title = cItem['title']
+        if icon == '':
+            icon = cItem.get('icon', self.DEFAULT_ICON_URL)
         
         return [{'title':self.cleanHtmlStr( title ), 'text': self.cleanHtmlStr( desc ), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':otherInfo}]
     
@@ -413,5 +445,6 @@ class IPTVHost(CHostBase):
     def withArticleContent(self, cItem):
         if cItem.get('priv_has_art', False):
             return True
-        else: return False
+        else:
+            return False
     

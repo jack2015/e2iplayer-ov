@@ -10,8 +10,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, by
 ###################################################
 # FOREIGN import
 ###################################################
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 e2icjson = None
 ############################################
 

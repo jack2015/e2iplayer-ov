@@ -13,8 +13,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, by
 ###################################################
 import urlparse
 from copy import deepcopy
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 ###################################################
 
 
@@ -72,19 +74,22 @@ class Kabarety(CBaseHostClass):
         self.cacheFiltersKeys = []
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         
         def addFilter(data, marker, baseKey, addAll=True, titleBase=''):
             key = 'f_' + baseKey
             self.cacheFilters[key] = []
             for item in data:
                 value = self.cm.ph.getSearchGroups(item, marker + '''="([^"]+?)"''')[0]
-                if value == '': continue
+                if value == '':
+                    continue
                 title = self.cleanHtmlStr(item)
                 self.cacheFilters[key].append({'title':title.title(), key:value})
                 
             if len(self.cacheFilters[key]):
-                if addAll: self.cacheFilters[key].insert(0, {'title':_('All')})
+                if addAll:
+                    self.cacheFilters[key].insert(0, {'title':_('All')})
                 self.cacheFiltersKeys.append(key)
         
         # type
@@ -114,9 +119,11 @@ class Kabarety(CBaseHostClass):
         cItem = dict(cItem)
         
         f_idx = cItem.get('f_idx', 0)
-        if f_idx == 0: self.fillCacheFilters(cItem)
+        if f_idx == 0:
+            self.fillCacheFilters(cItem)
         
-        if 0 == len(self.cacheFiltersKeys): return
+        if 0 == len(self.cacheFiltersKeys):
+            return
         
         filter = self.cacheFiltersKeys[f_idx]
         f_idx += 1
@@ -128,7 +135,8 @@ class Kabarety(CBaseHostClass):
     def listCategory(self, cItem, idx, nextCategory):
         printDBG("Kabarety.listCategory")
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         
         m1 = '<div class="rborder">'
         if idx == 0:
@@ -139,7 +147,8 @@ class Kabarety(CBaseHostClass):
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<a', '</a>')
         for item in data:
             url = self.getFullUrl( self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0] )
-            if not self.cm.isValidUrl(url): continue
+            if not self.cm.isValidUrl(url):
+                continue
             title = self.cleanHtmlStr(item)
             params = dict(cItem)
             params.update({'good_for_fav': True, 'title':title, 'url':url})
@@ -159,7 +168,8 @@ class Kabarety(CBaseHostClass):
         baseUrl += '&count={0}'.format(perPage)
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         
         cat = self.cm.ph.getSearchGroups(data, '<div class="load"[^>]+?name="([^"]+?)"')[0]
         baseUrl += '&cat={0}'.format(cat)
@@ -168,7 +178,8 @@ class Kabarety(CBaseHostClass):
         HEADER['Referer'] = cItem['url']
         
         sts, data = self.getPage(self.getFullUrl(baseUrl), {'header':HEADER})
-        if not sts: return
+        if not sts:
+            return
         
         printDBG(data)
         
@@ -176,7 +187,8 @@ class Kabarety(CBaseHostClass):
         num = 0
         for item in data:
             url = self.getFullUrl( self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0] )
-            if not self.cm.isValidUrl(url): continue
+            if not self.cm.isValidUrl(url):
+                continue
             
             icon = self.getFullIconUrl( self.cm.ph.getSearchGroups(item, 'src="([^"]+?)"')[0] )
             title = self.cleanHtmlStr(item)
@@ -195,7 +207,8 @@ class Kabarety(CBaseHostClass):
         printDBG("Kabarety.listSearchResult cItem[%s], searchPattern[%s] searchType[%s]" % (cItem, searchPattern, searchType))
         
         sts, data = self.getPage(self.getFullUrl('szukaj'), post_data={'szukaj':searchPattern})
-        if not sts: return
+        if not sts:
+            return
         
         if searchType == 'sketches':
             m = '<div class="div_szukaj_video div_szukaj', '<input type="hidden"'
@@ -213,7 +226,8 @@ class Kabarety(CBaseHostClass):
         
         for item in data:
             url = self.getFullUrl( self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0] )
-            if not self.cm.isValidUrl(url): continue
+            if not self.cm.isValidUrl(url):
+                continue
             
             icon = self.getFullIconUrl( self.cm.ph.getSearchGroups(item, 'src="([^"]+?)"')[0] )
             title = self.cleanHtmlStr(item)
@@ -231,7 +245,8 @@ class Kabarety(CBaseHostClass):
         urlTab = []
         
         sts, data = self.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
         
         videoUrl = self.cm.ph.getSearchGroups(data, '''<iframe[^>]+?src=['"](https?://[^"^']+?)['"]''', 1, True)[0]
         if self.cm.isValidUrl(videoUrl):
@@ -269,7 +284,8 @@ class Kabarety(CBaseHostClass):
         try:
             cItem = byteify(json.loads(fav_data))
             links = self.getLinksForVideo(cItem)
-        except Exception: printExc()
+        except Exception:
+            printExc()
         return links
         
     def setInitListFromFavouriteItem(self, fav_data):

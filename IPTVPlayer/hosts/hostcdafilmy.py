@@ -16,8 +16,10 @@ from Plugins.Extensions.IPTVPlayer.libs.youtube_dl.utils import unescapeHTML
 import urlparse
 import re
 import urllib
-try:    import json
-except Exception: import simplejson as json
+try:
+    import json
+except Exception:
+    import simplejson as json
 ###################################################
 
 
@@ -44,12 +46,15 @@ class CdaFilmy(CBaseHostClass):
         self.cacheFiltersKeys = []
         
     def getPage(self, baseUrl, addParams = {}, post_data = None):
-        if addParams == {}: addParams = dict(self.defaultParams)
+        if addParams == {}:
+            addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
         def _getFullUrl(url):
-            if self.cm.isValidUrl(url): return url
-            else: return urlparse.urljoin(baseUrl, url)
+            if self.cm.isValidUrl(url):
+                return url
+            else:
+                return urlparse.urljoin(baseUrl, url)
         addParams['cloudflare_params'] = {'domain':self.up.getDomain(baseUrl), 'cookie_file':self.COOKIE_FILE, 'User-Agent':self.USER_AGENT, 'full_url_handle':_getFullUrl}
         return self.cm.getPageCFProtection(baseUrl, addParams, post_data)
         
@@ -78,7 +83,8 @@ class CdaFilmy(CBaseHostClass):
         printDBG("cda-filmy.listCats")
  
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
 
         printDBG("cda-filmy.listCats data1[%s]" % data)            
         data = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'Wdgt widget_categories'), ('</ul', '>'))[1]
@@ -86,9 +92,11 @@ class CdaFilmy(CBaseHostClass):
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<li', '</li>')
         for item in data:
             url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
-            if url == '': continue
+            if url == '':
+                continue
             title = self.cleanHtmlStr(item)
-            if title == '': continue
+            if title == '':
+                continue
             params = dict(cItem)
             params.update({'good_for_fav':False, 'category':nextCategory, 'title':title, 'desc':'', 'url':url})
             self.addDir(params)
@@ -97,7 +105,8 @@ class CdaFilmy(CBaseHostClass):
         printDBG("cda-filmy.listItems")
         page = cItem.get('page', 1)
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(data.meta['url'])
             
         nextPage = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'wp-pagenavi'), ('</div', '>'))[1]
@@ -126,7 +135,8 @@ class CdaFilmy(CBaseHostClass):
     def listSeries(self, cItem):
         printDBG("cda-filmy.listSeries")
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(data.meta['url'])
 
         data = self.cm.ph.getAllItemsBeetwenNodes(data, ('<div', '>', 'Wdgt AABox'), ('</table', '>'))
@@ -138,7 +148,8 @@ class CdaFilmy(CBaseHostClass):
 #                item = unescapeHTML(item)
                 printDBG("cda-filmy.listSeries item %s" % item)
                 url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
-                if url == '': continue
+                if url == '':
+                    continue
                 icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(unescapeHTML(item), '''src=['"]([^"^']+?)['"]''')[0])
                 title = season + ' - ' + self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(item, ('<td', '>', 'MvTbTtl'), ('</td', '>'))[1])
                 params = {'good_for_fav':True, 'url':url, 'title':title, 'icon':icon}
@@ -148,16 +159,19 @@ class CdaFilmy(CBaseHostClass):
         printDBG("cda-filmy.listAZ")
 
         sts, data = self.getPage(cItem['url'])
-        if not sts: return
+        if not sts:
+            return
         self.setMainUrl(data.meta['url'])
            
         data = self.cm.ph.getDataBeetwenNodes(data, ('<ul', '>', 'AZList'), ('</ul', '>'))[1]
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<a', '</a>')
         for item in data:
             url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
-            if url == '': continue
+            if url == '':
+                continue
             title = self.cleanHtmlStr(item)
-            if title == '': continue
+            if title == '':
+                continue
             params = dict(cItem)
             params.update({'good_for_fav':False, 'category':nextCategory, 'title':letter, 'desc':'', 'url':url})
             self.addDir(params)
@@ -181,7 +195,8 @@ class CdaFilmy(CBaseHostClass):
                 
         cacheKey = cItem['url']
         cacheTab = self.cacheLinks.get(cacheKey, [])
-        if len(cacheTab): return cacheTab
+        if len(cacheTab):
+            return cacheTab
         
         self.cacheLinks = {}
         
@@ -195,7 +210,8 @@ class CdaFilmy(CBaseHostClass):
             
         params['header']['Referer'] = cUrl
         sts, data = self.getPage(url, params)
-        if not sts: return []
+        if not sts:
+            return []
         
         cUrl = data.meta['url']
         self.setMainUrl(cUrl)
@@ -207,7 +223,8 @@ class CdaFilmy(CBaseHostClass):
             printDBG("cda-filmy.getLinksForVideo item[%s]" % item)
             url = self.cm.ph.getSearchGroups(item, '''src=['"]([^"^']+?)['"]''', 1, True)[0]
             sts, data = self.getPage(url, params)
-            if not sts: continue
+            if not sts:
+                continue
             playerUrl = self.cm.ph.getSearchGroups(data, '''src=['"]([^"^']+?)['"]''', 1, True)[0]
             retTab.append({'name':self.up.getHostName(playerUrl), 'url':strwithmeta(playerUrl, {'Referer':url}), 'need_resolve':1})
              
@@ -236,7 +253,8 @@ class CdaFilmy(CBaseHostClass):
         itemsList = []
 
         sts, data = self.cm.getPage(cItem['url'])
-        if not sts: return []
+        if not sts:
+            return []
 
         title = cItem['title']
         icon = cItem.get('icon', '')
@@ -248,9 +266,12 @@ class CdaFilmy(CBaseHostClass):
         itemsList.append((_('Info'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<p class="Info">', '</p>', False)[1])))
         itemsList.append((_('Genres'), self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<strong>Gatunek:', '</li>', False)[1])))
 
-        if title == '': title = cItem['title']
-        if icon  == '': icon  = cItem.get('icon', '')
-        if desc  == '': desc  = cItem.get('desc', '')
+        if title == '':
+            title = cItem['title']
+        if icon  == '':
+            icon  = cItem.get('icon', '')
+        if desc  == '':
+            desc  = cItem.get('desc', '')
 
         return [{'title':self.cleanHtmlStr( title ), 'text': self.cleanHtmlStr( desc ), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
         

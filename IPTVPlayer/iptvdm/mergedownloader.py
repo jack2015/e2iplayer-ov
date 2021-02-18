@@ -22,8 +22,10 @@ from enigma import eConsoleAppContainer
 import re
 import datetime
 try:
-    try:    import json
-    except Exception: import simplejson as json
+    try:
+        import json
+    except Exception:
+        import simplejson as json
 except Exception:
     printExc()
 ###################################################
@@ -149,9 +151,11 @@ class MergeDownloader(BaseDownloader):
             for idx in range(len(lines)):
                 if 'Length:' in lines[idx]:
                     match = re.search(" ([0-9]+?) ", lines[idx])
-                    if match: self.multi['remote_size'][self.currIdx] = int(match.group(1))
+                    if match:
+                        self.multi['remote_size'][self.currIdx] = int(match.group(1))
                     match = re.search("(\[[^]]+?\])", lines[idx])
-                    if match: self.multi['remote_content_type'][self.currIdx] = match.group(1)
+                    if match:
+                        self.multi['remote_content_type'][self.currIdx] = match.group(1)
             self.outData = ''
                         
     def _terminate(self):
