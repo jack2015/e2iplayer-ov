@@ -31,13 +31,13 @@ from Screens.MessageBox import MessageBox
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.allboxtv_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.allboxtv_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.allboxtv_password = ConfigText(default="", fixed_size=False)
 
 def GetConfigList():
     optionList = []
-    optionList.append(getConfigListEntry(_("e-mail")+":",    config.plugins.iptvplayer.allboxtv_login))
-    optionList.append(getConfigListEntry(_("password")+":", config.plugins.iptvplayer.allboxtv_password))
+    optionList.append(getConfigListEntry(_("e-mail") + ":", config.plugins.iptvplayer.allboxtv_login))
+    optionList.append(getConfigListEntry(_("password") + ":", config.plugins.iptvplayer.allboxtv_password))
     return optionList
 ###################################################
 def gettytul():
@@ -62,20 +62,20 @@ class AllBoxTV(CBaseHostClass):
         self.cacheCartoonsLetter = []
         self.cacheCartoonsByLetter = {}
         
-        self.cacheLinks    = {}
+        self.cacheLinks = {}
         self.defaultParams = {'header':self.HTTP_HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         
-        self.MAIN_CAT_TAB = [{'category':'list_filters',       'title': _('Movies'),          'url':self.getFullUrl('/filmy-online')},
-                             {'category':'list_items',         'title': _('Premieres'),       'url':self.getFullUrl('/premiery')},
-                             {'category':'list_series_az',     'title': _('TV series'),       'url':self.getFullUrl('/seriale-online')},
-                             {'category':'list_cartoons_az',   'title': _('Cartoons'),        'url':self.getFullUrl('/bajki-online')},
-                             {'category':'list_filters',       'title': _('Ranking'),         'url':self.getFullUrl('/filmy-online,wszystkie,top')},
+        self.MAIN_CAT_TAB = [{'category':'list_filters', 'title': _('Movies'), 'url':self.getFullUrl('/filmy-online')},
+                             {'category':'list_items', 'title': _('Premieres'), 'url':self.getFullUrl('/premiery')},
+                             {'category':'list_series_az', 'title': _('TV series'), 'url':self.getFullUrl('/seriale-online')},
+                             {'category':'list_cartoons_az', 'title': _('Cartoons'), 'url':self.getFullUrl('/bajki-online')},
+                             {'category':'list_filters', 'title': _('Ranking'), 'url':self.getFullUrl('/filmy-online,wszystkie,top')},
                              
-                             {'category':'search',           'title': _('Search'),          'search_item':True}, 
-                             {'category':'search_history',   'title': _('Search history')},
+                             {'category':'search', 'title': _('Search'), 'search_item':True}, 
+                             {'category':'search_history', 'title': _('Search history')},
                             ]
         self.loggedIn = None
-        self.login    = ''
+        self.login = ''
         self.password = ''
         self.loginMessage = ''
         
@@ -95,7 +95,7 @@ class AllBoxTV(CBaseHostClass):
     def base64Decode(self, data):
         missing_padding = len(data) % 4
         if missing_padding != 0:
-            data += '='* (4 - missing_padding)
+            data += '=' * (4 - missing_padding)
         return base64.b64decode(data)
     
     def getFullUrl(self, url):
@@ -241,7 +241,7 @@ class AllBoxTV(CBaseHostClass):
             
             if nextPage:
                 params = dict(cItem)
-                params.update({'good_for_fav':False, 'title':_("Next page"), 'page':page+1, 'movies_count':moviesCount})
+                params.update({'good_for_fav':False, 'title':_("Next page"), 'page':page + 1, 'movies_count':moviesCount})
                 self.addDir(params)
             
         except Exception:
@@ -302,10 +302,10 @@ class AllBoxTV(CBaseHostClass):
         seasonsTab = []
         data = ph.findall(data, ('<div', '</div>', 'seasonHead'), '</div>', flags=ph.START_S)
         for idx in range(1, len(data), 2):
-            sTitle = ph.clean_html(data[idx-1].split('<span', 1)[0])
+            sTitle = ph.clean_html(data[idx - 1].split('<span', 1)[0])
             sItem = ph.findall(data[idx], '<a', '</a>')
             for item in sItem:
-                url   = self.getFullUrl(ph.search(item, ph.A)[1])
+                url = self.getFullUrl(ph.search(item, ph.A)[1])
                 title = ph.clean_html(item)
                 tmp = ph.search(title, '''S([0-9]+?)E([0-9]+?)[^0-9]''', flags=ph.I)
                 title = '%s - %s' % (seriesTitle, title)
@@ -371,7 +371,7 @@ class AllBoxTV(CBaseHostClass):
         data = ph.find(data, ('<div', '>', 'tab-content'), ('<div', '>', 'sidebarTitle'))[1]
         data = re.compile('<div([^>]+?tabpanel[^>]+?)>').split(data)
         for idx in range(2, len(data), 2):
-            name = ph.getattr(data[idx-1], 'id')
+            name = ph.getattr(data[idx - 1], 'id')
             if name not in ['movies', 'serials']:
                 printDBG('SKIP search group %s' % name)
                 continue
@@ -523,7 +523,7 @@ class AllBoxTV(CBaseHostClass):
             data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<input', '>')
             post_data = {}
             for item in data:
-                name  = self.cm.ph.getSearchGroups(item, '''name=['"]([^'^"]+?)['"]''')[0]
+                name = self.cm.ph.getSearchGroups(item, '''name=['"]([^'^"]+?)['"]''')[0]
                 value = self.cm.ph.getSearchGroups(item, '''value=['"]([^'^"]+?)['"]''')[0]
                 post_data[name] = value
             
@@ -537,7 +537,7 @@ class AllBoxTV(CBaseHostClass):
                 printDBG('tryTologin OK')
                 self.loggedIn = True
                 data = self.cm.ph.getDataBeetwenNodes(data, ('<', '>', 'mobile-header'), ('</ul', '>'))[1]
-                data  = self.cm.ph.getAllItemsBeetwenMarkers(data, '<li', '</li>') 
+                data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<li', '</li>') 
                 self.loginMessage = []
                 for item in data:
                     item = ph.clean_html(item)
@@ -564,9 +564,9 @@ class AllBoxTV(CBaseHostClass):
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
 
-        name     = self.currItem.get("name", '')
+        name = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        mode     = self.currItem.get("mode", '')
+        mode = self.currItem.get("mode", '')
         
         printDBG("handleService: |||| name[%s], category[%s] " % (name, category))
         self.currList = []

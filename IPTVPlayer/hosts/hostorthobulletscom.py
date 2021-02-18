@@ -32,13 +32,13 @@ from Screens.MessageBox import MessageBox
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.orthobulletscom_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.orthobulletscom_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.orthobulletscom_password = ConfigText(default="", fixed_size=False)
 
 def GetConfigList():
     optionList = []
-    optionList.append(getConfigListEntry(_("login")+":",    config.plugins.iptvplayer.orthobulletscom_login))
-    optionList.append(getConfigListEntry(_("password")+":", config.plugins.iptvplayer.orthobulletscom_password))
+    optionList.append(getConfigListEntry(_("login") + ":", config.plugins.iptvplayer.orthobulletscom_login))
+    optionList.append(getConfigListEntry(_("password") + ":", config.plugins.iptvplayer.orthobulletscom_password))
     return optionList
 ###################################################
 
@@ -62,62 +62,62 @@ class OrthoBullets(CBaseHostClass):
         
         self.defaultParams = {'header':self.HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         self.loggedIn = None
-        self.login    = ''
+        self.login = ''
         self.password = ''
              
-        self.MAIN_CAT_TAB =     [
-                                    {'category':'categories',           'title': _('Categories'),       'url':self.MAIN_URL, 'icon':self.DEFAULT_ICON_URL},
-                                    {'category':'subspeciality',        'title': _('Subspecialities'),    'url':self.MAIN_URL, 'icon':self.DEFAULT_ICON_URL},
-                                    {'category':'search',           'title': _('Search'), 'search_item':True},
-                                    {'category':'search_history',   'title': _('Search history')} 
+        self.MAIN_CAT_TAB = [
+                                    {'category':'categories', 'title': _('Categories'), 'url':self.MAIN_URL, 'icon':self.DEFAULT_ICON_URL},
+                                    {'category':'subspeciality', 'title': _('Subspecialities'), 'url':self.MAIN_URL, 'icon':self.DEFAULT_ICON_URL},
+                                    {'category':'search', 'title': _('Search'), 'search_item':True},
+                                    {'category':'search_history', 'title': _('Search history')} 
                                 ]
 
 
 
-        self.CATEGORIES_TAB =   [
-                                    {'category':'list_categories',  'title': _('All'), 'url':self.MAIN_URL + 'video/list.aspx'},
-                                    {'category':'list_categories',  'title': _('Board Review'), 'url':self.MAIN_URL + 'video/list.aspx?c=7'},
-                                    {'category':'list_categories',  'title': _('CME SAE'), 'url':self.MAIN_URL + 'video/list.aspx?c=20'},
-                                    {'category':'list_categories',  'title': _('Educational Animation'), 'url':self.MAIN_URL + 'video/list.aspx?c=109'},
-                                    {'category':'list_categories',  'title': _('Ethical & Legal'), 'url':self.MAIN_URL + 'video/list.aspx?c=10'},
-                                    {'category':'list_categories',  'title': _('Exam Review'), 'url':self.MAIN_URL + 'video/list.aspx?c=19'},
-                                    {'category':'list_categories',  'title': _('Humanitarian'), 'url':self.MAIN_URL + 'video/list.aspx?c=8'},
-                                    {'category':'list_categories',  'title': _('Industry'), 'url':self.MAIN_URL + 'video/list.aspx?c=107'},
-                                    {'category':'list_categories',  'title': _('Interactive Learning Center(ILC)'), 'url':self.MAIN_URL + 'video/list.aspx?c=17'},
-                                    {'category':'list_categories',  'title': _('Jobs & Positions'), 'url':self.MAIN_URL + 'video/list.aspx?c=14'},
-                                    {'category':'list_categories',  'title': _('Journal Club'), 'url':self.MAIN_URL + 'video/list.aspx?c=9'},
-                                    {'category':'list_categories',  'title': _('Medtryx Marketing'), 'url':self.MAIN_URL + 'video/list.aspx?c=24'},
-                                    {'category':'list_categories',  'title': _('Meetings'), 'url':self.MAIN_URL + 'video/list.aspx?c=12'},
-                                    {'category':'list_categories',  'title': _('Pathology Rounds'), 'url':self.MAIN_URL + 'video/list.aspx?c=16'},
-                                    {'category':'list_categories',  'title': _('Physical Exam'), 'url':self.MAIN_URL + 'video/list.aspx?c=5'},
-                                    {'category':'list_categories',  'title': _('Powerpoint Presentation'), 'url':self.MAIN_URL + 'video/list.aspx?c=108'},
-                                    {'category':'list_categories',  'title': _('Practice Management'), 'url':self.MAIN_URL + 'video/list.aspx?c=11'},
-                                    {'category':'list_categories',  'title': _('Professional Networks'), 'url':self.MAIN_URL + 'video/list.aspx?c=13'},
-                                    {'category':'list_categories',  'title': _('Radiology Rounds'), 'url':self.MAIN_URL + 'video/list.aspx?c=15'},
-                                    {'category':'list_categories',  'title': _('Study Plan'), 'url':self.MAIN_URL + 'video/list.aspx?c=21'},
-                                    {'category':'list_categories',  'title': _('Surgical Approaches'), 'url':self.MAIN_URL + 'video/list.aspx?c=3'},
-                                    {'category':'list_categories',  'title': _('Surgical Cases'), 'url':self.MAIN_URL + 'video/list.aspx?c=100'},
-                                    {'category':'list_categories',  'title': _('Surgical Complications'), 'url':self.MAIN_URL + 'video/list.aspx?c=4'},
-                                    {'category':'list_categories',  'title': _('Surgical Techniques'), 'url':self.MAIN_URL + 'video/list.aspx?c=2'},
-                                    {'category':'list_categories',  'title': _('Techniques'), 'url':self.MAIN_URL + 'video/list.aspx?c=106'},
-                                    {'category':'list_categories',  'title': _('Treatment Consult'), 'url':self.MAIN_URL + 'video/list.aspx?c=1'},
-                                    {'category':'list_categories',  'title': _('Written Boards Review'), 'url':self.MAIN_URL + 'video/list.aspx?c=102'}
+        self.CATEGORIES_TAB = [
+                                    {'category':'list_categories', 'title': _('All'), 'url':self.MAIN_URL + 'video/list.aspx'},
+                                    {'category':'list_categories', 'title': _('Board Review'), 'url':self.MAIN_URL + 'video/list.aspx?c=7'},
+                                    {'category':'list_categories', 'title': _('CME SAE'), 'url':self.MAIN_URL + 'video/list.aspx?c=20'},
+                                    {'category':'list_categories', 'title': _('Educational Animation'), 'url':self.MAIN_URL + 'video/list.aspx?c=109'},
+                                    {'category':'list_categories', 'title': _('Ethical & Legal'), 'url':self.MAIN_URL + 'video/list.aspx?c=10'},
+                                    {'category':'list_categories', 'title': _('Exam Review'), 'url':self.MAIN_URL + 'video/list.aspx?c=19'},
+                                    {'category':'list_categories', 'title': _('Humanitarian'), 'url':self.MAIN_URL + 'video/list.aspx?c=8'},
+                                    {'category':'list_categories', 'title': _('Industry'), 'url':self.MAIN_URL + 'video/list.aspx?c=107'},
+                                    {'category':'list_categories', 'title': _('Interactive Learning Center(ILC)'), 'url':self.MAIN_URL + 'video/list.aspx?c=17'},
+                                    {'category':'list_categories', 'title': _('Jobs & Positions'), 'url':self.MAIN_URL + 'video/list.aspx?c=14'},
+                                    {'category':'list_categories', 'title': _('Journal Club'), 'url':self.MAIN_URL + 'video/list.aspx?c=9'},
+                                    {'category':'list_categories', 'title': _('Medtryx Marketing'), 'url':self.MAIN_URL + 'video/list.aspx?c=24'},
+                                    {'category':'list_categories', 'title': _('Meetings'), 'url':self.MAIN_URL + 'video/list.aspx?c=12'},
+                                    {'category':'list_categories', 'title': _('Pathology Rounds'), 'url':self.MAIN_URL + 'video/list.aspx?c=16'},
+                                    {'category':'list_categories', 'title': _('Physical Exam'), 'url':self.MAIN_URL + 'video/list.aspx?c=5'},
+                                    {'category':'list_categories', 'title': _('Powerpoint Presentation'), 'url':self.MAIN_URL + 'video/list.aspx?c=108'},
+                                    {'category':'list_categories', 'title': _('Practice Management'), 'url':self.MAIN_URL + 'video/list.aspx?c=11'},
+                                    {'category':'list_categories', 'title': _('Professional Networks'), 'url':self.MAIN_URL + 'video/list.aspx?c=13'},
+                                    {'category':'list_categories', 'title': _('Radiology Rounds'), 'url':self.MAIN_URL + 'video/list.aspx?c=15'},
+                                    {'category':'list_categories', 'title': _('Study Plan'), 'url':self.MAIN_URL + 'video/list.aspx?c=21'},
+                                    {'category':'list_categories', 'title': _('Surgical Approaches'), 'url':self.MAIN_URL + 'video/list.aspx?c=3'},
+                                    {'category':'list_categories', 'title': _('Surgical Cases'), 'url':self.MAIN_URL + 'video/list.aspx?c=100'},
+                                    {'category':'list_categories', 'title': _('Surgical Complications'), 'url':self.MAIN_URL + 'video/list.aspx?c=4'},
+                                    {'category':'list_categories', 'title': _('Surgical Techniques'), 'url':self.MAIN_URL + 'video/list.aspx?c=2'},
+                                    {'category':'list_categories', 'title': _('Techniques'), 'url':self.MAIN_URL + 'video/list.aspx?c=106'},
+                                    {'category':'list_categories', 'title': _('Treatment Consult'), 'url':self.MAIN_URL + 'video/list.aspx?c=1'},
+                                    {'category':'list_categories', 'title': _('Written Boards Review'), 'url':self.MAIN_URL + 'video/list.aspx?c=102'}
                                 ]
 
-        self.SPECIALITY_TAB =   [
-                                    {'category':'list_speciality',  'title': _('Trauma'), 'url':self.MAIN_URL + 'video/list.aspx?s=1'},
-                                    {'category':'list_speciality',  'title': _('Spine'), 'url':self.MAIN_URL + 'video/list.aspx?s=2'},
-                                    {'category':'list_speciality',  'title': _('Shoulder & Elbow'), 'url':self.MAIN_URL + 'video/list.aspx?s=3'},
-                                    {'category':'list_speciality',  'title': _('Knee & Sports'), 'url':self.MAIN_URL + 'video/list.aspx?s=225'},
-                                    {'category':'list_speciality',  'title': _('Pediatrics'), 'url':self.MAIN_URL + 'video/list.aspx?s=4'},
-                                    {'category':'list_speciality',  'title': _('Recon'), 'url':self.MAIN_URL + 'video/list.aspx?s=5'},
-                                    {'category':'list_speciality',  'title': _('Hand'), 'url':self.MAIN_URL + 'video/list.aspx?s=6'},
-                                    {'category':'list_speciality',  'title': _('Foot & Ankle'), 'url':self.MAIN_URL + 'video/list.aspx?s=7'},
-                                    {'category':'list_speciality',  'title': _('Pathology'), 'url':self.MAIN_URL + 'video/list.aspx?s=8'},
-                                    {'category':'list_speciality',  'title': _('Basic Science'), 'url':self.MAIN_URL + 'video/list.aspx?s=9'},
-                                    {'category':'list_speciality',  'title': _('Anatomy'), 'url':self.MAIN_URL + 'video/list.aspx?s=10'},
-                                    {'category':'list_speciality',  'title': _('Approaches'), 'url':self.MAIN_URL + 'video/list.aspx?s=12'},
-                                    {'category':'list_speciality',  'title': _('General'), 'url':self.MAIN_URL + 'video/list.aspx?s=13'},
+        self.SPECIALITY_TAB = [
+                                    {'category':'list_speciality', 'title': _('Trauma'), 'url':self.MAIN_URL + 'video/list.aspx?s=1'},
+                                    {'category':'list_speciality', 'title': _('Spine'), 'url':self.MAIN_URL + 'video/list.aspx?s=2'},
+                                    {'category':'list_speciality', 'title': _('Shoulder & Elbow'), 'url':self.MAIN_URL + 'video/list.aspx?s=3'},
+                                    {'category':'list_speciality', 'title': _('Knee & Sports'), 'url':self.MAIN_URL + 'video/list.aspx?s=225'},
+                                    {'category':'list_speciality', 'title': _('Pediatrics'), 'url':self.MAIN_URL + 'video/list.aspx?s=4'},
+                                    {'category':'list_speciality', 'title': _('Recon'), 'url':self.MAIN_URL + 'video/list.aspx?s=5'},
+                                    {'category':'list_speciality', 'title': _('Hand'), 'url':self.MAIN_URL + 'video/list.aspx?s=6'},
+                                    {'category':'list_speciality', 'title': _('Foot & Ankle'), 'url':self.MAIN_URL + 'video/list.aspx?s=7'},
+                                    {'category':'list_speciality', 'title': _('Pathology'), 'url':self.MAIN_URL + 'video/list.aspx?s=8'},
+                                    {'category':'list_speciality', 'title': _('Basic Science'), 'url':self.MAIN_URL + 'video/list.aspx?s=9'},
+                                    {'category':'list_speciality', 'title': _('Anatomy'), 'url':self.MAIN_URL + 'video/list.aspx?s=10'},
+                                    {'category':'list_speciality', 'title': _('Approaches'), 'url':self.MAIN_URL + 'video/list.aspx?s=12'},
+                                    {'category':'list_speciality', 'title': _('General'), 'url':self.MAIN_URL + 'video/list.aspx?s=13'},
                                 ]
         
     def getPage(self, baseUrl, addParams={}, post_data=None):
@@ -155,21 +155,21 @@ class OrthoBullets(CBaseHostClass):
             title = map(lambda cleanTitle: cleanTitle.replace('\r\n                    ', ''), title)
             title = map(lambda cleanTitle: cleanTitle.replace('\r\n                ', ''), title)
             title = title[0]
-            title  = ph.clean_html(title)
+            title = ph.clean_html(title)
             videourl = self.MAIN_URL + self.cm.ph.getSearchGroups(videos, 'href="([^"]+?)"')[0]
             imageurl = self.cm.ph.getAllItemsBeetwenNodes(videos, 'style="background-image: url(\'', ('\');">'), False)[1]
             viddate = self.cm.ph.getAllItemsBeetwenNodes(videos, '<div class="dashboard-item__date">', '</div>', False)[0]
             viddate = viddate.strip()
             vidviews = self.cm.ph.getAllItemsBeetwenNodes(videos, '<div class="dashboard-item__views">', '</div>', False)[0]
             vidviews = vidviews.strip()
-            desc = '\c00????00 Title: \c00??????%s\\n \c00????00Date: \c00??????%s\\n \c00????00Views: \c00??????%s\\n' %(title, viddate, vidviews)
+            desc = '\c00????00 Title: \c00??????%s\\n \c00????00Date: \c00??????%s\\n \c00????00Views: \c00??????%s\\n' % (title, viddate, vidviews)
             params = dict(cItem)
             params.update({'good_for_fav':True, 'title':title, 'url':videourl, 'icon':imageurl, 'desc':desc})
             self.addVideo(params)                    
             
         if nextPage:
             params = dict(cItem)
-            params.update({'good_for_fav':False, 'title':_("Next page"), 'page':page+1, 'url':self.getFullUrl(nextPage)})
+            params.update({'good_for_fav':False, 'title':_("Next page"), 'page':page + 1, 'url':self.getFullUrl(nextPage)})
             self.addDir(params)  
               
     def listSearchResult(self, cItem, searchPattern, searchType):
@@ -225,7 +225,7 @@ class OrthoBullets(CBaseHostClass):
             inputData = self.cm.ph.getAllItemsBeetwenMarkers(data, '<input', '>')
             inputData.extend(self.cm.ph.getAllItemsBeetwenMarkers(data, '<button', '>'))
             for item in inputData:
-                name  = self.cm.ph.getSearchGroups(item, '''name=['"]([^'^"]+?)['"]''')[0]
+                name = self.cm.ph.getSearchGroups(item, '''name=['"]([^'^"]+?)['"]''')[0]
                 value = self.cm.ph.getSearchGroups(item, '''value=['"]([^'^"]+?)['"]''')[0].replace('&amp;', '&')
                 post_data[name] = value
             
@@ -248,7 +248,7 @@ class OrthoBullets(CBaseHostClass):
                 inputData = self.cm.ph.getAllItemsBeetwenMarkers(data, '<input', '>')
                 inputData.extend(self.cm.ph.getAllItemsBeetwenMarkers(data, '<button', '>'))
                 for item in inputData:
-                    name  = self.cm.ph.getSearchGroups(item, '''name=['"]([^'^"]+?)['"]''')[0]
+                    name = self.cm.ph.getSearchGroups(item, '''name=['"]([^'^"]+?)['"]''')[0]
                     value = self.cm.ph.getSearchGroups(item, '''value=['"]([^'^"]+?)['"]''')[0].replace('&amp;', '&')
                     post_data[name] = value
                 
@@ -271,9 +271,9 @@ class OrthoBullets(CBaseHostClass):
 
         self.tryTologin()
 
-        name     = self.currItem.get("name", '')
+        name = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        mode     = self.currItem.get("mode", '')
+        mode = self.currItem.get("mode", '')
         
         printDBG("handleService: || name [%s], category [%s], mode [%s] " % (name, category, mode))
         

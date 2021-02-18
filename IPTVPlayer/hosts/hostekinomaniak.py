@@ -42,7 +42,7 @@ class eKinomaniak(CBaseHostClass):
         self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
 
         self.cacheMovieFilters = {'cats':[], 'sort':[], 'years':[], 'az':[]}        
-        self.cacheLinks    = {}
+        self.cacheLinks = {}
         self.defaultParams = {'header':self.HTTP_HEADER, 'with_metadata':True, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
 
     def getPage(self, baseUrl, addParams={}, post_data=None):
@@ -110,12 +110,12 @@ class eKinomaniak(CBaseHostClass):
     def listMainMenu(self, cItem):
         printDBG("eKinomaniak.listMainMenu")
 
-        MAIN_CAT_TAB = [{'category':'list_sort',      'title': _('Movies'),         'url':self.getFullUrl('/watch/movies/')},
-                        {'category':'list_sort',      'title': _('Series'),         'url':self.getFullUrl('/watch/tv-shows')},
-                        {'category':'list_years',     'title': _('Movies by year'), 'url':self.MAIN_URL},
-                        {'category':'list_cats',      'title': _('Movies genres'),  'url':self.MAIN_URL},
-                        {'category':'list_az',        'title': _('Alphabetically'), 'url':self.MAIN_URL},
-                        {'category':'search',         'title': _('Search'),         'search_item':True}, 
+        MAIN_CAT_TAB = [{'category':'list_sort', 'title': _('Movies'), 'url':self.getFullUrl('/watch/movies/')},
+                        {'category':'list_sort', 'title': _('Series'), 'url':self.getFullUrl('/watch/tv-shows')},
+                        {'category':'list_years', 'title': _('Movies by year'), 'url':self.MAIN_URL},
+                        {'category':'list_cats', 'title': _('Movies genres'), 'url':self.MAIN_URL},
+                        {'category':'list_az', 'title': _('Alphabetically'), 'url':self.MAIN_URL},
+                        {'category':'search', 'title': _('Search'), 'search_item':True}, 
                         {'category':'search_history', 'title': _('Search history')},]
         self.listsTab(MAIN_CAT_TAB, cItem)
     
@@ -180,7 +180,7 @@ class eKinomaniak(CBaseHostClass):
         printDBG("eKinomaniak.listItems %s" % cItem)
         page = cItem.get('page', 1)
 
-        url  = cItem['url']
+        url = cItem['url']
         sort = cItem.get('sort', '')
         if sort not in url:
             url = url + sort
@@ -335,10 +335,10 @@ class eKinomaniak(CBaseHostClass):
 
         if title == '':
             title = cItem['title']
-        if icon  == '':
-            icon  = cItem.get('icon', '')
-        if desc  == '':
-            desc  = cItem.get('desc', '')
+        if icon == '':
+            icon = cItem.get('icon', '')
+        if desc == '':
+            desc = cItem.get('desc', '')
 
         return [{'title':self.cleanHtmlStr(title), 'text': self.cleanHtmlStr(desc), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
         
@@ -347,9 +347,9 @@ class eKinomaniak(CBaseHostClass):
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
 
-        name     = self.currItem.get("name", '')
+        name = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        mode     = self.currItem.get("mode", '')
+        mode = self.currItem.get("mode", '')
         
         printDBG("handleService: |||| name[%s], category[%s] " % (name, category))
         self.cacheLinks = {}

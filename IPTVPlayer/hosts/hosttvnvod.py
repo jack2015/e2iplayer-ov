@@ -33,7 +33,7 @@ except ImportError as e:
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.TVNDefaultformat = ConfigSelection(default="9999", choices=[("0", "Najgorsza"), ("1", "Bardzo niska"), ("2", "Niska"),  ("3", "Średnia"), ("4", "Standard"), ("5", "Wysoka"), ("6", "Bardzo wysoka"), ("7", "HD"), ("9999", "Najlepsza")])
+config.plugins.iptvplayer.TVNDefaultformat = ConfigSelection(default="9999", choices=[("0", "Najgorsza"), ("1", "Bardzo niska"), ("2", "Niska"), ("3", "Średnia"), ("4", "Standard"), ("5", "Wysoka"), ("6", "Bardzo wysoka"), ("7", "HD"), ("9999", "Najlepsza")])
 config.plugins.iptvplayer.TVNUseDF = ConfigYesNo(default=False)
 config.plugins.iptvplayer.TVNdevice = ConfigSelection(default="_mobile_", choices=[("_mobile_", "Mobile"), ("_tv_", "TV")])
 config.plugins.iptvplayer.proxyenable = ConfigYesNo(default=False)
@@ -53,7 +53,7 @@ def gettytul():
     return 'TVN Player'
 
 class TvnVod(CBaseHostClass):
-    ICON_URL     = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/%s?quality=50&dstw=290&dsth=287&type=1'
+    ICON_URL = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/%s?quality=50&dstw=290&dsth=287&type=1'
     
     QUALITIES_TABLE = { 
         'HD': 7,
@@ -133,7 +133,7 @@ class TvnVod(CBaseHostClass):
         return "Android4"
         
     def getBaseUrl(self, pl):
-        url = self.platforms[pl]['base_url'] + '/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (self.platforms[pl]['platform'], self.platforms[pl]['terminal'],  self.platforms[pl]['authKey'], self.platforms[pl]['api'])
+        url = self.platforms[pl]['base_url'] + '/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (self.platforms[pl]['platform'], self.platforms[pl]['terminal'], self.platforms[pl]['authKey'], self.platforms[pl]['api'])
         if pl not in ['Android', 'Android2', 'Panasonic']:
             url += 'showContentContractor=free%2Csamsung%2Cstandard&'
         return url 
@@ -194,7 +194,7 @@ class TvnVod(CBaseHostClass):
         salt = salt.hexdigest()[:32]
         tvncrypt = aes_cbc.AES_CBC(SecretKey, base.noPadding(), keySize=32)
         key = tvncrypt.decrypt(binascii.unhexlify(KeyStr), iv=iv)[:32]
-        expire = 3600000L + int(time.time()*1000) - 946684800000L
+        expire = 3600000L + int(time.time() * 1000) - 946684800000L
         unencryptedToken = "name=%s&expire=%s\0" % (url, expire)
         pkcs5_pad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
         pkcs5_unpad = lambda s: s[0:-ord(s[-1])]
@@ -212,7 +212,7 @@ class TvnVod(CBaseHostClass):
         page = 1 + cItem.get('page', 0)
         if 'search' == cItem.get('category', None):
             searchMode = True
-            urlQuery  = '&sort=newest&m=getSearchItems&page=%d&query=%s' % (page, cItem['pattern'])
+            urlQuery = '&sort=newest&m=getSearchItems&page=%d&query=%s' % (page, cItem['pattern'])
             if cItem.get('search_category', False):
                 pl = 'Android4'
 
@@ -252,7 +252,7 @@ class TvnVod(CBaseHostClass):
                 data = tmp
                 tmp = None
             else:
-                seasons  = data.get('seasons', None)
+                seasons = data.get('seasons', None)
                 # some fix for sub-categories
                 # and 0 < len(data.get('items', []))
                 if 0 < len(data.get('categories', [])) and cItem.get('previd', '') != cItem.get('id', ''):
@@ -271,9 +271,9 @@ class TvnVod(CBaseHostClass):
             if 0 != cItem.get('season', 0) or cItem.get('season', 0) == numSeasons:
                 for item in data:
                     category = self._getJItemStr(item, 'type', '')
-                    if category  in ['stream', 'catalog_with_widget', 'pauses', 'favorites']:
+                    if category in ['stream', 'catalog_with_widget', 'pauses', 'favorites']:
                         continue
-                    id       = self._getJItemStr(item, 'id', '')
+                    id = self._getJItemStr(item, 'id', '')
                     # some fix for sub-categories
                     if catalogs:
                         if 'category' == category:
@@ -385,9 +385,9 @@ class TvnVod(CBaseHostClass):
             elif 'Panasonic' in pl:
                 videoUrl = url
             else:
-                sts, data  = self.cm.getPage(url, {'header': self.getHttpHeader(pl)})
+                sts, data = self.cm.getPage(url, {'header': self.getHttpHeader(pl)})
                 if sts and data.startswith('http'):
-                    videoUrl =  data.encode('utf-8')
+                    videoUrl = data.encode('utf-8')
         urlTab = []
         videoUrl = strwithmeta(videoUrl, {'header': self.getHttpHeader(pl)})
         if self.cm.isValidUrl(videoUrl):
@@ -436,7 +436,7 @@ class TvnVod(CBaseHostClass):
                                 url = strwithmeta(url, {'tvn_platform':pl})
                                 qualityName = self._getJItemStr(video, 'profile_name', '')
                                 videoUrls.append({'name':qualityName, 'profile_name':qualityName, 'url':url, 'need_resolve':1})
-                    if  1 < len(videoUrls):
+                    if 1 < len(videoUrls):
                         max_bitrate = int(config.plugins.iptvplayer.TVNDefaultformat.value)
                         def __getLinkQuality(itemLink):
                             return int(TvnVod.QUALITIES_TABLE.get(itemLink['profile_name'], 9999))
@@ -465,7 +465,7 @@ class TvnVod(CBaseHostClass):
         # clear hosting tab cache
         self.linksCacheCache = {}
 
-        name     = self.currItem.get("name", '')
+        name = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
         printDBG("TvnVod.handleService: ---------> name[%s], category[%s] " % (name, category))
         self.currList = []

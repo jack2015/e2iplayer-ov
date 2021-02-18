@@ -28,13 +28,13 @@ from Components.config import config, ConfigSelection, ConfigYesNo
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.ytformat        = ConfigSelection(default="mp4", choices=[("flv, mp4", "flv, mp4"), ("flv", "flv"), ("mp4", "mp4")]) 
+config.plugins.iptvplayer.ytformat = ConfigSelection(default="mp4", choices=[("flv, mp4", "flv, mp4"), ("flv", "flv"), ("mp4", "mp4")]) 
 config.plugins.iptvplayer.ytDefaultformat = ConfigSelection(default="720", choices=[("0", _("the worst")), ("144", "144p"), ("240", "240p"), ("360", "360p"), ("720", "720p"), ("1080", "1080p"), ("1440", "1440p"), ("2160", "2160p"), ("9999", _("the best"))])
-config.plugins.iptvplayer.ytUseDF         = ConfigYesNo(default=True)
-config.plugins.iptvplayer.ytAgeGate       = ConfigYesNo(default=False)
-config.plugins.iptvplayer.ytVP9           = ConfigYesNo(default=False)
-config.plugins.iptvplayer.ytShowDash      = ConfigSelection(default="auto", choices=[("auto", _("Auto")), ("true", _("Yes")), ("false", _("No"))])
-config.plugins.iptvplayer.ytSortBy        = ConfigSelection(default="", choices=[("", _("Relevance")), ("video_date_uploaded", _("Upload date")), ("video_view_count", _("View count")), ("video_avg_rating", _("Rating"))]) 
+config.plugins.iptvplayer.ytUseDF = ConfigYesNo(default=True)
+config.plugins.iptvplayer.ytAgeGate = ConfigYesNo(default=False)
+config.plugins.iptvplayer.ytVP9 = ConfigYesNo(default=False)
+config.plugins.iptvplayer.ytShowDash = ConfigSelection(default="auto", choices=[("auto", _("Auto")), ("true", _("Yes")), ("false", _("No"))])
+config.plugins.iptvplayer.ytSortBy = ConfigSelection(default="", choices=[("", _("Relevance")), ("video_date_uploaded", _("Upload date")), ("video_view_count", _("View count")), ("video_avg_rating", _("Rating"))]) 
 
 
 class YouTubeParser():
@@ -47,7 +47,7 @@ class YouTubeParser():
                             'X-YouTube-Client-Version': '2.20200207.03.01', 
                             'X-Requested-With':'XMLHttpRequest'
                             }
-        self.http_params={'header':self.HTTP_HEADER, 'return_data': True}
+        self.http_params = {'header':self.HTTP_HEADER, 'return_data': True}
         self.postdata = {}
         self.sessionToken = ""
         
@@ -125,7 +125,7 @@ class YouTubeParser():
                     printDBG(tmpList)
                     for idx in range(len(tmpList)):
                         tmpList[idx]['format'] = "%sx%s" % (tmpList[idx].get('height', 0), tmpList[idx].get('width', 0))
-                        tmpList[idx]['ext']  = "mpd"
+                        tmpList[idx]['ext'] = "mpd"
                         tmpList[idx]['dash'] = True
                     dashList.extend(tmpList)
             # sort by quality -> format
@@ -147,14 +147,14 @@ class YouTubeParser():
                     format = re.search('([0-9]+?)p$', item['format'])
                     if format != None:
                         item['format'] = format.group(1) + "x"
-                        item['ext']  = item['ext'] + "_M3U8"
-                        item['url']  = decorateUrl(item['url'], {"iptv_proto":"m3u8"})
+                        item['ext'] = item['ext'] + "_M3U8"
+                        item['url'] = decorateUrl(item['url'], {"iptv_proto":"m3u8"})
                         retHLSList.append(item)
                 else:
                     format = re.search('([0-9]+?x[0-9]+?$)', item['format'])
                     if format != None:
                         item['format'] = format.group(1)
-                        item['url']  = decorateUrl(item['url'])
+                        item['url'] = decorateUrl(item['url'])
                         retList.append(item)
         
         if len(dashAudioLists):
@@ -173,14 +173,14 @@ class YouTubeParser():
                 if sts:
                     data = data.replace('\\"', '"').replace('\\\\\\/', '/')
                     hlsUrl = self.cm.ph.getSearchGroups(data, '''"hlsvp"\s*:\s*"(https?://[^"]+?)"''')[0]
-                    hlsUrl= json_loads('"%s"' % hlsUrl)
+                    hlsUrl = json_loads('"%s"' % hlsUrl)
                     if self.cm.isValidUrl(hlsUrl):
                         hlsList = getDirectM3U8Playlist(hlsUrl)
                         if len(hlsList):
                             dashList = []
                             for item in hlsList:
                                 item['format'] = "%sx%s" % (item.get('with', 0), item.get('heigth', 0))
-                                item['ext']  = "m3u8"
+                                item['ext'] = "m3u8"
                                 item['m3u8'] = True
                                 retList.append(item)
             except Exception:
@@ -204,7 +204,7 @@ class YouTubeParser():
                         printDBG(dashList)
                         for idx in range(len(dashList)):
                             dashList[idx]['format'] = "%sx%s" % (dashList[idx].get('height', 0), dashList[idx].get('width', 0))
-                            dashList[idx]['ext']  = "mpd"
+                            dashList[idx]['ext'] = "mpd"
                             dashList[idx]['dash'] = True
                 except Exception:
                     printExc()
@@ -262,7 +262,7 @@ class YouTubeParser():
                     url = img['url']
                 i = i + 1
         
-            if hq or (not config.plugins.iptvplayer.allowedcoverformats.value) or config.plugins.iptvplayer.allowedcoverformats.value !='all':
+            if hq or (not config.plugins.iptvplayer.allowedcoverformats.value) or config.plugins.iptvplayer.allowedcoverformats.value != 'all':
                 if 'hqdefault' in url:
                     url = url.replace('hqdefault','hq720')
                 if '?' in url:
@@ -332,7 +332,7 @@ class YouTubeParser():
                 desc = owner
                             
             try:
-                desc = desc + "\n"+ videoJson["descriptionSnippet"]["runs"][0]["text"]
+                desc = desc + "\n" + videoJson["descriptionSnippet"]["runs"][0]["text"]
             except:
                 pass
         
@@ -409,7 +409,7 @@ class YouTubeParser():
         
         currList = []
         try:
-            sts, data =  self.cm.getPage(url, self.http_params)
+            sts, data = self.cm.getPage(url, self.http_params)
             if sts:
                 self.checkSessionToken(data)
 
@@ -443,7 +443,7 @@ class YouTubeParser():
         
         currList = []
         try:
-            sts, data =  self.cm.getPage(url, self.http_params)
+            sts, data = self.cm.getPage(url, self.http_params)
             if sts:
                 self.checkSessionToken(data)
 
@@ -500,7 +500,7 @@ class YouTubeParser():
 
         currList = []
         try:
-            sts,data =  self.cm.getPage(url, self.http_params)
+            sts,data = self.cm.getPage(url, self.http_params)
             if sts:
                 sts, data = CParsingHelper.getDataBeetwenMarkers(data, 'class="playlist-videos-container', '<div class="watch-sidebar-body">', False)
                 data = data.split('class="yt-uix-scroller-scroll-unit')
@@ -520,7 +520,7 @@ class YouTubeParser():
         printDBG('YouTubeParser.getVideosFromPlaylist')
         currList = []
         try:
-            sts, data =  self.cm.getPage(url, self.http_params)
+            sts, data = self.cm.getPage(url, self.http_params)
             if sts:
                 self.checkSessionToken(data)
 
@@ -568,7 +568,7 @@ class YouTubeParser():
         currList = []
 
         try:
-            sts, data =  self.cm.getPage(url, self.http_params, self.postdata)
+            sts, data = self.cm.getPage(url, self.http_params, self.postdata)
             
             if sts:
                 if 'browse_ajax' in url:
@@ -660,7 +660,7 @@ class YouTubeParser():
             
             if url:
                 # next page search
-                sts, data =  self.cm.getPage(url, self.http_params, self.postdata)
+                sts, data = self.cm.getPage(url, self.http_params, self.postdata)
                 
                 if sts:
                     response = json_loads(data)
@@ -678,7 +678,7 @@ class YouTubeParser():
                 if searchType == 'live':
                     url += 'EgJAAQ%253D%253D'
 
-                sts,data =  self.cm.getPage(url, self.http_params)
+                sts,data = self.cm.getPage(url, self.http_params)
 
                 if sts:
                     self.checkSessionToken(data)
@@ -792,19 +792,19 @@ class YouTubeParser():
 
         currList = []
         if baseUrl != '':
-            sts, data =  self.cm.getPage(baseUrl, self.http_params)
+            sts, data = self.cm.getPage(baseUrl, self.http_params)
             try:
                 data = json_loads(data)['video']
                 for item in data:
-                    url   = 'http://www.youtube.com/watch?v=' + item['encrypted_id']
+                    url = 'http://www.youtube.com/watch?v=' + item['encrypted_id']
                     title = item['title']
-                    img   = item['thumbnail']
-                    time  = item['length_seconds']
+                    img = item['thumbnail']
+                    time = item['length_seconds']
                     if '' != time:
                         time = str(timedelta(seconds=int(time)))
                     if time.startswith("0:"):
                         time = time[2:]
-                    desc  = item['description']
+                    desc = item['description']
                     params = {'type': 'video', 'category': 'video', 'title': title, 'url': url, 'icon': img, 'time': time, 'desc': desc}
                     currList.append(params)
             except Exception:

@@ -58,9 +58,9 @@ class HLSDownloader(BaseDownloader):
         
     def _checkWorkingCallBack(self, callBackFun, code, data):
         reason = ''
-        sts    = True
+        sts = True
         if code != 0:
-            sts    = False
+            sts = False
             reason = data
             self.iptv_sys = None
         callBackFun(sts, reason)
@@ -69,10 +69,10 @@ class HLSDownloader(BaseDownloader):
         '''
             Owervrite start from BaseDownloader
         '''
-        self.url              = url
-        self.filePath         = filePath
+        self.url = url
+        self.filePath = filePath
         self.downloaderParams = params
-        self.fileExtension    = '' # should be implemented in future
+        self.fileExtension = '' # should be implemented in future
         self.outData = ''
         self.contentType = 'unknown'
         

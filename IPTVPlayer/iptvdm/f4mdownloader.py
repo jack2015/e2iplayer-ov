@@ -55,9 +55,9 @@ class F4mDownloader(BaseDownloader):
         
     def _checkWorkingCallBack(self, callBackFun, code, data):
         reason = ''
-        sts    = True
+        sts = True
         if code != 0:
-            sts    = False
+            sts = False
             reason = data
             self.iptv_sys = None
             callBackFun(sts, reason)
@@ -70,9 +70,9 @@ class F4mDownloader(BaseDownloader):
         
     def _checkWgetWorkingCallBack(self, callBackFun, code, data):
         reason = ''
-        sts    = True
+        sts = True
         if code != 0:
-            sts    = False
+            sts = False
             reason = data
         self.iptv_sys = None
         callBackFun(sts, reason)
@@ -81,10 +81,10 @@ class F4mDownloader(BaseDownloader):
         '''
             Owervrite start from BaseDownloader
         '''
-        self.url              = url
-        self.filePath         = filePath
+        self.url = url
+        self.filePath = filePath
         self.downloaderParams = params
-        self.fileExtension    = '' # should be implemented in future
+        self.fileExtension = '' # should be implemented in future
         if 'ustream.tv' in url:
             self.streamSelector = strwithmeta(url).meta.get('iptv_chank_url', '')
         else:
@@ -104,7 +104,7 @@ class F4mDownloader(BaseDownloader):
         self.console_stderrAvail_conn = eConnectCallback(self.console.stderrAvail, self._dataAvail)
         self.console.execute(E2PrioFix(cmd))
         
-        self.status     = DMHelper.STS.DOWNLOADING
+        self.status = DMHelper.STS.DOWNLOADING
         
         self.onStart()
         return BaseDownloader.CODE_OK

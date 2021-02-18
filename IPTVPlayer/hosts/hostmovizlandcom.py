@@ -28,13 +28,13 @@ class MovizlandCom(CBaseHostClass):
     AJAX_HEADER = dict(HEADER)
     AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest'})
     
-    MAIN_URL      = 'http://m.movizland.com/'
-    SEARCH_URL    = MAIN_URL + '?s='
-    DEFAULT_ICON_URL  = "http://vb.movizland.com/movizland/images/logo.png"
+    MAIN_URL = 'http://m.movizland.com/'
+    SEARCH_URL = MAIN_URL + '?s='
+    DEFAULT_ICON_URL = "http://vb.movizland.com/movizland/images/logo.png"
     
-    MAIN_CAT_TAB = [{'category': 'categories',      'title': _('Categories'), 'url': MAIN_URL,},
-                    {'category': 'search',          'title': _('Search'), 'search_item': True,},
-                    {'category': 'search_history',  'title': _('Search history'),}]
+    MAIN_CAT_TAB = [{'category': 'categories', 'title': _('Categories'), 'url': MAIN_URL,},
+                    {'category': 'search', 'title': _('Search'), 'search_item': True,},
+                    {'category': 'search_history', 'title': _('Search history'),}]
  
     def __init__(self):
         CBaseHostClass.__init__(self, {'history':'  MovizlandCom.tv', 'cookie':'movizlandcom.cookie'})
@@ -48,7 +48,7 @@ class MovizlandCom(CBaseHostClass):
             url = 'http:' + url
         else:
             if 0 < len(url) and not url.startswith('http'):
-                url =  self.MAIN_URL + url
+                url = self.MAIN_URL + url
             if not self.MAIN_URL.startswith('https://'):
                 url = url.replace('https://', 'http://')
                 
@@ -82,7 +82,7 @@ class MovizlandCom(CBaseHostClass):
         for item in tab:
             params = dict(cItem)
             params.update(item)
-            params['name']  = 'category'
+            params['name'] = 'category'
             if type == 'dir':
                 self.addDir(params)
             else:
@@ -110,9 +110,9 @@ class MovizlandCom(CBaseHostClass):
             
     def listItems(self, cItem, nextCategory='explore_item'):
         printDBG("MovizlandCom.listItems")
-        page      = cItem.get('page', 1)
+        page = cItem.get('page', 1)
         post_data = cItem.get('post_data', None) 
-        url       = cItem['url']
+        url = cItem['url']
         
         if page > 1:
             if url.endswith('/'):
@@ -148,7 +148,7 @@ class MovizlandCom(CBaseHostClass):
             if url == '':
                 continue
             title = self.cleanHtmlStr(item)
-            icon  = self.cm.ph.getSearchGroups(item, '''src=['"]([^'^"]+?)['"]''', 1)[0]
+            icon = self.cm.ph.getSearchGroups(item, '''src=['"]([^'^"]+?)['"]''', 1)[0]
             
             url = self._getFullUrl(url)
             url = self._getFullUrl(url)
@@ -163,7 +163,7 @@ class MovizlandCom(CBaseHostClass):
         
         if nextPage:
             params = dict(cItem)
-            params.update({'title':_('Next page'), 'page':page+1})
+            params.update({'title':_('Next page'), 'page':page + 1})
             self.addDir(params)
             
     def exploreItem(self, cItem):
@@ -246,7 +246,7 @@ class MovizlandCom(CBaseHostClass):
 
         tmp = self.cleanHtmlStr(self.cm.ph.getDataBeetwenNodes(data, ('<span', '>', 'ratings'), ('</span', '>'), False)[1])
         if tmp != '':
-            itemsList.append((_('Rating:'),  tmp))
+            itemsList.append((_('Rating:'), tmp))
 
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<btns', '</btns>')
         for item in data:
@@ -280,9 +280,9 @@ class MovizlandCom(CBaseHostClass):
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
 
-        name     = self.currItem.get("name", '')
+        name = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        mode     = self.currItem.get("mode", '')
+        mode = self.currItem.get("mode", '')
         
         printDBG("handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category))
         self.currList = []

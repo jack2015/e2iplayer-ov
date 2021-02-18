@@ -6,7 +6,7 @@
 ###################################################
 from Plugins.Extensions.IPTVPlayer.components.iptvplayerinit import TranslateTXT as _, SetIPTVPlayerLastHostError
 from Plugins.Extensions.IPTVPlayer.components.ihost import CHostBase, CBaseHostClass
-from Plugins.Extensions.IPTVPlayer.tools.iptvtools import  printDBG, printExc, byteify
+from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, byteify
 from Plugins.Extensions.IPTVPlayer.libs.youtube_dl.utils import clean_html
 ###################################################
 
@@ -36,11 +36,11 @@ class SerialeNet(CBaseHostClass):
         
         self.DEFAULT_ICON_URL = 'http://3.bp.blogspot.com/_Gm9qKcXSvaM/S3X4VtoRfjI/AAAAAAAAAHw/I3ZTIK_DZlY/s200/MCj04421470000%5B1%5D.png'
         self.MAIN_URL = "http://serialnet.pl/"
-        self.CAT_TAB  = [{'category':'abc_menu',        'title':'Alfabetycznie',             'url':self.getMainUrl()},
-                         {'category':'last_update',     'title':'Ostatnio uzupełnione',      'url':self.getMainUrl()},
+        self.CAT_TAB = [{'category':'abc_menu', 'title':'Alfabetycznie', 'url':self.getMainUrl()},
+                         {'category':'last_update', 'title':'Ostatnio uzupełnione', 'url':self.getMainUrl()},
                          
-                         {'category':'search',          'title':_('Search'), 'search_item':True},
-                         {'category':'search_history',  'title':_('Search history')}]
+                         {'category':'search', 'title':_('Search'), 'search_item':True},
+                         {'category':'search_history', 'title':_('Search history')}]
         self.seasonsCache = []
         
     def _getStr(self, v, default=''):
@@ -58,7 +58,7 @@ class SerialeNet(CBaseHostClass):
         ret = ''
         try:
             if len(s) > 0:
-               js = 'unpack' + s[s.find('}(')+1:-1]
+               js = 'unpack' + s[s.find('}(') + 1:-1]
                js = js.replace("unpack('", '''unpack("''').replace(");'", ''');"''').replace("\\", "/")
                js = js.replace("//", "/").replace("/'", "'")
                js = "self." + js
@@ -70,16 +70,16 @@ class SerialeNet(CBaseHostClass):
         return ret
 
     def unpack(self, p, a, c, k, e=None, d=None):
-        for i in xrange(c-1, -1, -1):
+        for i in xrange(c - 1, -1, -1):
             if k[i]:
-               p = re.sub('\\b'+self.int2base(i, a)+'\\b', k[i], p)
+               p = re.sub('\\b' + self.int2base(i, a) + '\\b', k[i], p)
         return p
         
     def int2base(self, x, base):
         digs = string.digits + string.lowercase + string.uppercase
         if x < 0:
             sign = -1
-        elif x==0:
+        elif x == 0:
             return '0'
         else:
             sign = 1
@@ -182,7 +182,7 @@ class SerialeNet(CBaseHostClass):
                 if not self.cm.isValidUrl(url):
                     continue
                 title = self.cleanHtmlStr(e)
-                eNum  = self.cm.ph.getSearchGroups(title, '''\s*?([0-9]+)''')[0]
+                eNum = self.cm.ph.getSearchGroups(title, '''\s*?([0-9]+)''')[0]
                 if 'odcinek' in title.lower() and len(url) < 20 and eNum != '' and sNum != '':
                     title = 's%se%s ' % (sNum.zfill(2), eNum.zfill(2))
                 else:
@@ -223,10 +223,10 @@ class SerialeNet(CBaseHostClass):
             data = self.cm.ph.getDataBeetwenMarkers(data, '<h2>Ostatnio dodane</h2> <div class="item">', '<script>', False)[1]
             data = data.split('<div class="item">')
             for item in data:
-                desc  = self.cleanHtmlStr(item)
-                icon  = self.getFullUrl(self.cm.ph.getSearchGroups(item, 'src="([^"]+?)"')[0])
+                desc = self.cleanHtmlStr(item)
+                icon = self.getFullUrl(self.cm.ph.getSearchGroups(item, 'src="([^"]+?)"')[0])
                 title = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(item, '<p id="s_title">', '</p>', False)[1])
-                url   = self.getFullUrl(self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0])
+                url = self.getFullUrl(self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0])
                 params = dict(cItem)
                 params.update({'good_for_fav': True, 'category':category, 'title':title, 'icon':icon, 'desc':desc, 'url':url})
                 self.addDir(params)
@@ -236,9 +236,9 @@ class SerialeNet(CBaseHostClass):
         keywordList = self.cm.ph.getNormalizeStr(searchPattern).upper().split(' ')
         keywordList = set(keywordList)
         if len(keywordList):
-            series  = self._listsSeries(self.getMainUrl())
+            series = self._listsSeries(self.getMainUrl())
             for item in series:
-                txt = self.cm.ph.getNormalizeStr((item['t1'] + ' ' +  item['t2'])).upper()
+                txt = self.cm.ph.getNormalizeStr((item['t1'] + ' ' + item['t2'])).upper()
                 txtTab = txt.split(' ')
                 matches = 0
                 for word in keywordList:
@@ -257,7 +257,7 @@ class SerialeNet(CBaseHostClass):
     
     def getLinksForVideo(self, cItem):
         videoUrlTab = []
-        baseUrl   = self.getFullUrl(cItem['url'])
+        baseUrl = self.getFullUrl(cItem['url'])
         try:
             sts, data = self.cm.getPage(baseUrl)
             verUrl = self.getFullUrl(self.cm.ph.getSearchGroups(data, '<iframe id="framep" class="radi" src="([^"]+?)"')[0])
@@ -269,7 +269,7 @@ class SerialeNet(CBaseHostClass):
                 if len(data):
                     del data[0]
                 for item in data:
-                    name  = self.cm.ph.getSearchGroups(item, 'name="([^"]+?)"')[0]
+                    name = self.cm.ph.getSearchGroups(item, 'name="([^"]+?)"')[0]
                     value = self.cm.ph.getSearchGroups(item, 'value="([^"]+?)"')[0]
                     versions.append({'title':value, 'url': verUrl + ('&wi=va&%s=%s' % (name, value))})
             else:
@@ -350,7 +350,7 @@ class SerialeNet(CBaseHostClass):
         printDBG('SerialeNet.handleService start')
 
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
-        name     = self.currItem.get("name", None)
+        name = self.currItem.get("name", None)
         category = self.currItem.get("category", '')
         printDBG("SerialeNet.handleService: ---------> name[%s], category[%s] " % (name, category))
         searchPattern = self.currItem.get("search_pattern", searchPattern)

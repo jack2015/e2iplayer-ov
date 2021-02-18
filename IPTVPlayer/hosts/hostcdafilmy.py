@@ -37,7 +37,7 @@ class CdaFilmy(CBaseHostClass):
         self.AJAX_HEADER = dict(self.HTTP_HEADER)
         self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
         
-        self.cacheLinks    = {}
+        self.cacheLinks = {}
         self.defaultParams = {'header':self.HTTP_HEADER, 'with_metadata':True, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         
         self.cacheSeriesLetter = []
@@ -67,14 +67,14 @@ class CdaFilmy(CBaseHostClass):
         #sts, data = self.getPage(self.getMainUrl())
         #if not sts: return
         #self.setMainUrl(data.meta['url'])
-        MAIN_CAT_TAB = [{'category':'list_items',     'title': 'Filmy',             'url':self.getFullUrl('/filmy-online/')},
-                        {'category':'list_items',     'title': 'Seriale',           'url':self.getFullUrl('/seriale-online/')},
-                        {'category':'list_items',     'title': 'Premiery',          'url':self.getFullUrl('/gatunek/premiery/')},
-                        {'category':'list_items',     'title': 'Popularne',         'url':self.getFullUrl('/najpopularniejsze-filmy-online/')},
-                        {'category':'list_items',     'title': 'Najlepiej oceniane','url':self.getFullUrl('/najwyzej-oceniane-filmy-online/')},
+        MAIN_CAT_TAB = [{'category':'list_items', 'title': 'Filmy', 'url':self.getFullUrl('/filmy-online/')},
+                        {'category':'list_items', 'title': 'Seriale', 'url':self.getFullUrl('/seriale-online/')},
+                        {'category':'list_items', 'title': 'Premiery', 'url':self.getFullUrl('/gatunek/premiery/')},
+                        {'category':'list_items', 'title': 'Popularne', 'url':self.getFullUrl('/najpopularniejsze-filmy-online/')},
+                        {'category':'list_items', 'title': 'Najlepiej oceniane','url':self.getFullUrl('/najwyzej-oceniane-filmy-online/')},
 #                        {'category':'a_z',            'title': _('By years'),       'url':self.getMainUrl()},
-                        {'category':'cats',           'title': _('Categories'),     'url':self.getMainUrl()},
-                        {'category':'search',         'title': _('Search'),         'search_item':True}, 
+                        {'category':'cats', 'title': _('Categories'), 'url':self.getMainUrl()},
+                        {'category':'search', 'title': _('Search'), 'search_item':True}, 
                         {'category':'search_history', 'title': _('Search history')},]
         self.listsTab(MAIN_CAT_TAB, cItem)
     
@@ -268,10 +268,10 @@ class CdaFilmy(CBaseHostClass):
 
         if title == '':
             title = cItem['title']
-        if icon  == '':
-            icon  = cItem.get('icon', '')
-        if desc  == '':
-            desc  = cItem.get('desc', '')
+        if icon == '':
+            icon = cItem.get('icon', '')
+        if desc == '':
+            desc = cItem.get('desc', '')
 
         return [{'title':self.cleanHtmlStr(title), 'text': self.cleanHtmlStr(desc), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
         
@@ -280,9 +280,9 @@ class CdaFilmy(CBaseHostClass):
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
 
-        name     = self.currItem.get("name", '')
+        name = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        mode     = self.currItem.get("mode", '')
+        mode = self.currItem.get("mode", '')
         
         printDBG("handleService: |||| name[%s], category[%s] " % (name, category))
         self.cacheLinks = {}
