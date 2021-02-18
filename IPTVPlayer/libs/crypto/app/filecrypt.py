@@ -10,7 +10,10 @@ from __future__ import print_function
     2002 by Paul A. Lambert
     Read LICENSE.txt for license information.
 """
-import sys, getpass, getopt, os
+import sys
+import getpass
+import getopt
+import os
 from crypto.cipher.trolldoll import Trolldoll
 from crypto.errors           import DecryptNotBlockAlignedError
 from binascii_plus           import *
