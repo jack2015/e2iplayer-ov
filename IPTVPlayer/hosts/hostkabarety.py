@@ -46,7 +46,7 @@ class Kabarety(CBaseHostClass):
                              {'category': 'search_history', 'title': _('Search history'),            } 
                             ]
     
-    def getPage(self, baseUrl, addParams = {}, post_data = None):
+    def getPage(self, baseUrl, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
         
@@ -300,7 +300,7 @@ class Kabarety(CBaseHostClass):
         self.addDir(params)
         return True
         
-    def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):
+    def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)

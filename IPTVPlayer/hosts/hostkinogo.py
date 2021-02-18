@@ -44,7 +44,7 @@ class KinogoCC(CBaseHostClass):
         self.cacheFilters = {}
         self.cacheFiltersKeys = []
         
-    def getPage(self, baseUrl, addParams = {}, post_data = None):
+    def getPage(self, baseUrl, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
@@ -277,7 +277,7 @@ class KinogoCC(CBaseHostClass):
             return cItem['urls_tab']
         return [{'name':'direct', 'url':strwithmeta(cItem['url'], {'Referer':self.getMainUrl()}), 'need_resolve':0}]
     
-    def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):
+    def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)

@@ -38,7 +38,7 @@ class MeczykiPL(CBaseHostClass):
     def selectDomain(self):
         self.MAIN_URL = 'http://www.meczyki.pl/'
     
-    def getPage(self, baseUrl, addParams = {}, post_data = None):
+    def getPage(self, baseUrl, addParams={}, post_data=None):
         return self.cm.getPage(baseUrl, addParams, post_data)
     
     def listMainMenu(self, cItem, nextCategory):
@@ -194,7 +194,7 @@ class MeczykiPL(CBaseHostClass):
             urlTab.extend(self.up.getVideoLinkExt(videoUrl))
         return urlTab
 
-    def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):
+    def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)

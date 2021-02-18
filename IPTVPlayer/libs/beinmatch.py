@@ -31,7 +31,7 @@ class BeinmatchApi(CBaseHostClass):
         self.http_params = {'header':self.HTTP_HEADER}
         self.getLinkJS = ''
 
-    def getPage(self, baseUrl, addParams = {}, post_data = None):
+    def getPage(self, baseUrl, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.http_params)
         origBaseUrl = baseUrl
@@ -54,7 +54,7 @@ class BeinmatchApi(CBaseHostClass):
                 break
 
         if not self.getLinkJS:
-            self.sessionEx.waitForFinishOpen(MessageBox, _('Data for link generation could not be found.\nPlease report this problem to %s') % 'https://github.com/persianpros/e2iplayer/issues', type = MessageBox.TYPE_ERROR, timeout = 10)
+            self.sessionEx.waitForFinishOpen(MessageBox, _('Data for link generation could not be found.\nPlease report this problem to %s') % 'https://github.com/persianpros/e2iplayer/issues', type=MessageBox.TYPE_ERROR, timeout=10)
 
         data = ph.find(data, ('<table', '>', 'tabIndex'), ('<div', '>', 'Side'))[1]
         data = ph.rfindall(data, '</tr>', ('<table', '>', 'tabIndex'))

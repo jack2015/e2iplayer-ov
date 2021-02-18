@@ -35,42 +35,42 @@ config.plugins.iptvplayer = ConfigSubsection()
 
 from Plugins.Extensions.IPTVPlayer.components.configextmovieplayer import ConfigExtMoviePlayer
 
-config.plugins.iptvplayer.hlsdl_download  = ConfigYesNo(default = True)
-config.plugins.iptvplayer.set_curr_title  = ConfigYesNo(default = False)
-config.plugins.iptvplayer.curr_title_file = ConfigText(default = "", fixed_size = False) 
+config.plugins.iptvplayer.hlsdl_download  = ConfigYesNo(default=True)
+config.plugins.iptvplayer.set_curr_title  = ConfigYesNo(default=False)
+config.plugins.iptvplayer.curr_title_file = ConfigText(default="", fixed_size=False) 
 
-config.plugins.iptvplayer.showcover          = ConfigYesNo(default = True)
-config.plugins.iptvplayer.deleteIcons        = ConfigSelection(default = "3", choices = [("0", _("after closing")), ("1", _("after day")), ("3", _("after three days")), ("7", _("after a week"))]) 
-config.plugins.iptvplayer.allowedcoverformats= ConfigSelection(default = "jpeg,png", choices = [("jpeg,png,gif", _("jpeg,png,gif")), ("jpeg,png", _("jpeg,png")), ("jpeg", _("jpeg")), ("all", _("all"))]) 
-config.plugins.iptvplayer.showinextensions   = ConfigYesNo(default = True)
-config.plugins.iptvplayer.showinMainMenu     = ConfigYesNo(default = False)
-config.plugins.iptvplayer.ListaGraficzna     = ConfigYesNo(default = True)
-config.plugins.iptvplayer.group_hosts        = ConfigYesNo(default = True)
-config.plugins.iptvplayer.NaszaSciezka       = ConfigDirectory(default = "/hdd/movie/") #, fixed_size = False)
-config.plugins.iptvplayer.bufferingPath      = ConfigDirectory(default = config.plugins.iptvplayer.NaszaSciezka.value) #, fixed_size = False)
-config.plugins.iptvplayer.buforowanie        = ConfigYesNo(default = False)
-config.plugins.iptvplayer.buforowanie_m3u8   = ConfigYesNo(default = True)
-config.plugins.iptvplayer.buforowanie_rtmp   = ConfigYesNo(default = False)
+config.plugins.iptvplayer.showcover          = ConfigYesNo(default=True)
+config.plugins.iptvplayer.deleteIcons        = ConfigSelection(default="3", choices=[("0", _("after closing")), ("1", _("after day")), ("3", _("after three days")), ("7", _("after a week"))]) 
+config.plugins.iptvplayer.allowedcoverformats= ConfigSelection(default="jpeg,png", choices=[("jpeg,png,gif", _("jpeg,png,gif")), ("jpeg,png", _("jpeg,png")), ("jpeg", _("jpeg")), ("all", _("all"))]) 
+config.plugins.iptvplayer.showinextensions   = ConfigYesNo(default=True)
+config.plugins.iptvplayer.showinMainMenu     = ConfigYesNo(default=False)
+config.plugins.iptvplayer.ListaGraficzna     = ConfigYesNo(default=True)
+config.plugins.iptvplayer.group_hosts        = ConfigYesNo(default=True)
+config.plugins.iptvplayer.NaszaSciezka       = ConfigDirectory(default="/hdd/movie/") #, fixed_size = False)
+config.plugins.iptvplayer.bufferingPath      = ConfigDirectory(default=config.plugins.iptvplayer.NaszaSciezka.value) #, fixed_size = False)
+config.plugins.iptvplayer.buforowanie        = ConfigYesNo(default=False)
+config.plugins.iptvplayer.buforowanie_m3u8   = ConfigYesNo(default=True)
+config.plugins.iptvplayer.buforowanie_rtmp   = ConfigYesNo(default=False)
 config.plugins.iptvplayer.requestedBuffSize  = ConfigInteger(2, (1, 120))
 config.plugins.iptvplayer.requestedAudioBuffSize  = ConfigInteger(256, (1, 10240))
 
-config.plugins.iptvplayer.IPTVDMRunAtStart      = ConfigYesNo(default = False)
-config.plugins.iptvplayer.IPTVDMShowAfterAdd    = ConfigYesNo(default = True)
-config.plugins.iptvplayer.IPTVDMMaxDownloadItem = ConfigSelection(default = "1", choices = [("1", "1"), ("2", "2"), ("3", "3"), ("4", "4")])
+config.plugins.iptvplayer.IPTVDMRunAtStart      = ConfigYesNo(default=False)
+config.plugins.iptvplayer.IPTVDMShowAfterAdd    = ConfigYesNo(default=True)
+config.plugins.iptvplayer.IPTVDMMaxDownloadItem = ConfigSelection(default="1", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4")])
 
-config.plugins.iptvplayer.AktualizacjaWmenu = ConfigYesNo(default = True)
-config.plugins.iptvplayer.sortuj = ConfigYesNo(default = True)
-config.plugins.iptvplayer.remove_diabled_hosts = ConfigYesNo(default = False)
-config.plugins.iptvplayer.IPTVWebIterface = ConfigYesNo(default = False)
-config.plugins.iptvplayer.plugin_autostart = ConfigYesNo(default = False)
-config.plugins.iptvplayer.plugin_autostart_method = ConfigSelection(default = "wizard", choices = [("wizard", "wizard"), ("infobar", "infobar")])
+config.plugins.iptvplayer.AktualizacjaWmenu = ConfigYesNo(default=True)
+config.plugins.iptvplayer.sortuj = ConfigYesNo(default=True)
+config.plugins.iptvplayer.remove_diabled_hosts = ConfigYesNo(default=False)
+config.plugins.iptvplayer.IPTVWebIterface = ConfigYesNo(default=False)
+config.plugins.iptvplayer.plugin_autostart = ConfigYesNo(default=False)
+config.plugins.iptvplayer.plugin_autostart_method = ConfigSelection(default="wizard", choices=[("wizard", "wizard"), ("infobar", "infobar")])
 
-config.plugins.iptvplayer.preferredupdateserver = ConfigSelection(default = "", choices = [("", _("Default")), ("1", "http://iptvplayer.vline.pl/"), ("2", _("http://zadmario.gitlab.io/"))])
-config.plugins.iptvplayer.osk_type = ConfigSelection(default = "", choices = [("", _("Auto")), ("system", _("System")), ("own", _("Own model"))])
-config.plugins.iptvplayer.osk_layout = ConfigText(default = "", fixed_size = False)
-config.plugins.iptvplayer.osk_allow_suggestions = ConfigYesNo(default = True)
-config.plugins.iptvplayer.osk_default_suggestions = ConfigSelection(default = "", choices = [("", _("Auto")), ("none", _("None")), ("google", "google.com"), ("filmweb", "filmweb.pl"), ("imdb", "imdb.com"), ("filmstarts", "filmstarts.de")]) 
-config.plugins.iptvplayer.osk_background_color = ConfigSelection(default = "", choices = [('', _('Default')), ('transparent', _('Transparent')), ('#000000', _('Black')), ('#80000000', _('Darkgray')), ('#cc000000', _('Lightgray'))])
+config.plugins.iptvplayer.preferredupdateserver = ConfigSelection(default="", choices=[("", _("Default")), ("1", "http://iptvplayer.vline.pl/"), ("2", _("http://zadmario.gitlab.io/"))])
+config.plugins.iptvplayer.osk_type = ConfigSelection(default="", choices=[("", _("Auto")), ("system", _("System")), ("own", _("Own model"))])
+config.plugins.iptvplayer.osk_layout = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.osk_allow_suggestions = ConfigYesNo(default=True)
+config.plugins.iptvplayer.osk_default_suggestions = ConfigSelection(default="", choices=[("", _("Auto")), ("none", _("None")), ("google", "google.com"), ("filmweb", "filmweb.pl"), ("imdb", "imdb.com"), ("filmstarts", "filmstarts.de")]) 
+config.plugins.iptvplayer.osk_background_color = ConfigSelection(default="", choices=[('', _('Default')), ('transparent', _('Transparent')), ('#000000', _('Black')), ('#80000000', _('Darkgray')), ('#cc000000', _('Lightgray'))])
 
 def GetMoviePlayerName(player):
     map = {"auto":_("auto"), "mini": _("internal"), "standard":_("standard"), 'exteplayer': _("exteplayer3"), 'extgstplayer': _("gstplayer")}
@@ -80,94 +80,94 @@ def ConfigPlayer(player):
     return (player, GetMoviePlayerName(player))
 
 # without buffering mode
-config.plugins.iptvplayer.defaultIptvMoviePlayer0 = ConfigSelection(default = "auto", choices = [ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
-config.plugins.iptvplayer.alternativeIptvMoviePlayer0 = ConfigSelection(default = "auto", choices = [ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
+config.plugins.iptvplayer.defaultIptvMoviePlayer0 = ConfigSelection(default="auto", choices=[ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
+config.plugins.iptvplayer.alternativeIptvMoviePlayer0 = ConfigSelection(default="auto", choices=[ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
 # with buffering mode
-config.plugins.iptvplayer.defaultIptvMoviePlayer = ConfigSelection(default = "auto", choices = [ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
-config.plugins.iptvplayer.alternativeIptvMoviePlayer = ConfigSelection(default = "auto", choices = [ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
+config.plugins.iptvplayer.defaultIptvMoviePlayer = ConfigSelection(default="auto", choices=[ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
+config.plugins.iptvplayer.alternativeIptvMoviePlayer = ConfigSelection(default="auto", choices=[ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
 
-config.plugins.iptvplayer.SciezkaCache = ConfigDirectory(default = "/hdd/IPTVCache/") #, fixed_size = False)
-config.plugins.iptvplayer.NaszaTMP = ConfigDirectory(default = "/tmp/") #, fixed_size = False)
-config.plugins.iptvplayer.ZablokujWMV = ConfigYesNo(default = True)
+config.plugins.iptvplayer.SciezkaCache = ConfigDirectory(default="/hdd/IPTVCache/") #, fixed_size = False)
+config.plugins.iptvplayer.NaszaTMP = ConfigDirectory(default="/tmp/") #, fixed_size = False)
+config.plugins.iptvplayer.ZablokujWMV = ConfigYesNo(default=True)
 
-config.plugins.iptvplayer.gitlab_repo = ConfigSelection(default = "zadmario", choices = [("mosz_nowy", "mosz_nowy"), ("zadmario", "zadmario"), ("maxbambi", "maxbambi")])
+config.plugins.iptvplayer.gitlab_repo = ConfigSelection(default="zadmario", choices=[("mosz_nowy", "mosz_nowy"), ("zadmario", "zadmario"), ("maxbambi", "maxbambi")])
 
-config.plugins.iptvplayer.vkcom_login    = ConfigText(default="", fixed_size = False)
-config.plugins.iptvplayer.vkcom_password = ConfigText(default="", fixed_size = False)
+config.plugins.iptvplayer.vkcom_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.vkcom_password = ConfigText(default="", fixed_size=False)
 
-config.plugins.iptvplayer.fichiercom_login    = ConfigText(default="", fixed_size = False)
-config.plugins.iptvplayer.fichiercom_password = ConfigText(default="", fixed_size = False)
+config.plugins.iptvplayer.fichiercom_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.fichiercom_password = ConfigText(default="", fixed_size=False)
 
-config.plugins.iptvplayer.iptvplayer_login    = ConfigText(default="", fixed_size = False)
-config.plugins.iptvplayer.iptvplayer_password = ConfigText(default="", fixed_size = False)
+config.plugins.iptvplayer.iptvplayer_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.iptvplayer_password = ConfigText(default="", fixed_size=False)
 
-config.plugins.iptvplayer.useSubtitlesParserExtension = ConfigYesNo(default = True)
-config.plugins.iptvplayer.opensuborg_login    = ConfigText(default="", fixed_size = False)
-config.plugins.iptvplayer.opensuborg_password = ConfigText(default="", fixed_size = False)
-config.plugins.iptvplayer.napisy24pl_login    = ConfigText(default="", fixed_size = False)
-config.plugins.iptvplayer.napisy24pl_password = ConfigText(default="", fixed_size = False)
+config.plugins.iptvplayer.useSubtitlesParserExtension = ConfigYesNo(default=True)
+config.plugins.iptvplayer.opensuborg_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.opensuborg_password = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.napisy24pl_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.napisy24pl_password = ConfigText(default="", fixed_size=False)
 
-config.plugins.iptvplayer.debugprint = ConfigSelection(default = "", choices = [("", _("no")), ("console", _("yes, to console")), ("debugfile", _("yes, to file /hdd/iptv.dbg"))])
+config.plugins.iptvplayer.debugprint = ConfigSelection(default="", choices=[("", _("no")), ("console", _("yes, to console")), ("debugfile", _("yes, to file /hdd/iptv.dbg"))])
 
 #icons
-config.plugins.iptvplayer.IconsSize = ConfigSelection(default = "100", choices = [("135", "135x135"), ("120", "120x120"), ("100", "100x100")]) 
-config.plugins.iptvplayer.numOfRow = ConfigSelection(default = "0", choices = [("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("0", "auto")])
-config.plugins.iptvplayer.numOfCol = ConfigSelection(default = "0", choices = [("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"), ("6", "6"), ("7", "7"), ("8", "8"), ("0", "auto")])
+config.plugins.iptvplayer.IconsSize = ConfigSelection(default="100", choices=[("135", "135x135"), ("120", "120x120"), ("100", "100x100")]) 
+config.plugins.iptvplayer.numOfRow = ConfigSelection(default="0", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("0", "auto")])
+config.plugins.iptvplayer.numOfCol = ConfigSelection(default="0", choices=[("1", "1"), ("2", "2"), ("3", "3"), ("4", "4"), ("5", "5"), ("6", "6"), ("7", "7"), ("8", "8"), ("0", "auto")])
 
-config.plugins.iptvplayer.skin = ConfigSelection(default = "auto", choices = GetSkinsList())
+config.plugins.iptvplayer.skin = ConfigSelection(default="auto", choices=GetSkinsList())
 
 #Pin code
 from iptvpin import IPTVPinWidget
-config.plugins.iptvplayer.fakePin = ConfigSelection(default = "fake", choices = [("fake", "****")])
-config.plugins.iptvplayer.pin = ConfigText(default = "0000", fixed_size = False)
-config.plugins.iptvplayer.disable_live = ConfigYesNo(default = False)
-config.plugins.iptvplayer.configProtectedByPin = ConfigYesNo(default = False)
-config.plugins.iptvplayer.pluginProtectedByPin = ConfigYesNo(default = False)
+config.plugins.iptvplayer.fakePin = ConfigSelection(default="fake", choices=[("fake", "****")])
+config.plugins.iptvplayer.pin = ConfigText(default="0000", fixed_size=False)
+config.plugins.iptvplayer.disable_live = ConfigYesNo(default=False)
+config.plugins.iptvplayer.configProtectedByPin = ConfigYesNo(default=False)
+config.plugins.iptvplayer.pluginProtectedByPin = ConfigYesNo(default=False)
 
-config.plugins.iptvplayer.httpssslcertvalidation = ConfigYesNo(default = False)
+config.plugins.iptvplayer.httpssslcertvalidation = ConfigYesNo(default=False)
 
 #PROXY
-config.plugins.iptvplayer.proxyurl = ConfigText(default = "http://user:pass@ip:port", fixed_size = False)
-config.plugins.iptvplayer.german_proxyurl = ConfigText(default = "http://user:pass@ip:port", fixed_size = False)
-config.plugins.iptvplayer.russian_proxyurl = ConfigText(default = "http://user:pass@ip:port", fixed_size = False)
-config.plugins.iptvplayer.ukrainian_proxyurl = ConfigText(default = "http://user:pass@ip:port", fixed_size = False)
-config.plugins.iptvplayer.alternative_proxy1 = ConfigText(default = "http://user:pass@ip:port", fixed_size = False)
-config.plugins.iptvplayer.alternative_proxy2 = ConfigText(default = "http://user:pass@ip:port", fixed_size = False)
+config.plugins.iptvplayer.proxyurl = ConfigText(default="http://user:pass@ip:port", fixed_size=False)
+config.plugins.iptvplayer.german_proxyurl = ConfigText(default="http://user:pass@ip:port", fixed_size=False)
+config.plugins.iptvplayer.russian_proxyurl = ConfigText(default="http://user:pass@ip:port", fixed_size=False)
+config.plugins.iptvplayer.ukrainian_proxyurl = ConfigText(default="http://user:pass@ip:port", fixed_size=False)
+config.plugins.iptvplayer.alternative_proxy1 = ConfigText(default="http://user:pass@ip:port", fixed_size=False)
+config.plugins.iptvplayer.alternative_proxy2 = ConfigText(default="http://user:pass@ip:port", fixed_size=False)
 
-config.plugins.iptvplayer.captcha_bypass = ConfigSelection(default = "", choices = [("", _("Auto")), ("2captcha.com", "2captcha.com"), ("9kw.eu", "9kw.eu")]) 
+config.plugins.iptvplayer.captcha_bypass = ConfigSelection(default="", choices=[("", _("Auto")), ("2captcha.com", "2captcha.com"), ("9kw.eu", "9kw.eu")]) 
 
-config.plugins.iptvplayer.api_key_9kweu = ConfigText(default = "", fixed_size = False)
-config.plugins.iptvplayer.api_key_2captcha = ConfigText(default = "", fixed_size = False)
+config.plugins.iptvplayer.api_key_9kweu = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.api_key_2captcha = ConfigText(default="", fixed_size=False)
 
-config.plugins.iptvplayer.myjd_login = ConfigText(default = "", fixed_size = False)
-config.plugins.iptvplayer.myjd_password = ConfigText(default = "", fixed_size = False)
-config.plugins.iptvplayer.myjd_jdname = ConfigText(default = "", fixed_size = False)
+config.plugins.iptvplayer.myjd_login = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.myjd_password = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.myjd_jdname = ConfigText(default="", fixed_size=False)
 
 # Update
-config.plugins.iptvplayer.autoCheckForUpdate = ConfigYesNo(default = False)
-config.plugins.iptvplayer.updateLastCheckedVersion = ConfigText(default = "00.00.00.00", fixed_size = False)
-config.plugins.iptvplayer.fakeUpdate               = ConfigSelection(default = "fake", choices = [("fake", "  ")])
-config.plugins.iptvplayer.downgradePossible        = ConfigYesNo(default = False)
-config.plugins.iptvplayer.possibleUpdateType       = ConfigSelection(default = "precompiled", choices = [("sourcecode", _("with source code")), ("precompiled", _("precompiled")), ("all", _("all types"))]) 
+config.plugins.iptvplayer.autoCheckForUpdate = ConfigYesNo(default=False)
+config.plugins.iptvplayer.updateLastCheckedVersion = ConfigText(default="00.00.00.00", fixed_size=False)
+config.plugins.iptvplayer.fakeUpdate               = ConfigSelection(default="fake", choices=[("fake", "  ")])
+config.plugins.iptvplayer.downgradePossible        = ConfigYesNo(default=False)
+config.plugins.iptvplayer.possibleUpdateType       = ConfigSelection(default="precompiled", choices=[("sourcecode", _("with source code")), ("precompiled", _("precompiled")), ("all", _("all types"))]) 
 
 # Hosts lists
-config.plugins.iptvplayer.fakeHostsList = ConfigSelection(default = "fake", choices = [("fake", "  ")])
+config.plugins.iptvplayer.fakeHostsList = ConfigSelection(default="fake", choices=[("fake", "  ")])
 
 
 # External movie player settings
-config.plugins.iptvplayer.fakExtMoviePlayerList = ConfigSelection(default = "fake", choices = [("fake", "  ")])
+config.plugins.iptvplayer.fakExtMoviePlayerList = ConfigSelection(default="fake", choices=[("fake", "  ")])
 
 # hidden options
-config.plugins.iptvplayer.hiddenAllVersionInUpdate = ConfigYesNo(default = False)
-config.plugins.iptvplayer.hidden_ext_player_def_aspect_ratio = ConfigSelection(default = "-1", choices = [("-1", _("default")), ("0", _("4:3 Letterbox")), ("1", _("4:3 PanScan")), ("2", _("16:9")), ("3", _("16:9 always")), ("4", _("16:10 Letterbox")), ("5", _("16:10 PanScan")), ("6", _("16:9 Letterbox"))] )
+config.plugins.iptvplayer.hiddenAllVersionInUpdate = ConfigYesNo(default=False)
+config.plugins.iptvplayer.hidden_ext_player_def_aspect_ratio = ConfigSelection(default="-1", choices=[("-1", _("default")), ("0", _("4:3 Letterbox")), ("1", _("4:3 PanScan")), ("2", _("16:9")), ("3", _("16:9 always")), ("4", _("16:10 Letterbox")), ("5", _("16:10 PanScan")), ("6", _("16:9 Letterbox"))] )
         
 config.plugins.iptvplayer.search_history_size  = ConfigInteger(50, (0, 1000000))
 config.plugins.iptvplayer.autoplay_start_delay  = ConfigInteger(3, (0, 9))
 
-config.plugins.iptvplayer.watched_item_color = ConfigSelection(default = "#808080", choices = COLORS_DEFINITONS)
-config.plugins.iptvplayer.usepycurl = ConfigYesNo(default = False)
+config.plugins.iptvplayer.watched_item_color = ConfigSelection(default="#808080", choices=COLORS_DEFINITONS)
+config.plugins.iptvplayer.usepycurl = ConfigYesNo(default=False)
 
-config.plugins.iptvplayer.prefer_hlsdl_for_pls_with_alt_media = ConfigYesNo(default = True)
+config.plugins.iptvplayer.prefer_hlsdl_for_pls_with_alt_media = ConfigYesNo(default=True)
 
 ###################################################
 
@@ -175,8 +175,8 @@ config.plugins.iptvplayer.prefer_hlsdl_for_pls_with_alt_media = ConfigYesNo(defa
 # Generate list of hosts options for Enabling/Disabling
 ########################################################
 class ConfigIPTVHostOnOff(ConfigOnOff):
-    def __init__(self, default = False):
-        ConfigOnOff.__init__(self, default = default)
+    def __init__(self, default=False):
+        ConfigOnOff.__init__(self, default=default)
 
 gListOfHostsNames = GetHostsList()
 for hostName in gListOfHostsNames:
@@ -412,7 +412,7 @@ class ConfigMenu(ConfigBaseWidget):
         if message == '':
             self.close()
         else:
-            self.session.openWithCallback(self.closeAfterMessage, MessageBox, text = message, type = MessageBox.TYPE_YESNO)
+            self.session.openWithCallback(self.closeAfterMessage, MessageBox, text=message, type=MessageBox.TYPE_YESNO)
             
     def closeAfterMessage(self):
         self.close()
@@ -426,7 +426,7 @@ class ConfigMenu(ConfigBaseWidget):
                     self["config"].list[curIndex][1].value = newPath
             self.session.openWithCallback(boundFunction(SetDirPathCallBack, curIndex), IPTVDirectorySelectorWidget, currDir=currItem.value, title=_("Select directory"))
         elif config.plugins.iptvplayer.fakePin == currItem:
-            self.changePin(start = True)
+            self.changePin(start=True)
         elif config.plugins.iptvplayer.fakeUpdate == currItem:
             self.keyUpdate()
         elif config.plugins.iptvplayer.fakeHostsList == currItem:
@@ -455,7 +455,7 @@ class ConfigMenu(ConfigBaseWidget):
         tab.extend(players)
         return tab
 
-    def changePin(self, pin = None, start = False):
+    def changePin(self, pin=None, start=False):
         # 'PUT_OLD_PIN', 'PUT_NEW_PIN', 'CONFIRM_NEW_PIN'
         if True == start:
             self.changingPinState = 'PUT_OLD_PIN'

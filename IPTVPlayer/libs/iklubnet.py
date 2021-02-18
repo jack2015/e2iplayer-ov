@@ -26,7 +26,7 @@ except Exception:
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.iklubnet_categorization  = ConfigYesNo(default = True)
+config.plugins.iptvplayer.iklubnet_categorization  = ConfigYesNo(default=True)
 
 def GetConfigList():
     optionList = []

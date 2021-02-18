@@ -277,7 +277,7 @@ class IPTVDirectorySelectorWidget(Screen):
             self.currDirChanged()
         
     def newDir(self):
-        self.session.openWithCallback(self.enterPatternCallBack, GetVirtualKeyboard(), title = (_("Enter name")), text = "")
+        self.session.openWithCallback(self.enterPatternCallBack, GetVirtualKeyboard(), title=(_("Enter name")), text="")
 
     def enterPatternCallBack(self, newDirName=None):
         if None != self.currDir and newDirName != None:
@@ -292,7 +292,7 @@ class IPTVDirectorySelectorWidget(Screen):
             if sts:
                 self.requestRefresh()
             else:
-                self.session.open(MessageBox, msg, type = MessageBox.TYPE_INFO, timeout=5)
+                self.session.open(MessageBox, msg, type=MessageBox.TYPE_INFO, timeout=5)
 
 class IPTVFileSelectorWidget(IPTVDirectorySelectorWidget):
     screenwidth = getDesktop(0).size().width()

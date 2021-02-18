@@ -38,7 +38,7 @@ class Fullmatchtv(CBaseHostClass):
         self.categoryId = ''
         self.maxPage    = ''
 
-    def getPage(self, url, addParams = {}, post_data = None):
+    def getPage(self, url, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
         
@@ -133,7 +133,7 @@ class Fullmatchtv(CBaseHostClass):
             urlTab = self.up.getVideoLinkExt(videoUrl)
         return urlTab
 
-    def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):
+    def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
 
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)

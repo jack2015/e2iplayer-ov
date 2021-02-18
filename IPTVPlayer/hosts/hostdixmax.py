@@ -31,8 +31,8 @@ from Screens.MessageBox import MessageBox
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.dixmax_login     = ConfigText(default = "", fixed_size = False)
-config.plugins.iptvplayer.dixmax_password  = ConfigText(default = "", fixed_size = False)
+config.plugins.iptvplayer.dixmax_login     = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.dixmax_password  = ConfigText(default="", fixed_size=False)
 
 def GetConfigList():
     optionList = []
@@ -469,7 +469,7 @@ class DixMax(CBaseHostClass):
             self.loggedIn = False
             if '' == self.login.strip() or '' == self.password.strip():
                 msg = _('The host %s requires registration. \nPlease fill your login and password in the host configuration. Available under blue button.' % self.getMainUrl())
-                self.sessionEx.waitForFinishOpen(MessageBox, msg, type=MessageBox.TYPE_INFO, timeout = 10)
+                self.sessionEx.waitForFinishOpen(MessageBox, msg, type=MessageBox.TYPE_INFO, timeout=10)
                 return False
 
             msgTab = [_('Login failed.')]
@@ -491,7 +491,7 @@ class DixMax(CBaseHostClass):
                 self.loggedIn = True
             else:
                 printDBG(data)
-                self.sessionEx.waitForFinishOpen(MessageBox, '\n'.join(msgTab), type = MessageBox.TYPE_ERROR, timeout = 10)
+                self.sessionEx.waitForFinishOpen(MessageBox, '\n'.join(msgTab), type=MessageBox.TYPE_ERROR, timeout=10)
                 printDBG('tryTologin failed')
 
             if self.loggedIn:
@@ -500,7 +500,7 @@ class DixMax(CBaseHostClass):
 
         return self.loggedIn
 
-    def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):
+    def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)

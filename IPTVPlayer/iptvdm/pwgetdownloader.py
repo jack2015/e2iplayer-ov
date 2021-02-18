@@ -29,10 +29,10 @@ import re
 ###################################################
 class PwgetDownloader(BaseDownloader):
     # wget status
-    WGET_STS = enum( NONE         = 'WGET_NONE',
-                     CONNECTING   = 'WGET_CONNECTING',
-                     DOWNLOADING  = 'WGET_DOWNLOADING',
-                     ENDED        = 'WGET_ENDED')
+    WGET_STS = enum( NONE='WGET_NONE',
+                     CONNECTING='WGET_CONNECTING',
+                     DOWNLOADING='WGET_DOWNLOADING',
+                     ENDED='WGET_ENDED')
                      
     def __init__(self):
         printDBG('PwgetDownloader.__init__ ----------------------------------')
@@ -61,7 +61,7 @@ class PwgetDownloader(BaseDownloader):
         self.iptv_sys = None
         callBackFun(sts, reason)
     
-    def start(self, url, filePath, params = {}):
+    def start(self, url, filePath, params={}):
         '''
             Owervrite start from BaseDownloader
         '''

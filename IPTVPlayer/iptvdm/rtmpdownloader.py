@@ -30,13 +30,13 @@ import re
 class RtmpDownloader(BaseDownloader):
     URI_TAB = ['rtmp://', 'rtmpt://', 'rtmpe://', 'rtmpte://', 'rtmps://']
     # rtmp status
-    RTMP_STS = enum( NONE         = 'RTMP_NONE',
-                     CONNECTING   = 'RTMP_CONNECTING',
-                     DOWNLOADING  = 'RTMP_DOWNLOADING',
-                     ENDED        = 'RTMP_ENDED')
+    RTMP_STS = enum( NONE='RTMP_NONE',
+                     CONNECTING='RTMP_CONNECTING',
+                     DOWNLOADING='RTMP_DOWNLOADING',
+                     ENDED='RTMP_ENDED')
     # rtmp status
-    INFO = enum( FROM_FILE   = 'INFO_FROM_FILE',
-                 FROM_DOTS   = 'INFO_FROM_DOTS')
+    INFO = enum( FROM_FILE='INFO_FROM_FILE',
+                 FROM_DOTS='INFO_FROM_DOTS')
                      
     def __init__(self):
         printDBG('RtmpDownloader.__init__ ----------------------------------')
@@ -114,7 +114,7 @@ class RtmpDownloader(BaseDownloader):
         item, parameter, value, cmd = _processItem('##fake##', parameter, value, cmd) 
         return cmd
             
-    def start(self, url, filePath, params = {}, info_from=None, retries=0):
+    def start(self, url, filePath, params={}, info_from=None, retries=0):
         '''
             Owervrite start from BaseDownloader
         '''

@@ -24,8 +24,8 @@ from Components.config import config, ConfigText, getConfigListEntry
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.plusdede_login    = ConfigText(default = "", fixed_size = False)
-config.plugins.iptvplayer.plusdede_password = ConfigText(default = "", fixed_size = False)
+config.plugins.iptvplayer.plusdede_login    = ConfigText(default="", fixed_size=False)
+config.plugins.iptvplayer.plusdede_password = ConfigText(default="", fixed_size=False)
 
 def GetConfigList():
     optionList = []
@@ -54,7 +54,7 @@ class DokumentalneNET(CBaseHostClass):
     def getFullUrl(self, url):
         return CBaseHostClass.getFullUrl(self, url).replace('&#038;', '&')
         
-    def getPage(self, baseUrl, addParams = {}, post_data = None):
+    def getPage(self, baseUrl, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
@@ -176,7 +176,7 @@ class DokumentalneNET(CBaseHostClass):
             
         return retTab
         
-    def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):
+    def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)

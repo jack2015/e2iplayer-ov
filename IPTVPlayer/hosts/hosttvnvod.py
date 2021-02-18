@@ -33,10 +33,10 @@ except ImportError as e:
 ###################################################
 # Config options for HOST
 ###################################################
-config.plugins.iptvplayer.TVNDefaultformat = ConfigSelection(default = "9999", choices = [("0", "Najgorsza"), ("1", "Bardzo niska"), ("2", "Niska"),  ("3", "Średnia"), ("4", "Standard"), ("5", "Wysoka"), ("6", "Bardzo wysoka"), ("7", "HD"), ("9999", "Najlepsza")])
-config.plugins.iptvplayer.TVNUseDF = ConfigYesNo(default = False)
-config.plugins.iptvplayer.TVNdevice = ConfigSelection(default = "_mobile_", choices = [("_mobile_", "Mobile"), ("_tv_", "TV")])
-config.plugins.iptvplayer.proxyenable = ConfigYesNo(default = False)
+config.plugins.iptvplayer.TVNDefaultformat = ConfigSelection(default="9999", choices=[("0", "Najgorsza"), ("1", "Bardzo niska"), ("2", "Niska"),  ("3", "Średnia"), ("4", "Standard"), ("5", "Wysoka"), ("6", "Bardzo wysoka"), ("7", "HD"), ("9999", "Najlepsza")])
+config.plugins.iptvplayer.TVNUseDF = ConfigYesNo(default=False)
+config.plugins.iptvplayer.TVNdevice = ConfigSelection(default="_mobile_", choices=[("_mobile_", "Mobile"), ("_tv_", "TV")])
+config.plugins.iptvplayer.proxyenable = ConfigYesNo(default=False)
    
 def GetConfigList():
     optionList = []
@@ -457,7 +457,7 @@ class TvnVod(CBaseHostClass):
             printExc()
         return self.getLinks(fav_data)
 
-    def handleService(self, index, refresh = 0, searchPattern = '', searchType = ''):
+    def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('TvnVod..handleService start')
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
