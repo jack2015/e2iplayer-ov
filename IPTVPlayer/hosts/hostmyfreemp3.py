@@ -24,6 +24,7 @@ except Exception:
 def gettytul():
     return 'https://my-free-mp3.net/'
 
+
 class MyFreeMp3(CBaseHostClass):
     
     def __init__(self):
@@ -48,6 +49,7 @@ class MyFreeMp3(CBaseHostClass):
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -151,6 +153,7 @@ class MyFreeMp3(CBaseHostClass):
         printDBG("MyFreeMp3.getLinksForVideo [%s]" % cItem)
         
         map = 'ABCDEFGHJKMNPQRSTUVWXYZabcdefghjkmnpqrstuvxyz123'
+
         def encode(input):
             length = len(map)
             encoded = ""
@@ -210,6 +213,7 @@ class MyFreeMp3(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

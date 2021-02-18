@@ -19,6 +19,7 @@ from Components.Label import Label
 from Components.ActionMap import ActionMap
 ###################################################
 
+
 class IPTVChoiceBoxItem:
     TYPE_ON = "on"
     TYPE_OFF = "off"
@@ -32,6 +33,7 @@ class IPTVChoiceBoxItem:
         self.description = description
         self.type = type
         self.privateData = privateData
+
 
 class IPTVChoiceBoxWidget(Screen):
 
@@ -60,7 +62,6 @@ class IPTVChoiceBoxWidget(Screen):
         self.onShown.append(self.onStart)
         self.onClose.append(self.__onClose)
 
-        
         self["title"] = Label(self.params.get('title', _("Select option")))        
         self["list"] = IPTVRadioButtonList()
         

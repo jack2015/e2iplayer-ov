@@ -23,9 +23,9 @@ except Exception:
 ###################################################
 
 
-
 def gettytul():
     return 'https://shahiid-anime.net/'
+
 
 class ShahiidAnime(CBaseHostClass):
     
@@ -390,6 +390,7 @@ class ShahiidAnime(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -19,6 +19,7 @@ import copy
 def gettytul():
     return 'https://spryciarze.pl/'
     
+
 class Spryciarze(CBaseHostClass):
     MAIN_URL = 'https://www.spryciarze.pl/'
     MAIN_CATEGORIES_URL = MAIN_URL + 'kategorie/'
@@ -218,8 +219,6 @@ class Spryciarze(CBaseHostClass):
         if 1 == len(self.currList):
             self.getVideoList2(self.currList[0]['url'])
             
-        
-    
     def getVideoList2(self, url):
         printDBG('Spryciarze.getVideoList')
         self.currList = []
@@ -388,6 +387,7 @@ class Spryciarze(CBaseHostClass):
             self.getSearchResut(searchPattern)
     # end handleService
 
+
 class IPTVHost(IHost):
 
     def __init__(self):
@@ -486,7 +486,6 @@ class IPTVHost(IHost):
     def getLogoPath(self):  
         return RetHost(RetHost.OK, value=[GetLogoDir('spryciarzelogo.png')])
 
-
     def convertList(self, cList):
         hostList = []
         possibleTypesOfSearch = []
@@ -534,8 +533,6 @@ class IPTVHost(IHost):
         return hostList
 
 
-
-          
 #host = Spryciarze()
 #host.getMainCategory()
 #host.getVideoList('http://kulinaria.spryciarze.pl/kategorie/dania-miesne')

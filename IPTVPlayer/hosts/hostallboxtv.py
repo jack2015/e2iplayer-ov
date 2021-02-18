@@ -34,14 +34,18 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.allboxtv_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.allboxtv_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("e-mail") + ":", config.plugins.iptvplayer.allboxtv_login))
     optionList.append(getConfigListEntry(_("password") + ":", config.plugins.iptvplayer.allboxtv_password))
     return optionList
 ###################################################
+
+
 def gettytul():
     return 'https://allbox.tv/'
+
 
 class AllBoxTV(CBaseHostClass):
     
@@ -84,6 +88,7 @@ class AllBoxTV(CBaseHostClass):
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -608,6 +613,7 @@ class AllBoxTV(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

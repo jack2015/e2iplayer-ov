@@ -121,11 +121,13 @@ if sys.version_info < (2, 4):
 else:
 	HANDLE_ERRORS = 0
     
+
 class ConnectionManager:
     """
     The connection manager must be able to:
       * keep track of all existing
       """
+
     def __init__(self):
         self._lock = thread.allocate_lock()
         self._hostmap = {} # map hosts to a list of connections
@@ -184,6 +186,7 @@ class ConnectionManager:
             return list(self._hostmap.get(host, []))
         else:
             return dict(self._hostmap)
+
 
 class KeepAliveHandler:
     def __init__(self):
@@ -354,6 +357,7 @@ class KeepAliveHandler:
     def _get_connection(self, host):
         return NotImplementedError
 
+
 class HTTPHandler(KeepAliveHandler, urllib2.HTTPHandler):
     def __init__(self):
         KeepAliveHandler.__init__(self)
@@ -363,6 +367,7 @@ class HTTPHandler(KeepAliveHandler, urllib2.HTTPHandler):
 
     def _get_connection(self, host):
         return HTTPConnection(host)
+
 
 class HTTPSHandler(KeepAliveHandler, urllib2.HTTPSHandler):
     def __init__(self, ssl_factory=None):
@@ -384,6 +389,7 @@ class HTTPSHandler(KeepAliveHandler, urllib2.HTTPSHandler):
         except AttributeError:
         	return HTTPSConnection(host)
         
+
 class HTTPResponse(httplib.HTTPResponse):
     # we need to subclass HTTPResponse in order to
     # 1) add readline() and readlines() methods
@@ -403,7 +409,6 @@ class HTTPResponse(httplib.HTTPResponse):
     # Both readline and readlines have been stolen with almost no
     # modification from socket.py
     
-
     def __init__(self, sock, debuglevel=0, strict=0, method=None):
         if method: # the httplib in python 2.3 uses the method arg
             httplib.HTTPResponse.__init__(self, sock, debuglevel, method)
@@ -491,6 +496,7 @@ class HTTPResponse(httplib.HTTPResponse):
 class HTTPConnection(httplib.HTTPConnection):
     # use the modified response class
     response_class = HTTPResponse
+
 
 class HTTPSConnection(httplib.HTTPSConnection):
     response_class = HTTPResponse

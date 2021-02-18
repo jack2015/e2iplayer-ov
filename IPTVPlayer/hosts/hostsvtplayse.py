@@ -42,6 +42,7 @@ config.plugins.iptvplayer.svt_prefered_format = ConfigSelection(default="hls", c
 ("dash", _("DASH/mpd"))
 ])
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Default video quality:"), config.plugins.iptvplayer.svt_default_quality))
@@ -52,9 +53,9 @@ def GetConfigList():
 ###################################################
 
 
-
 def gettytul():
     return 'https://svtplay.se/'
+
 
 class SVTPlaySE(CBaseHostClass):
  
@@ -89,7 +90,6 @@ class SVTPlaySE(CBaseHostClass):
         self.itemsPerPage = 48
         self.programsAZCache = {'keys': [], 'dict': {}}
         
-    
     def getFullApiUrl(self, url):
         if url.startswith('/'):
             url = '/api' + url
@@ -604,6 +604,7 @@ class SVTPlaySE(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

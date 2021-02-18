@@ -14,8 +14,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, rm
 import urllib
 ###################################################
 
+
 def gettytul():
     return 'http://otakufr.com/'
+
 
 class OtakuFR(CBaseHostClass):
  
@@ -64,6 +66,7 @@ class OtakuFR(CBaseHostClass):
                              {'category': 'search', 'title': _('Search'), 'search_item': True, },
                              {'category': 'search_history', 'title': _('Search history'), } 
                             ]
+
     def listABC(self, cItem, nextCategory):
         printDBG("OtakuFR.listABC")
         
@@ -325,6 +328,7 @@ class OtakuFR(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

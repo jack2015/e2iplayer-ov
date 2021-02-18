@@ -37,6 +37,7 @@ config.plugins.iptvplayer.hdfull_language = ConfigSelection(default="es", choice
 config.plugins.iptvplayer.hdfull_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.hdfull_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Language"), config.plugins.iptvplayer.hdfull_language))
@@ -45,12 +46,15 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'https://hdfull.me/'
     
+
 class SuggestionsProvider:
     MAIN_URL = 'https://hdfull.me/'
     COOKIE_FILE = ''
+
     def __init__(self):
         self.cm = common()
         self.lang = config.plugins.iptvplayer.hdfull_language.value
@@ -75,6 +79,7 @@ class SuggestionsProvider:
             return retList 
         return None
 
+
 def jstr(item, key, default=''):
     v = item.get(key, default)
     if isinstance(v, type(u'')):
@@ -83,6 +88,7 @@ def jstr(item, key, default=''):
         return v
     else:
         return default
+
 
 class HDFull(CBaseHostClass, CaptchaHelper):
 
@@ -708,6 +714,7 @@ class HDFull(CBaseHostClass, CaptchaHelper):
     def getSuggestionsProvider(self, index):
         printDBG('HDFull.getSuggestionsProvider')
         return SuggestionsProvider()
+
 
 class IPTVHost(CHostBase):
 

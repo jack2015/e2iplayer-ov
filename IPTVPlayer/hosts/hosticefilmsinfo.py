@@ -30,6 +30,8 @@ config.plugins.iptvplayer.icefilmsinfo_proxy = ConfigSelection(default="None", c
                                                                                             ("proxy_1", _("Alternative proxy server (1)")),
                                                                                             ("proxy_2", _("Alternative proxy server (2)"))])
 config.plugins.iptvplayer.icefilmsinfo_alt_domain = ConfigText(default="", fixed_size=False)
+
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Use proxy server:"), config.plugins.iptvplayer.icefilmsinfo_proxy))
@@ -39,9 +41,9 @@ def GetConfigList():
 ###################################################
 
 
-
 def gettytul():
     return 'http://icefilms.info/'
+
 
 class IceFilms(CBaseHostClass):
  
@@ -482,6 +484,7 @@ class IceFilms(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

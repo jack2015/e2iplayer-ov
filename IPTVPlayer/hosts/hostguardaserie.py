@@ -19,8 +19,10 @@ except Exception:
     import simplejson as json
 ###################################################
 
+
 def gettytul():
     return 'https://www.guardaserie.digital/'
+
 
 class GuardaSerieClick(CBaseHostClass):
 
@@ -297,6 +299,7 @@ class GuardaSerieClick(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

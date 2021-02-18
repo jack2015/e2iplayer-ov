@@ -41,6 +41,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.rtlmosthu_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.rtlmosthu_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Email") + ":", config.plugins.iptvplayer.rtlmosthu_login))
@@ -48,8 +49,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'https://rtlmost.hu/'
+
 
 def _getImageExtKey(images, role):
     try:
@@ -60,6 +63,7 @@ def _getImageExtKey(images, role):
         pass
     return None
 
+
 def _updateOtherInfo(otherInfo, item):
     try:
         otherInfo['duration'] = str(datetime.timedelta(seconds=item['duration']))
@@ -69,6 +73,7 @@ def _updateOtherInfo(otherInfo, item):
         otherInfo['age_limit'] = str(item['csa']['sort_index'])
     except:
         pass
+
 
 class RtlMostHU(CBaseHostClass):
 

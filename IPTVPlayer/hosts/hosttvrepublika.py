@@ -22,6 +22,7 @@ except Exception:
 def gettytul():
     return 'http://telewizjarepublika.pl/'
 
+
 class TVRepublkaPL(CBaseHostClass):
  
     def __init__(self):
@@ -168,6 +169,7 @@ class TVRepublkaPL(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

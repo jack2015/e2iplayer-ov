@@ -385,6 +385,7 @@ class SerialeNet(CBaseHostClass):
             printExc()
         CBaseHostClass.endHandleService(self, index, refresh)
 
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

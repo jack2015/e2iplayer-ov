@@ -35,6 +35,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.wizjatv_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.wizjatv_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry('wizja.tv ' + _("login") + ':', config.plugins.iptvplayer.wizjatv_login))
@@ -42,6 +43,7 @@ def GetConfigList():
     return optionList
     
 ###################################################
+
 
 class WizjaTvApi(CBaseHostClass):
 
@@ -92,7 +94,6 @@ class WizjaTvApi(CBaseHostClass):
                 printDBG('WizjaTvApi.doLogin there is no cookie file after login')
         return logged, premium
 
-    
     def getList(self, cItem):
         printDBG("WizjaTvApi.getChannelsList")
         

@@ -18,6 +18,7 @@ except:
 
 DUKTAPE_VER = '226'
 
+
 def duktape_execute(cmd_params):
     ret = {'sts': False, 'code': -12, 'data': ''}
     noDuk = False
@@ -41,6 +42,7 @@ def duktape_execute(cmd_params):
     printDBG('duktape_execute cmd ret[%s]' % ret)
     return ret
 
+
 def js_execute(jscode, params={}):
     ret = {'sts': False, 'code': -12, 'data': ''}
     sts, tmpPath = CreateTmpFile('.iptv_js.js', jscode)
@@ -53,6 +55,7 @@ def js_execute(jscode, params={}):
 
     printDBG('js_execute cmd ret[%s]' % ret)
     return ret
+
 
 def js_execute_ext(items, params={}):
     fileList = []
@@ -134,6 +137,7 @@ def js_execute_ext(items, params={}):
             rm(file)
     return ret
     
+
 def is_js_cached(name, hash):
     ret = False
     byteFileName = GetJSCacheDir(name + '.byte')

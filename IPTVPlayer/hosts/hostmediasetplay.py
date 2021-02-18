@@ -33,6 +33,7 @@ from datetime import timedelta
 def gettytul():
     return 'https://mediasetplay.it/'
 
+
 class MediasetPlay(CBaseHostClass):
 
     def __init__(self):
@@ -369,7 +370,6 @@ class MediasetPlay(CBaseHostClass):
                    {'title': 'Avventura', 'f_ref': 'CWFICTIONADVENTURE'}, ]
         self.listsTab(tab, cItem)
 
-            
     def listCatalogItems(self, cItem, nextCategory):
         printDBG("MediasetPlay.listCatalogItems")
         query = {'uxReference': cItem['f_ref'], 'platform': 'pc'}
@@ -601,6 +601,7 @@ class MediasetPlay(CBaseHostClass):
             printExc()
 
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
     def __init__(self):

@@ -29,6 +29,7 @@ from Components.config import config, ConfigYesNo, getConfigListEntry
 ###################################################
 config.plugins.iptvplayer.favourites_use_watched_flag = ConfigYesNo(default=True)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Allow watched flag to be set"), config.plugins.iptvplayer.favourites_use_watched_flag))
@@ -37,8 +38,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return _('Favourites')
+
 
 class Favourites(CBaseHostClass):
      
@@ -186,6 +189,7 @@ class Favourites(CBaseHostClass):
         
     def getCurrentGuestHostName(self):
         return self.hostName
+
 
 class IPTVHost(CHostBase):
 

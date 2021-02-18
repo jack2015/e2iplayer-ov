@@ -24,6 +24,7 @@ import datetime
 def gettytul():
     return 'http://raiplay.it/'
 
+
 class Raiplay(CBaseHostClass):
  
     def __init__(self):
@@ -46,7 +47,6 @@ class Raiplay(CBaseHostClass):
         #self.defaultParams = { 'header': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; rv:17.0) Gecko/20100101 Firefox/17.0'}}
         self.defaultParams = {'header': {'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2956.0 Safari/537.36"}}
 
-        
     def getPage(self, url, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
@@ -113,7 +113,6 @@ class Raiplay(CBaseHostClass):
         
         return linksTab
 
-   
     def listMainMenu(self, cItem):
         MAIN_CAT_TAB = [{'category': 'live_tv', 'title': 'Dirette tv'},
                         {'category': 'live_radio', 'title': 'Dirette radio'},
@@ -121,7 +120,6 @@ class Raiplay(CBaseHostClass):
                         {'category': 'ondemand', 'title': 'Programmi on demand'},
                         {'category': 'tg', 'title': 'Archivio Telegiornali'}]  
         self.listsTab(MAIN_CAT_TAB, cItem)  
-
 
     def listLiveTvChannels(self, cItem):
         printDBG("Raiplay - start live channel list")
@@ -198,7 +196,6 @@ class Raiplay(CBaseHostClass):
             icon = self.MAIN_URL + station["icon"]          
             self.addDir(MergeDicts(cItem, {'category': 'replay_channel', 'title': title, 'name': name}))              
 
-            
     def listEPG(self, cItem):
         str = cItem['name']
         epgDate = str[:10]
@@ -275,7 +272,6 @@ class Raiplay(CBaseHostClass):
                 icon_url = self.MAIN_URL + item["image"]
                 self.addDir(MergeDicts(cItem, {'category': 'ondemand_items', 'title': item["name"], 'name': item["name"], 'url': item["PathID"], 'icon': icon_url, 'sub-type': item["sub-type"]}))            
 
-                
     def listOnDemandCategory(self, cItem):
         pathId = cItem["url"]
         pathId = self.getFullUrl(pathId)
@@ -299,7 +295,6 @@ class Raiplay(CBaseHostClass):
 
             self.addDir(MergeDicts(cItem, {'category': 'ondemand_items', 'title': item["name"], 'name': item["name"], 'url': item["PathID"], 'sub-type': item["sub-type"], 'icon': icon_url}))           
 
-            
     def listOnDemandAZ(self, cItem):
         pathId = cItem["url"]
         pathId = self.getFullUrl(pathId)
@@ -312,7 +307,6 @@ class Raiplay(CBaseHostClass):
         for i in range(26):
             self.addDir(MergeDicts(cItem, {'category': 'ondemand_list', 'title': chr(ord('A') + i), 'name': chr(ord('A') + i), 'url': pathId}))              
 
-            
     def listOnDemandIndex(self, cItem):
         pathId = cItem["url"]
         pathId = self.getFullUrl(pathId)
@@ -377,7 +371,6 @@ class Raiplay(CBaseHostClass):
         TG_TAB = [{'category': 'tg1', 'title': 'TG 1'}, {'category': 'tg2', 'title': 'TG 2'},
                   {'category': 'tg3', 'title': 'TG 3'}, {'category': 'tgr-root', 'title': 'TG Regionali'}]
         self.listsTab(TG_TAB, cItem)  
-    
     
     def listTgr(self, cItem):
         printDBG("Raiplay. start tgr list")

@@ -10,6 +10,7 @@ from parser import parse, is_url
 
 __all__ = 'M3U8', 'Playlist', 'loads', 'load', 'parse'
 
+
 def inits(content, uri):
     '''
     Given a string with a m3u8 content and uri from which 
@@ -22,12 +23,14 @@ def inits(content, uri):
     base_uri = urlparse.urljoin(prefix, base_path)
     return M3U8(content, base_uri=base_uri)
 
+
 def loads(content):
     '''
     Given a string with a m3u8 content, returns a M3U8 object.
     Raises ValueError if invalid content
     '''
     return M3U8(content)
+
 
 def load(uri):
     '''
@@ -39,6 +42,7 @@ def load(uri):
     else:
         return _load_from_file(uri)
 
+
 def _load_from_uri(uri):
     open = urlopen(uri)
     uri = open.geturl()
@@ -48,6 +52,7 @@ def _load_from_uri(uri):
     base_path = os.path.normpath(parsed_url.path + '/..')
     base_uri = urlparse.urljoin(prefix, base_path)
     return M3U8(content, base_uri=base_uri)
+
 
 def _load_from_file(uri):
     with open(uri) as fileobj:

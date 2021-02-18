@@ -24,6 +24,7 @@ except Exception:
 def gettytul():
     return 'http://classiccinemaonline.com/'
 
+
 class ClassicCinemaOnline(CBaseHostClass):
     
     def __init__(self):
@@ -53,6 +54,7 @@ class ClassicCinemaOnline(CBaseHostClass):
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -313,6 +315,7 @@ class ClassicCinemaOnline(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

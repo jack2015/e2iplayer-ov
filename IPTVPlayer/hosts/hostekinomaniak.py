@@ -30,6 +30,7 @@ from copy import deepcopy
 def gettytul():
     return 'https://ekinomaniak.net/'
 
+
 class eKinomaniak(CBaseHostClass):
     
     def __init__(self):
@@ -384,6 +385,7 @@ class eKinomaniak(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -15,9 +15,9 @@ import random
 ###################################################
 
 
-
 def gettytul():
     return 'http://radiostacja.pl/'
+
 
 class RadiostacjaPl(CBaseHostClass):
     
@@ -285,6 +285,7 @@ class RadiostacjaPl(CBaseHostClass):
             self.listRMFItems(self.currItem)
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

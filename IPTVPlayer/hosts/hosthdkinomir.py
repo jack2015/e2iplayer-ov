@@ -24,6 +24,7 @@ except Exception:
 def gettytul():
     return 'http://hdkinomir.com/'
 
+
 class HDKinoMir(CBaseHostClass):
  
     def __init__(self):
@@ -47,8 +48,6 @@ class HDKinoMir(CBaseHostClass):
         
         self.encoding = ''
         
-
-    
     def getPage(self, url, params={}, post_data=None):
         sts, data = self.cm.getPage(url, params, post_data)
         if sts and self.encoding == '':
@@ -316,6 +315,8 @@ class HDKinoMir(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

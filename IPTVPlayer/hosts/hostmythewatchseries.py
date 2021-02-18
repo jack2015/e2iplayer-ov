@@ -19,6 +19,7 @@ import urllib
 def gettytul():
     return 'https://gowatchseries.io/'
 
+
 class MyTheWatchseries(CBaseHostClass):
  
     def __init__(self):
@@ -463,6 +464,7 @@ class MyTheWatchseries(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

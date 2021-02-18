@@ -21,22 +21,30 @@ import threading
 
 import signal
 import os
+
+
 def signal_handler(sig, frame):
     os.kill(os.getpid(), signal.SIGTERM)
+
+
 signal.signal(signal.SIGINT, signal_handler)
 
 LAST_HTTP_ERROR_CODE = -1
 LAST_HTTP_ERROR_DATA = ''
 
+
 def updateStatus(type, data, code=None):
     obj = {'type': type, 'data': data, 'code': code}
     sys.stderr.write('\n%s\n' % json.dumps(obj).encode('utf-8'))
 
+
 DEBUGE = False 
+
 
 def printDBG(strDat):
     if DEBUGE:
         print("%s" % strDat)
+
 
 def printExc(msg=''):
     printDBG("===============================================")
@@ -45,6 +53,7 @@ def printExc(msg=''):
     msg = msg + ': \n%s' % traceback.format_exc()
     printDBG(msg)
     printDBG("===============================================")
+
 
 def getPage(url, headers={}, post_data=None):
     printDBG('url [%s]' % url)
@@ -83,14 +92,17 @@ def getPage(url, headers={}, post_data=None):
         printExc()
     return sts, data 
 
+
 def _fromhex(hex):
     if sys.version_info < (2, 7, 0):
         return hex.decode('hex')
     else:
         return bytearray.fromhex(hex)
 
+
 class MYJDException(BaseException):
     pass
+
 
 class Jddevice:
     def __init__(self, jd, device_dict):
@@ -109,6 +121,7 @@ class Jddevice:
     def __action_url(self):
         return "/t_" + self.myjd.get_session_token() + "_" + self.device_id
 
+
 def decrypt(secret_token, data):
     iv = secret_token[:len(secret_token) // 2]
     key = secret_token[len(secret_token) // 2:]
@@ -117,6 +130,7 @@ def decrypt(secret_token, data):
     decrypted_data = cipher.decrypt(base64.b64decode(data), iv).strip()
     
     return decrypted_data
+
 
 def encrypt(secret_token, data):
     data = data.encode('utf-8')
@@ -127,6 +141,7 @@ def encrypt(secret_token, data):
     encrypted_data = base64.b64encode(cipher.encrypt(data, iv)) 
     
     return encrypted_data
+
 
 class Myjdapi:
     def __init__(self):
@@ -290,6 +305,7 @@ class Myjdapi:
         self.update_request_id()
         return jsondata
 
+
 class MyjdRequestHandler(BaseHTTPRequestHandler):
     server_version = 'IPTVPlayer HttpServer' #'AppWork GmbH HttpServer'
     
@@ -443,6 +459,8 @@ class MyjdRequestHandler(BaseHTTPRequestHandler):
         return
 
 ##################################
+
+
 def PoolConnection(*args, **kwargs):
     parameters = kwargs['params']
     printDBG("START THREAD")
@@ -457,10 +475,12 @@ def PoolConnection(*args, **kwargs):
         except Exception:
             printExc()
 
+
 class Params:
     def get_device_secret(self):
         return self.device_secret
     pass
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 7:
@@ -491,7 +511,6 @@ if __name__ == "__main__":
     parameters.captcha_notified = False
     parameters.captcha_data = CAPTCHA_DATA
     parameters.subscription_id = SUBSCRIPTION_ID
-    
     
     try:
         jd = None

@@ -10,6 +10,7 @@
 import hashlib
 from ..hash.hash import Hash
 
+
 class SHA1(Hash):
 
     def __init__(self):

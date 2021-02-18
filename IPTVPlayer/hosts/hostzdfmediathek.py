@@ -43,8 +43,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'ZDFmediathek'
+
 
 class ZDFmediathek(CBaseHostClass):
     HOST = 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.18) Gecko/20110621 Mandriva Linux/1.9.2.18-0.1mdv2010.2 (2010.2) Firefox/3.6.18'
@@ -471,6 +473,7 @@ class ZDFmediathek(CBaseHostClass):
                                 tmpUrlTab.append({'url': tmpItem['url'], 'quality_name': quality, 'quality': qualityVal, 'quality_pref': qualityPref, 'format_name': type['name'], 'format_pref': formatPref})
             except Exception:
                 printExc()
+
             def _cmpLinks(it1, it2):
                 prefmoreimportantly = config.plugins.iptvplayer.zdfmediathek_prefmoreimportant.value
                 if 'quality' == prefmoreimportantly:
@@ -566,6 +569,7 @@ class ZDFmediathek(CBaseHostClass):
         else:
             printExc()
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

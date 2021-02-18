@@ -34,6 +34,7 @@ config.plugins.iptvplayer.movieshdco_sortby = ConfigSelection(default="date", ch
 config.plugins.iptvplayer.cartoonhd_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.cartoonhd_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("login") + ":", config.plugins.iptvplayer.cartoonhd_login))
@@ -44,6 +45,7 @@ def GetConfigList():
 
 def gettytul():
     return 'https://cartoonhd.care/'
+
 
 class CartoonHD(CBaseHostClass):
  
@@ -63,7 +65,6 @@ class CartoonHD(CBaseHostClass):
         self.MAIN_URL = None
         self.SEARCH_URL = None
         
-
     def selectDomain(self):
         domain = 'https://cartoonhd.care/'
         params = dict(self.defaultParams)
@@ -663,6 +664,8 @@ class CartoonHD(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

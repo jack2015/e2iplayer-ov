@@ -34,6 +34,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.joemonsterorg_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.joemonsterorg_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry("Login:", config.plugins.iptvplayer.joemonsterorg_login))
@@ -41,8 +42,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'https://joemonster.org/'
+
 
 class JoeMonster(CBaseHostClass):
  
@@ -234,6 +237,7 @@ class JoeMonster(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

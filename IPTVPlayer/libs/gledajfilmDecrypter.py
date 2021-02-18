@@ -4,6 +4,7 @@
 # taken from: https://raw.githubusercontent.com/Joecowboy/MOVIE2K.bundle/master/Contents/Services/URL/MOVIE2K/Modules/gledajfilmDecrypter.py
 import math
 
+
 class gledajfilmDecrypter:
 	def __init__(self, param1, param2):
 
@@ -17,7 +18,6 @@ class gledajfilmDecrypter:
 		self.Nb = param2 / 32
 		self.Nk = param1 / 32
 		self.Nr = self.roundsArray[self.Nk][self.Nb]
-
 
 	def decrypt(self, param1, param2, param3):
 		_loc10_ = None
@@ -39,14 +39,12 @@ class gledajfilmDecrypter:
 		
 		return _loc4_
 
-
 	def MyInt(self, x):
 		x = 0xffffffff & x
 		if x > 0x7fffffff:
 			return - (~(x - 1) & 0xffffffff)
 		else:
 			return x   
-
 
 	def keyExpansion(self, param1):
 		_loc4_ = None
@@ -74,7 +72,6 @@ class gledajfilmDecrypter:
 	
 		return _loc3_
 
-
 	def hexToChars(self, param1):
 		_loc2_ = []
 		_loc3_ = 0
@@ -87,7 +84,6 @@ class gledajfilmDecrypter:
 
 		return _loc2_
 
-
 	def strToChars(self, param1):
 		_loc2_ = []
 		_loc3_ = 0
@@ -97,7 +93,6 @@ class gledajfilmDecrypter:
 		
 		return _loc2_
 
-
 	def charsToStr(self, param1):
 		_loc2_ = ''
 		_loc3_ = 0
@@ -105,7 +100,6 @@ class gledajfilmDecrypter:
 			_loc2_ = _loc2_ + chr(param1[_loc3_])
             		_loc3_ += 1
 		return _loc2_
-
 
 	def packBytes(self, param1):
 		_loc2_ = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
@@ -118,7 +112,6 @@ class gledajfilmDecrypter:
 			_loc3_ = _loc3_ + 4
 		return _loc2_
 
-
 	def unpackBytes(self, param1):
 		_loc2_ = []
 		_loc3_ = 0
@@ -130,7 +123,6 @@ class gledajfilmDecrypter:
 			_loc3_ += 1
 		return _loc2_
 
-
 	def InverseRound(self, param1, param2):
 		_loc3_ = False
 		_loc4_ = True
@@ -140,18 +132,15 @@ class gledajfilmDecrypter:
 		self.shiftRow(param1, 'decrypt')
 		self.byteSub(param1, 'decrypt')
 
-    
 	def FinalRound(self, param1, param2):
 		self.byteSub(param1, 'encrypt')
 		self.shiftRow(param1, 'encrypt')
 		self.addRoundKey(param1, param2)
 
-
 	def InverseFinalRound(self, param1, param2):
 		self.addRoundKey(param1, param2)
 		self.shiftRow(param1, 'decrypt')
 		self.byteSub(param1, 'decrypt')
-
 
 	def addRoundKey(self, param1, param2):
 		_loc3_ = 0
@@ -163,7 +152,6 @@ class gledajfilmDecrypter:
 			param1[3][_loc3_] = param1[3][_loc3_] ^ param2[_loc3_] >> 24 & 255
                   	_loc3_ += 1
                
-      
 	def shiftRow(self, param1, param2):
 		_loc4_ = True
 		_loc5_ = False
@@ -177,7 +165,6 @@ class gledajfilmDecrypter:
                   
 			_loc3_ += 1
 
-			
 	def cyclicShiftLeft(self, param1, param2):
 		_loc3_ = param1[0:param2]
 		param1 = param1[param2:]
@@ -185,7 +172,6 @@ class gledajfilmDecrypter:
 		
 		return param1
 
-      
  	def decryption(self, param1, param2):
 		param1 = self.packBytes(param1)
          	self.InverseFinalRound(param1, param2[self.Nb * self.Nr:]) # nb*nr=42
@@ -199,7 +185,6 @@ class gledajfilmDecrypter:
 
 		return reVal
 
-      
 	def byteSub(self, param1, param2):
 		_loc3_ = []
 		_loc5_ = 0
@@ -217,7 +202,6 @@ class gledajfilmDecrypter:
 				_loc5_ += 1
 			_loc4_ += 1
 
-         
  	def mixColumn(self, param1, param2):
 		_loc4_ = 0
 		_loc3_ = [0, 0, 0, 0]
@@ -240,14 +224,12 @@ class gledajfilmDecrypter:
             
 			_loc5_ += 1
 
-         
 	def xtime(self, param1):
 		param1 = param1 << 1
 		if param1 & 256:
 			return param1 ^ 283
 		else:
 			return param1
-	       
 	       
 	def mult_GF256(self, param1, param2):
 		_loc3_ = 0

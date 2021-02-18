@@ -18,9 +18,9 @@ import urllib
 ###################################################
 
 
-
 def gettytul():
     return 'https://streaminghd.online/'
+
 
 class StreamingHDFun(CBaseHostClass):
     
@@ -41,6 +41,7 @@ class StreamingHDFun(CBaseHostClass):
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -478,6 +479,7 @@ class StreamingHDFun(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -25,6 +25,7 @@ except Exception:
 def gettytul():
     return 'https://ororo.tv/'
 
+
 class OroroTV(CBaseHostClass):
     
     def __init__(self):
@@ -239,6 +240,7 @@ class OroroTV(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

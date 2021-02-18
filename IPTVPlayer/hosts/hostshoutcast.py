@@ -19,9 +19,9 @@ except Exception:
 ###################################################
 
 
-
 def gettytul():
     return 'http://shoutcast.com/'
+
 
 class ShoutcastCom(CBaseHostClass):
     
@@ -205,6 +205,7 @@ class ShoutcastCom(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

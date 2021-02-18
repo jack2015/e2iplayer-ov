@@ -32,6 +32,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.vidcorn_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.vidcorn_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("e-mail"), config.plugins.iptvplayer.vidcorn_login))
@@ -39,8 +40,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'https://vidcorn.tv/'
+
 
 class VidCorn(CBaseHostClass, CaptchaHelper):
 
@@ -669,6 +672,7 @@ class VidCorn(CBaseHostClass, CaptchaHelper):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

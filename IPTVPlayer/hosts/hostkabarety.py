@@ -23,6 +23,7 @@ except Exception:
 def gettytul():
     return 'http://kabaret.tworzymyhistorie.pl/'
 
+
 class Kabarety(CBaseHostClass):
  
     def __init__(self):
@@ -336,6 +337,7 @@ class Kabarety(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

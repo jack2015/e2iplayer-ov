@@ -18,6 +18,7 @@ from skin import parseColor
 
 from urlparse import urljoin
 
+
 class CUrlItem:
     def __init__(self, name="", url="", urlNeedsResolve=0):
         if isinstance(name, basestring):
@@ -36,6 +37,8 @@ class CUrlItem:
 # define attribiutes for item of diplay list
 # communicate display layer with host
 #
+
+
 class CDisplayListItem:
     TYPE_CATEGORY = "CATEGORY"
     TYPE_VIDEO = "VIDEO"
@@ -128,6 +131,7 @@ class CDisplayListItem:
             printExc()
         return None
 
+
 class ArticleContent:
     VISUALIZER_DEFAULT = 'DEFAULT'
     # Posible args and values for richDescParams:
@@ -179,6 +183,7 @@ class ArticleContent:
                         "budget": "Budget:",
                         "translation": "Translation:"
                         }
+
     def __init__(self, title='', text='', images=[], trailers=[], richDescParams={}, visualizer=None):
         self.title = title
         self.text = text
@@ -190,11 +195,13 @@ class ArticleContent:
         else:
             self.visualizer = visualizer
         
+
 class CFavItem:
     RESOLVER_DIRECT_LINK = 'DIRECT_LINK'
     RESOLVER_SELF = 'SELF'
     RESOLVER_URLLPARSER = 'URLLPARSER'
     TYPE_UNKNOWN = CDisplayListItem.TYPE_UNKNOWN
+
     def __init__(self, name='',
                   description='',
                   type=TYPE_UNKNOWN,
@@ -224,15 +231,18 @@ class CFavItem:
     def getAsDict(self):
         return vars(self)
         
+
 class CHostsGroupItem:
     def __init__(self, name='', title=''):
         self.name = name
         self.title = title
        
+
 class RetHost:
     OK = "OK"
     ERROR = "ERROR"
     NOT_IMPLEMENTED = "NOT_IMPLEMENTED"
+
     def __init__(self, status, value, message=''):
         self.status = status
         self.value = value  
@@ -242,6 +252,8 @@ class RetHost:
 # interface base class with method used to
 # communicate display layer with host
 #
+
+
 class IHost:
 
     def isProtectedByPinCode(self):
@@ -337,10 +349,13 @@ class IHost:
     def markItemAsViewed(self, Index=0):
         return RetHost(RetHost.NOT_IMPLEMENTED, value=[])
     
+
 '''
 CHostBase implements some typical methods
           from IHost interface
 '''
+
+
 class CHostBase(IHost):
     def __init__(self, host, withSearchHistrory, favouriteTypes=[]):
         self.host = host

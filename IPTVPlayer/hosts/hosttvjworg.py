@@ -38,6 +38,7 @@ config.plugins.iptvplayer.tvjworg_default_format = ConfigSelection(default="720"
                                                                                                ("99999999", "the best")])
 config.plugins.iptvplayer.tvjworg_use_df = ConfigYesNo(default=True)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Language"), config.plugins.iptvplayer.tvjworg_language))
@@ -50,6 +51,7 @@ def GetConfigList():
 
 def gettytul():
     return 'https://tv.jw.org/'
+
 
 class TVJWORG(CBaseHostClass):
     HTTP_HEADER = {'User-Agent': 'Mozilla/5.0', 'Accept': 'text/html'}
@@ -139,7 +141,6 @@ class TVJWORG(CBaseHostClass):
             langCode = config.plugins.iptvplayer.tvjworg_language.value
         return langCode
     
-            
     def listCategories(self, cItem, sub=''):
         printDBG("TVJWORG.listCategories")
         
@@ -244,7 +245,6 @@ class TVJWORG(CBaseHostClass):
         except Exception:
             printExc()
     
-    
     def getLinksForVideo(self, cItem):
         printDBG("TVJWORG.getLinksForVideo [%s]" % cItem)
         urlTab = []
@@ -262,6 +262,7 @@ class TVJWORG(CBaseHostClass):
             if 1 < len(urlTab):
                 error = False
                 max_bitrate = int(config.plugins.iptvplayer.tvjworg_default_format.value)
+
                 def __getLinkQuality(itemLink):
                     try: 
                         return int(itemLink['name'][0:-1])
@@ -303,6 +304,8 @@ class TVJWORG(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

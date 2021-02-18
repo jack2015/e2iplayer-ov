@@ -33,6 +33,7 @@ config.plugins.iptvplayer.kissanime_proxy = ConfigSelection(default="None", choi
                                                                                          ("proxy_1", _("Alternative proxy server (1)")),
                                                                                          ("proxy_2", _("Alternative proxy server (2)"))])
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Default video quality:"), config.plugins.iptvplayer.kissanime_defaultformat))
@@ -40,8 +41,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'http://kissanime.ru/'
+
 
 class KissAnimeTo(CBaseHostClass):
 
@@ -492,6 +495,7 @@ class KissAnimeTo(CBaseHostClass):
             
         if 0 < len(urlTab):
             max_bitrate = int(config.plugins.iptvplayer.kissanime_defaultformat.value)
+
             def __getLinkQuality(itemLink):
                 try:
                     return int(self.cm.ph.getSearchGroups('|' + itemLink['name'] + '|', '[^0-9]([0-9]+?)[^0-9]')[0])
@@ -501,7 +505,6 @@ class KissAnimeTo(CBaseHostClass):
             for idx in range(len(urlTab)):
                 urlTab[idx]['url'] = strwithmeta(urlTab[idx]['url'], {'iptv_wget_retry_on_http_error': '429', 'iptv_wget_waitretry': '0.1', 'iptv_wget_tries': '1000'})
                 
-            
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<iframe ', '>', withMarkers=True, caseSensitive=False)
         for item in data:
             url = self.cm.ph.getSearchGroups(item, '''<iframe[^>]+?src=['"]([^'^"]+?)['"]''', grupsNum=1, ignoreCase=True)[0]
@@ -565,6 +568,8 @@ class KissAnimeTo(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

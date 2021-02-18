@@ -21,6 +21,7 @@ import urllib
 def gettytul():
     return 'https://oipeirates.tv/'
 
+
 class OipeiratesOnline(CBaseHostClass):
 
     def __init__(self):
@@ -45,6 +46,7 @@ class OipeiratesOnline(CBaseHostClass):
     def getPage(self, baseUrl, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -447,6 +449,7 @@ class OipeiratesOnline(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

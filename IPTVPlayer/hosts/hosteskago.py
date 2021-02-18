@@ -19,8 +19,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtypes import strwithmeta
 import re
 ###################################################
 
+
 def gettytul():
     return 'http://www.eskago.pl/'
+
 
 class EskaGo(CBaseHostClass):
  
@@ -437,6 +439,8 @@ class EskaGo(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

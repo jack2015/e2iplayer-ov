@@ -24,6 +24,7 @@ config.plugins.iptvplayer.planetstreaming_proxy = ConfigSelection(default="None"
                                                                                                ("proxy_2", _("Alternative proxy server (2)"))])
 config.plugins.iptvplayer.planetstreaming_alt_domain = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Use proxy server:"), config.plugins.iptvplayer.planetstreaming_proxy))
@@ -35,6 +36,7 @@ def GetConfigList():
 
 def gettytul():
     return 'http://ww4.planet-streaming.com/'
+
 
 class PlanetStreaming(CBaseHostClass):
  
@@ -373,6 +375,7 @@ class PlanetStreaming(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

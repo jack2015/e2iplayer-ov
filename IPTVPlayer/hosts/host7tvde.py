@@ -20,8 +20,10 @@ from hashlib import sha1
 from datetime import timedelta
 ###################################################
 
+
 def gettytul():
     return 'https://7tv.de/'
+
 
 class C7tvDe(CBaseHostClass):
 
@@ -487,6 +489,7 @@ class C7tvDe(CBaseHostClass):
             printExc()
 
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
     def __init__(self):

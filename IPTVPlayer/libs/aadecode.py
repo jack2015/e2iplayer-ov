@@ -7,6 +7,7 @@ from __future__ import print_function
 
 import re
 
+
 class AADecoder(object):
     def __init__(self, aa_encoded_data):
         self.encoded_str = aa_encoded_data.replace('/*´∇｀*/', '')
@@ -82,7 +83,6 @@ class AADecoder(object):
                         elif t == '(':
                             balance += 1
                  
-
                 if result is None or len(result) == 0:
                     return ""
                 else:
@@ -100,8 +100,6 @@ class AADecoder(object):
 
         return str_char
 
-        
-              
     def decode_digit(self, enc_int, radix):
 
         #enc_int=enc_int.replace('(ﾟΘﾟ)','1').replace('(ﾟｰﾟ)','4').replace('(c^_^o)','0').replace('(o^_^o)','3')  
@@ -203,7 +201,6 @@ class AADecoder(object):
                 enc_char = data[:data.find(begin_char)]
                 data = data[len(enc_char):]
 
-            
             radix = 8
             # Detect radix 16 for utf8 char
             if enc_char.find(alt_char) == 0:

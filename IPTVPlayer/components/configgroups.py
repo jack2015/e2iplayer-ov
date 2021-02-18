@@ -20,6 +20,7 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvhostgroups import IPTVHostsGroups
 from Components.config import config, getConfigListEntry, ConfigYesNo
 ###################################################
         
+
 class ConfigGroupsMenu(ConfigBaseWidget):
    
     def __init__(self, session):

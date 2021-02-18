@@ -37,6 +37,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.goldvodtv_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.goldvodtv_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry('goldvod.tv ' + _("email") + ':', config.plugins.iptvplayer.goldvodtv_login))
@@ -44,6 +45,7 @@ def GetConfigList():
     return optionList
     
 ###################################################
+
 
 class GoldVodTVApi:
     MAIN_URL = 'http://goldvod.tv/'

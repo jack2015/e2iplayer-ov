@@ -38,6 +38,7 @@ config.plugins.iptvplayer.TVNUseDF = ConfigYesNo(default=False)
 config.plugins.iptvplayer.TVNdevice = ConfigSelection(default="_mobile_", choices=[("_mobile_", "Mobile"), ("_tv_", "TV")])
 config.plugins.iptvplayer.proxyenable = ConfigYesNo(default=False)
    
+
 def GetConfigList():
     optionList = []
 
@@ -49,8 +50,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'TVN Player'
+
 
 class TvnVod(CBaseHostClass):
     ICON_URL = 'http://redir.atmcdn.pl/scale/o2/tvn/web-content/m/%s?quality=50&dstw=290&dsth=287&type=1'
@@ -347,7 +350,6 @@ class TvnVod(CBaseHostClass):
         except Exception: 
             printExc()
 
-        
     def listSearchResult(self, cItem, pattern, searchType):
         printDBG("TvnVod.listSearchResult pattern[%s], searchType[%s]" % (pattern, searchType))
         params = dict(cItem)
@@ -438,6 +440,7 @@ class TvnVod(CBaseHostClass):
                                 videoUrls.append({'name': qualityName, 'profile_name': qualityName, 'url': url, 'need_resolve': 1})
                     if 1 < len(videoUrls):
                         max_bitrate = int(config.plugins.iptvplayer.TVNDefaultformat.value)
+
                         def __getLinkQuality(itemLink):
                             return int(TvnVod.QUALITIES_TABLE.get(itemLink['profile_name'], 9999))
                         videoUrls = CSelOneLink(videoUrls, __getLinkQuality, max_bitrate).getSortedLinks()
@@ -486,6 +489,7 @@ class TvnVod(CBaseHostClass):
         else:
             self.listsCategories(self.currItem)
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

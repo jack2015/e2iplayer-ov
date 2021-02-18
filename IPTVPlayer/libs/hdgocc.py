@@ -24,8 +24,10 @@ except Exception:
 # Config options for HOST
 ###################################################
 
+
 class HdgoccParser():
     USER_AGENT = 'Mozilla/5.0'
+
     def __init__(self):
         self.up = urlparser()
         self.cm = common()

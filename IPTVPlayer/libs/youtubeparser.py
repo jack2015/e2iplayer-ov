@@ -129,6 +129,7 @@ class YouTubeParser():
                         tmpList[idx]['dash'] = True
                     dashList.extend(tmpList)
             # sort by quality -> format
+
             def _key(x):
                 if x['format'].startswith('>'):
                      int(x['format'][1:-1])
@@ -437,7 +438,6 @@ class YouTubeParser():
             
         return currList
 
-    
     def getVideoFromFeed(self, url):
         printDBG('YouTubeParser.getVideosFromFeed')
         
@@ -490,10 +490,10 @@ class YouTubeParser():
 
         return currList
     
-        
     ########################################################
     # Tray List PARSER
     ########################################################
+
     def getVideosFromTraylist(self, url, category, page, cItem):
         printDBG('YouTubeParser.getVideosFromTraylist')
         return self.getVideosApiPlayList(url, category, page, cItem)
@@ -553,7 +553,6 @@ class YouTubeParser():
                                     printDBG(str(params))
                                     currList.append(params)
                     
-        
         except Exception:
             printExc()
             
@@ -695,7 +694,6 @@ class YouTubeParser():
             #printDBG(json_dumps(response))
             #printDBG("--------------------")
 
-            
             # search videos
             r2 = list(self.findKeys(response, 'videoRenderer'))
             
@@ -742,7 +740,6 @@ class YouTubeParser():
 
             nP = list(self.findKeys(response, "nextContinuationData"))
             nP_new = list(self.findKeys(response, "continuationEndpoint"))
-
 
             if nP:
                 nextPage = nP[0]

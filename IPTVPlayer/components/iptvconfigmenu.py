@@ -72,12 +72,15 @@ config.plugins.iptvplayer.osk_allow_suggestions = ConfigYesNo(default=True)
 config.plugins.iptvplayer.osk_default_suggestions = ConfigSelection(default="", choices=[("", _("Auto")), ("none", _("None")), ("google", "google.com"), ("filmweb", "filmweb.pl"), ("imdb", "imdb.com"), ("filmstarts", "filmstarts.de")]) 
 config.plugins.iptvplayer.osk_background_color = ConfigSelection(default="", choices=[('', _('Default')), ('transparent', _('Transparent')), ('#000000', _('Black')), ('#80000000', _('Darkgray')), ('#cc000000', _('Lightgray'))])
 
+
 def GetMoviePlayerName(player):
     map = {"auto": _("auto"), "mini": _("internal"), "standard": _("standard"), 'exteplayer': _("exteplayer3"), 'extgstplayer': _("gstplayer")}
     return map.get(player, _('unknown'))
     
+
 def ConfigPlayer(player):
     return (player, GetMoviePlayerName(player))
+
 
 # without buffering mode
 config.plugins.iptvplayer.defaultIptvMoviePlayer0 = ConfigSelection(default="auto", choices=[ConfigPlayer("auto"), ConfigPlayer("mini"), ConfigPlayer('extgstplayer'), ConfigPlayer('exteplayer'), ConfigPlayer("standard")])
@@ -174,9 +177,12 @@ config.plugins.iptvplayer.prefer_hlsdl_for_pls_with_alt_media = ConfigYesNo(defa
 ########################################################
 # Generate list of hosts options for Enabling/Disabling
 ########################################################
+
+
 class ConfigIPTVHostOnOff(ConfigOnOff):
     def __init__(self, default=False):
         ConfigOnOff.__init__(self, default=default)
+
 
 gListOfHostsNames = GetHostsList()
 for hostName in gListOfHostsNames:
@@ -190,9 +196,11 @@ for hostName in gListOfHostsNames:
     except Exception:
         printExc(hostName)
 
+
 def GetListOfHostsNames():
     global gListOfHostsNames
     return gListOfHostsNames
+
 
 def IsUpdateNeededForHostsChangesCommit(enabledHostsListOld, enabledHostsList=None, hostsFromFolder=None):
     if enabledHostsList == None: 
@@ -223,6 +231,7 @@ def IsUpdateNeededForHostsChangesCommit(enabledHostsListOld, enabledHostsList=No
     return bRet
 
 ###################################################
+
 
 class ConfigMenu(ConfigBaseWidget):
 
@@ -487,6 +496,7 @@ class ConfigMenu(ConfigBaseWidget):
         
     def extMoviePlayerList(self):
         self.session.open(ConfigExtMoviePlayer)
+
 
 def GetMoviePlayer(buffering=False, useAlternativePlayer=False):
     printDBG("GetMoviePlayer buffering[%r], useAlternativePlayer[%r]" % (buffering, useAlternativePlayer))

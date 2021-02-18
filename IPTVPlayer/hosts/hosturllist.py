@@ -27,6 +27,7 @@ config.plugins.iptvplayer.Sciezkaurllist = ConfigDirectory(default="/hdd/")
 config.plugins.iptvplayer.grupujurllist = ConfigYesNo(default=True)
 config.plugins.iptvplayer.sortuj = ConfigYesNo(default=True)
 
+
 def GetConfigList():
     optionList = [] 
     optionList.append(getConfigListEntry(_('Text files ytlist and urllist are in:'), config.plugins.iptvplayer.Sciezkaurllist))
@@ -35,8 +36,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return _('Urllists player')
+
 
 class Urllist(CBaseHostClass):
     URLLIST_FILE = 'urllist.txt'
@@ -151,6 +154,7 @@ class Urllist(CBaseHostClass):
             self.listCategory(self.currItem)
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

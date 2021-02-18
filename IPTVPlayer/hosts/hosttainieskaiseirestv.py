@@ -20,8 +20,10 @@ except Exception:
     import simplejson as json
 ###################################################
 
+
 def gettytul():
     return 'http://tainieskaiseires.tv/'
+
 
 class TainieskaiSeiresTv(CBaseHostClass):
  
@@ -416,6 +418,7 @@ class TainieskaiSeiresTv(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

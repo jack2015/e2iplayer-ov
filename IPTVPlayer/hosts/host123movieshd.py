@@ -27,6 +27,7 @@ config.plugins.iptvplayer.gomovies_proxy = ConfigSelection(default="None", choic
                                                                                         ("proxy_2", _("Alternative proxy server (2)"))])
 config.plugins.iptvplayer.gomovies_alt_domain = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Use proxy server:"), config.plugins.iptvplayer.gomovies_proxy))
@@ -38,6 +39,7 @@ def GetConfigList():
 
 def gettytul():
     return 'https://123movieshd.sc/'
+
 
 class GoMovies(CBaseHostClass):
  
@@ -412,6 +414,7 @@ class GoMovies(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -23,10 +23,12 @@ except Exception:
 # Config options for HOST
 ###################################################
 
+
 def GetConfigList():
     optionList = []
     return optionList
 ###################################################
+
 
 def GetLanguageTab():
     tab = [["Albanian", "sq", "alb"],
@@ -78,6 +80,7 @@ def GetLanguageTab():
             ["Farsi", "fa", "per"],
             ["Espanol", "es", "spa"]]
     return tab
+
 
 class SubsceneComProvider(CBaseSubProviderClass): 
     LANGUAGE_CACHE = []
@@ -353,6 +356,7 @@ class SubsceneComProvider(CBaseSubProviderClass):
             self.listSubsInPackedFile(self.currItem, 'list_sub_in_packed_file')
         
         CBaseSubProviderClass.endHandleService(self, index, refresh)
+
 
 class IPTVSubProvider(CSubProviderBase):
 

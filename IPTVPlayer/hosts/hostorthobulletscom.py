@@ -35,6 +35,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.orthobulletscom_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.orthobulletscom_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("login") + ":", config.plugins.iptvplayer.orthobulletscom_login))
@@ -45,6 +46,7 @@ def GetConfigList():
 
 def gettytul():
     return 'https://orthobullets.com/'
+
 
 class OrthoBullets(CBaseHostClass):
 
@@ -71,8 +73,6 @@ class OrthoBullets(CBaseHostClass):
                                     {'category': 'search', 'title': _('Search'), 'search_item': True},
                                     {'category': 'search_history', 'title': _('Search history')} 
                                 ]
-
-
 
         self.CATEGORIES_TAB = [
                                     {'category': 'list_categories', 'title': _('All'), 'url': self.MAIN_URL + 'video/list.aspx'},
@@ -123,6 +123,7 @@ class OrthoBullets(CBaseHostClass):
     def getPage(self, baseUrl, addParams={}, post_data=None):
         if addParams == {}:
             addParams = dict(self.defaultParams)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -130,7 +131,6 @@ class OrthoBullets(CBaseHostClass):
                 return urljoin(baseUrl, url)            
         addParams['cloudflare_params'] = {'domain': self.up.getDomain(baseUrl), 'cookie_file': self.COOKIE_FILE, 'User-Agent': self.USER_AGENT, 'full_url_handle': _getFullUrl}
         return self.cm.getPageCFProtection(baseUrl, addParams, post_data)
-
 
     def listItems(self, cItem):
         printDBG("..:: E2iplayer ::.. -  listItems(self, cItem): [%s]" % cItem)         
@@ -264,7 +264,6 @@ class OrthoBullets(CBaseHostClass):
                 
         return self.loggedIn
     
-    
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
@@ -308,6 +307,7 @@ class OrthoBullets(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

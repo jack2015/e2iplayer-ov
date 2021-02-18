@@ -19,8 +19,10 @@ except Exception:
     import simplejson as json
 ###################################################
 
+
 def gettytul():
     return 'http://dardarkom.com/'
+
 
 class DardarkomCom(CBaseHostClass):
  
@@ -442,6 +444,8 @@ class DardarkomCom(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

@@ -26,6 +26,7 @@ except Exception:
 def gettytul():
     return 'https://cda-filmy.online/'
 
+
 class CdaFilmy(CBaseHostClass):
     
     def __init__(self):
@@ -50,6 +51,7 @@ class CdaFilmy(CBaseHostClass):
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -78,7 +80,6 @@ class CdaFilmy(CBaseHostClass):
                         {'category': 'search_history', 'title': _('Search history')}, ]
         self.listsTab(MAIN_CAT_TAB, cItem)
     
-
     def listCats(self, cItem, nextCategory):
         printDBG("cda-filmy.listCats")
  
@@ -315,6 +316,7 @@ class CdaFilmy(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

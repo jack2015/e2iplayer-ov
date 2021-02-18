@@ -27,6 +27,8 @@ import re
 # One instance of this class can be used only for 
 # one download
 ###################################################
+
+
 class PwgetDownloader(BaseDownloader):
     # wget status
     WGET_STS = enum(NONE='WGET_NONE',

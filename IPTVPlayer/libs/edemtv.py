@@ -37,6 +37,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.edemtv_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.edemtv_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Email") + ": ", config.plugins.iptvplayer.edemtv_login))
@@ -44,6 +45,7 @@ def GetConfigList():
     return optionList
     
 ###################################################
+
 
 class EdemTvApi:
 
@@ -186,7 +188,6 @@ class EdemTvApi:
                     printDBG(data)
             else:
                 break
-        
         
         sts, data = self.cm.getPage(cItem['url'], self.http_params)
         if not sts:

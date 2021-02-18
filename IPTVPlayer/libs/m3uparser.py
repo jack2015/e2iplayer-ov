@@ -13,6 +13,7 @@ from Plugins.Extensions.IPTVPlayer.libs.urlparser import urlparser
 import re
 ###################################################
 
+
 def GetM3uAttribs(txt, firstKeyAsLength=False):
     attribs = {}
     type = 0 # 0 - key, 1 - start val, 2 - end val
@@ -46,6 +47,7 @@ def GetM3uAttribs(txt, firstKeyAsLength=False):
                 val = ''
                 type = 0
     return attribs
+
 
 def ParseM3u(data):
     printDBG('ParseM3u')

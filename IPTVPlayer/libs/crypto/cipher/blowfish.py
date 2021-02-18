@@ -35,6 +35,7 @@ Send questions, comments, bugs my way:
 
 __author__ = "Michael Gilfix <mgilfix@eecs.tufts.edu>"
 
+
 class Blowfish:
 
 	"""Blowfish encryption Scheme
@@ -473,6 +474,7 @@ class Blowfish:
 
 ##############################################################
 # Module testing
+
 
 if __name__ == '__main__':
 	key = 'This is a test key'

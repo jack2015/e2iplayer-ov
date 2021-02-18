@@ -34,14 +34,18 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.serijeonline_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.serijeonline_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("login") + ":", config.plugins.iptvplayer.serijeonline_login))
     optionList.append(getConfigListEntry(_("password") + ":", config.plugins.iptvplayer.serijeonline_password))
     return optionList
 ###################################################
+
+
 def gettytul():
     return 'http://www.serije.online/'
+
 
 class SerijeOnline(CBaseHostClass):
     
@@ -73,6 +77,7 @@ class SerijeOnline(CBaseHostClass):
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -371,6 +376,7 @@ class SerijeOnline(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

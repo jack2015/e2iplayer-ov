@@ -31,6 +31,7 @@ config.plugins.iptvplayer.losmovies_proxy = ConfigSelection(default="None", choi
                                                                                          ("proxy_1", _("Alternative proxy server (1)")),
                                                                                          ("proxy_2", _("Alternative proxy server (2)"))])
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Use proxy server:"), config.plugins.iptvplayer.losmovies_proxy))
@@ -40,6 +41,7 @@ def GetConfigList():
 
 def gettytul():
     return 'http://losmovies.cx/'
+
 
 class LosMovies(CBaseHostClass):
  
@@ -513,6 +515,7 @@ class LosMovies(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -9,6 +9,7 @@
 from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printExc
 from Components.config import config
 
+
 def GetVirtualKeyboard(caps={}):
     type = config.plugins.iptvplayer.osk_type.value
     

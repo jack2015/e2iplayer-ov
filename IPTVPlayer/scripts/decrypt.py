@@ -3,9 +3,12 @@
 from __future__ import print_function
 
 import sys
+
+
 def printDBG(strDat):
     print("%s" % strDat)
     #print("%s" % strDat, file=sys.stderr)
+
 
 def decrypt_file(file, key):
     from crypto.cipher.aes import AES
@@ -35,6 +38,7 @@ def decrypt_file(file, key):
             if not chunk:
                 break
     f.close()
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:

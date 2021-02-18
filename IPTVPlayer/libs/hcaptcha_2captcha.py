@@ -19,6 +19,7 @@ import urllib
 from Components.config import config
 ###################################################
 
+
 class UnCaptchahCaptcha:
     def __init__(self, lang='en'):
         self.cm = common()

@@ -24,12 +24,14 @@ Copyright (C) 2010 Hiroki Ohtani(liris)
 
 __all__ = ["NoLock", "validate_utf8", "extract_err_message"]
 
+
 class NoLock(object):
     def __enter__(self):
         pass
 
     def __exit__(self, type, value, traceback):
         pass
+
 
 try:
     # If wsaccel is available we use compiled routines to validate UTF-8
@@ -85,6 +87,7 @@ except ImportError as e:
 
         return True
 
+
 def validate_utf8(utfbytes):
     """
     validate utf8 byte string.
@@ -92,6 +95,7 @@ def validate_utf8(utfbytes):
     return value: if valid utf8 string, return true. Otherwise, return false.
     """
     return _validate_utf8(utfbytes)
+
 
 def extract_err_message(exception):
     if exception.args:

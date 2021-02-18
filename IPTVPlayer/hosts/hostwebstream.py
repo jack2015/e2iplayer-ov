@@ -66,6 +66,7 @@ config.plugins.iptvplayer.weatherbymatzgprohibitbuffering = ConfigYesNo(default=
 config.plugins.iptvplayer.weather_useproxy = ConfigYesNo(default=False)
 config.plugins.iptvplayer.fake_separator = ConfigSelection(default=" ", choices=[(" ", " ")])
 
+
 def GetConfigList():
     optionList = []
 
@@ -163,12 +164,14 @@ def GetConfigList():
     except Exception:
         printExc()
     
-
     return optionList
 
 ###################################################
+
+
 def gettytul():
     return _('"Web" streams player')
+
 
 class HasBahCa(CBaseHostClass):
     HTTP_HEADER = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3 Gecko/2008092417 Firefox/3.0.3'}
@@ -1207,6 +1210,7 @@ class HasBahCa(CBaseHostClass):
 
         CBaseHostClass.endHandleService(self, index, refresh)
 
+
 class IPTVHost(CHostBase):
 
     def __init__(self):
@@ -1351,7 +1355,6 @@ class IPTVHost(CHostBase):
             urlList = self.host.getMLBStreamResolvedLink(url)
         elif name == 'firstonetv.net':
             urlList = self.host.getFirstOneTvdLink(url)
-        
         
         if isinstance(urlList, list):
             for item in urlList:

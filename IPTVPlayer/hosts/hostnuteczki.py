@@ -29,6 +29,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.nuteczki_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.nuteczki_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("login"), config.plugins.iptvplayer.nuteczki_login))
@@ -39,6 +40,7 @@ def GetConfigList():
 
 def gettytul():
     return 'https://nuteczki.eu/'
+
 
 class NuteczkiEU(CBaseHostClass):
 
@@ -74,7 +76,6 @@ class NuteczkiEU(CBaseHostClass):
             return
         self.setMainUrl(self.cm.meta['url'])
         
-        
         tmp = self.cm.ph.getDataBeetwenNodes(data, ('<div', '>', 'drop-cat'), ('</span', '>'), False)[1]
         tmp = re.compile('(<li[^>]*?>|</li>|<ul[^>]*?>|</ul>)').split(tmp)
         if len(data) > 1:
@@ -98,7 +99,6 @@ class NuteczkiEU(CBaseHostClass):
                         {'category': 'search_history', 'title': _('Search history')}]
         self.listsTab(MAIN_CAT_TAB, cItem)
         
-       
     def listCategories(self, cItem, nextCategory):
         printDBG("NuteczkiEU.listCategories")
         try:
@@ -489,6 +489,7 @@ class NuteczkiEU(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

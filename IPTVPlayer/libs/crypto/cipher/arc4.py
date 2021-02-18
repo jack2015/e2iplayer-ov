@@ -18,9 +18,11 @@
     November 5, 2002
 """
 
+
 class ARC4:
     """ ARC4 Stream Cipher Algorithm
     """
+
     def __init__(self, key=None):
         """ key -> octet string for key """
         self.name = 'ARC4'
@@ -53,7 +55,6 @@ class ARC4:
             self.keyReady = None
         cipherText = arcfourBlock(self.state, plainText)
         return cipherText
-
 
     def decrypt(self, cipherText, more=None):
         """ Decrypt a string and return a string """

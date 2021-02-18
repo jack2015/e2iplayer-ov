@@ -32,11 +32,13 @@ from Plugins.Extensions.IPTVPlayer.components.asynccall import MainSessionWrappe
 # Config options for HOST
 ###################################################
 
+
 def GetConfigList():
     optionList = []
     return optionList
     
 ###################################################
+
 
 class ShowsportTVApi(CBaseHostClass):
     

@@ -12,6 +12,7 @@ from Components.ServiceEventTracker import ServiceEventTracker
 from enigma import iPlayableService, eTimer
 from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, eConnectCallback
 
+
 class customMoviePlayer(InfoBarShowHide, InfoBarSeek, InfoBarAudioSelection, InfoBarSubtitleSupport, HelpableScreen, InfoBarNotifications, Screen):
 
     STATE_IDLE = 0
@@ -20,7 +21,6 @@ class customMoviePlayer(InfoBarShowHide, InfoBarSeek, InfoBarAudioSelection, Inf
     ENABLE_RESUME_SUPPORT = True
     ALLOW_SUSPEND = True
     
-        
     def __init__(self, session, service, lastPosition=None, bugEOFworkaround=0):
         Screen.__init__(self, session)
         self.skinName = "MoviePlayer"
@@ -197,11 +197,13 @@ class customMoviePlayer(InfoBarShowHide, InfoBarSeek, InfoBarAudioSelection, Inf
     def openEventView(self, *args, **kwargs):
         pass
         
+
 #####################################################
 # movie player by j00zek
 #####################################################
 from Screens.InfoBar import MoviePlayer as standardMoviePlayer
 from enigma import eServiceReference
+
 
 class IPTVStandardMoviePlayer(standardMoviePlayer):
     def __init__(self, session, uri, title):
@@ -226,6 +228,7 @@ class IPTVStandardMoviePlayer(standardMoviePlayer):
             standardMoviePlayer.close(self, *args, **kwargs)
         else:
             standardMoviePlayer.close(self, 'key_exit')
+
 
 class IPTVMiniMoviePlayer(customMoviePlayer):
     def __init__(self, session, uri, title, lastPosition=None, bugEOFworkaround=0):

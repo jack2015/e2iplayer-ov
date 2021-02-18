@@ -20,8 +20,10 @@ from Plugins.Extensions.IPTVPlayer.tools.iptvtools import printDBG, printExc, rm
 from Screens.MessageBox import MessageBox
 ###################################################
 
+
 def gettytul():
     return 'https://fullmatchtv.com/'
+
 
 class Fullmatchtv(CBaseHostClass):
  
@@ -154,6 +156,7 @@ class Fullmatchtv(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

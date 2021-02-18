@@ -22,9 +22,9 @@ except Exception:
 ###################################################
 
 
-
 def gettytul():
     return 'https://uktvplay.uktv.co.uk/'
+
 
 class UKTVPlay(CBaseHostClass):
     
@@ -48,6 +48,7 @@ class UKTVPlay(CBaseHostClass):
             addParams = dict(self.defaultParams)
         origBaseUrl = baseUrl
         baseUrl = self.cm.iriToUri(baseUrl)
+
         def _getFullUrl(url):
             if self.cm.isValidUrl(url):
                 return url
@@ -304,6 +305,7 @@ class UKTVPlay(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -18,8 +18,10 @@ import re
 import base64
 ###################################################
 
+
 def gettytul():
     return 'http://alltube.pl/'
+
 
 class AlltubeTV(CBaseHostClass):
     USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0'
@@ -152,6 +154,7 @@ class AlltubeTV(CBaseHostClass):
         sts, data = self.getPage(url)
         if not sts:
             return
+
         def _getFilters(m1, m2, key):
             tab = []
             dat = self.cm.ph.getDataBeetwenMarkers(data, m1, m2, False)[1]
@@ -515,6 +518,8 @@ class AlltubeTV(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
+
 class IPTVHost(CHostBase):
 
     def __init__(self):

@@ -26,6 +26,7 @@ except Exception:
 def gettytul():
     return 'https://mozicsillag.me/'
 
+
 class MuziCsillangCC(CBaseHostClass):
  
     def __init__(self):
@@ -538,6 +539,7 @@ class MuziCsillangCC(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -32,6 +32,7 @@ from Plugins.Extensions.IPTVPlayer.components.iptvmultipleinputbox import IPTVMu
 def gettytul():
     return 'https://moovie.cc/'
 
+
 class MoovieCC(CBaseHostClass):
  
     def __init__(self):
@@ -575,7 +576,6 @@ class MoovieCC(CBaseHostClass):
         if not sts:
             return retTab
         
-        
         title = self.cleanHtmlStr(self.cm.ph.getSearchGroups(data, '''<meta[^>]+?itemprop="name"[^>]+?content="([^"]+?)"''')[0])
         icon = self.cm.ph.getDataBeetwenMarkers(data, '<div id="poster"', '</div>')[1]
         icon = self.getFullIconUrl(self.cm.ph.getSearchGroups(icon, '''<img[^>]+?src=['"]([^"^']+?\.jpe?g[^"^']*?)["']''')[0])
@@ -666,6 +666,7 @@ class MoovieCC(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

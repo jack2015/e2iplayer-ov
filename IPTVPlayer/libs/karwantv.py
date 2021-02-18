@@ -23,11 +23,13 @@ from urlparse import urljoin
 # Config options for HOST
 ###################################################
 
+
 def GetConfigList():
     optionList = []
     return optionList
     
 ###################################################
+
 
 class KarwanTvApi(CBaseHostClass):
 

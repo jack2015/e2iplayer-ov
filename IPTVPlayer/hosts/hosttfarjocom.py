@@ -20,9 +20,9 @@ except Exception:
 ###################################################
 
 
-
 def gettytul():
     return 'http://tfarjo.ws/'
+
 
 class TfarjoCom(CBaseHostClass):
     
@@ -436,6 +436,7 @@ class TfarjoCom(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

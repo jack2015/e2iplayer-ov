@@ -11,6 +11,7 @@ import re
 NO_DEFAULT = None
 compiled_regex_type = type(re.compile(''))
 
+
 class InfoExtractor():
     
     def __init__(self):

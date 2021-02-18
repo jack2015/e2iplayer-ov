@@ -10,6 +10,7 @@ except Exception:
 from Plugins.Extensions.IPTVPlayer.components.iptvplayerinit import TranslateTXT as _
 from Plugins.Extensions.IPTVPlayer.libs.pCommon import common
 
+
 class SuggestionsProvider:
 
     def __init__(self):

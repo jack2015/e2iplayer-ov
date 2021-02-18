@@ -29,6 +29,7 @@ from Screens.MessageBox import MessageBox
 config.plugins.iptvplayer.internetowa_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.internetowa_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry('internetowa.ws ' + _("email") + ':', config.plugins.iptvplayer.internetowa_login))
@@ -36,6 +37,7 @@ def GetConfigList():
     return optionList
     
 ###################################################
+
 
 class InternetowaApi(CBaseHostClass):
 

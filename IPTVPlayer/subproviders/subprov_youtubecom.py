@@ -19,10 +19,12 @@ import re
 # Config options for HOST
 ###################################################
 
+
 def GetConfigList():
     optionList = []
     return optionList
 ###################################################
+
 
 class YoutubeComProvider(CBaseSubProviderClass): 
     
@@ -123,6 +125,7 @@ class YoutubeComProvider(CBaseSubProviderClass):
             self.getSubtitles({'name': 'category', })
         
         CBaseSubProviderClass.endHandleService(self, index, refresh)
+
 
 class IPTVSubProvider(CSubProviderBase):
 

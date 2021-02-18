@@ -29,6 +29,7 @@ from Components.config import config, ConfigText, getConfigListEntry
 config.plugins.iptvplayer.bbc_login = ConfigText(default="", fixed_size=False)
 config.plugins.iptvplayer.bbc_password = ConfigText(default="", fixed_size=False)
 
+
 def GetConfigList():
     optionList = []
     optionList.append(getConfigListEntry(_("Use web-proxy (it may be illegal):"), config.plugins.iptvplayer.bbc_use_web_proxy))
@@ -43,8 +44,10 @@ def GetConfigList():
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'https://www.bbc.co.uk/sport'
+
 
 class BBCSport(CBaseHostClass):
  
@@ -607,6 +610,7 @@ class BBCSport(CBaseHostClass):
             printExc()
         
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -27,13 +27,16 @@ except Exception:
 ###################################################
 config.plugins.iptvplayer.hitbox_iconssize = ConfigSelection(default="medium", choices=[("large", _("large")), ("medium", _("medium")), ("small", _("small"))])
 
+
 def GetConfigList():
     optionList = []
     return optionList
 ###################################################
 
+
 def gettytul():
     return 'http://hitbox.tv/'
+
 
 class Hitbox(CBaseHostClass):
     NUM_OF_ITEMS = 20
@@ -271,6 +274,7 @@ class Hitbox(CBaseHostClass):
         else:
             printExc()
         CBaseHostClass.endHandleService(self, index, refresh)
+
 
 class IPTVHost(CHostBase):
 

@@ -19,9 +19,11 @@ except Exception:
 
 gMainThreadId = None
 
+
 def IsMainThread():
     global gMainThreadId
     return gMainThreadId == threading.current_thread()
+
 
 def SetMainThreadId(mainThreadId=None):
     global gMainThreadId
@@ -29,6 +31,7 @@ def SetMainThreadId(mainThreadId=None):
         gMainThreadId = threading.current_thread()
     else:
         gMainThreadId = mainThreadId
+
 
 def IsThreadTerminated():
     # this function shall be called only from working thread
@@ -41,6 +44,7 @@ def IsThreadTerminated():
     except Exception:
         printExc()
     return terminated
+
 
 def SetThreadKillable(killable):
     # this function shall be called only from working thread
@@ -63,7 +67,9 @@ def SetThreadKillable(killable):
         # thread as soon as possible
         raise SystemExit(-1)
 
+
 gMainFunctionsQueueTab = [None, None]
+
 
 class AsyncCall(object):
     def __init__(self, fnc, callback=None, callbackWithThreadID=False):
@@ -199,6 +205,7 @@ class AsyncCall(object):
 
         self.mainLock.release()
 
+
 class AsyncMethod(object):
     def __init__(self, fnc, callback=None, callbackWithThreadID=False):
         printDBG("AsyncMethod.__init__ ---")
@@ -218,6 +225,7 @@ class AsyncMethod(object):
         self.CallbackWithThreadID = None
         return AsyncCall(fnc, callback, callbackWithThreadID)(*args, **kwargs)
         
+
 class Delegate(object):
     def __init__(self, proxyFunctionQueue, fnc):
         self.function = fnc
@@ -247,6 +255,7 @@ class Delegate(object):
     #def __del__(self):
     #    printDBG("Delegate.__del__ ---")
 
+
 class DelegateToMainThread(Delegate):
     def __init__(self, fnc, mainThreadIdx=0):
         global gMainFunctionsQueueTab
@@ -255,12 +264,14 @@ class DelegateToMainThread(Delegate):
     #def __del__(self):
     #    printDBG("DelegateToMainThread.__del__ ---")
 
+
 class MainSessionWrapper(object):
     '''
     MainSessionWrapper
     can be used only from other thread then MainThread.
     '''
     WAIT_RET = "WaitForFinish"
+
     def __init__(self, mainThreadIdx=0):
         self.retVal = None
         self.event = threading.Event()
@@ -289,6 +300,7 @@ class MainSessionWrapper(object):
         self.retVal = args
         self.event.set()
 
+
 class iptv_execute(object):
     '''
     Calling os.system is not recommended, it may fail due to lack of memory,
@@ -301,6 +313,7 @@ class iptv_execute(object):
     used inside MainThread context
     '''
     WAIT_RET = "WaitForFinish"
+
     def __init__(self, mainThreadIdx=0):
         self.retVal = None
         self.event = threading.Event()
@@ -362,10 +375,13 @@ class iptv_execute(object):
 #                          Proxy function Queue
 #           can be used to run callback function from MainThread
 ###############################################################################
+
+
 class CPQItemBase:
     def __init__(self):
         pass
         
+
 class CPQItemDelegate(CPQItemBase):
     def __init__(self, callFnc, args, kwargs, retFnc):
         CPQItemBase.__init__(self)
@@ -374,16 +390,19 @@ class CPQItemDelegate(CPQItemBase):
         self.kwargs = kwargs
         self.retFnc = retFnc
 
+
 class CPQItemCallBack(CPQItemBase):
     def __init__(self, clientFunName, retValue):
         CPQItemBase.__init__(self)
         self.clientFunName = clientFunName
         self.retValue = retValue
         
+
 class CPQParamsWrapper:
     def __init__(self, params):
         self.params = params
   
+
 class CFunctionProxyQueue:
     def __init__(self, session):
         # read/write/change display elements should be done from main thread
@@ -460,7 +479,6 @@ class CFunctionProxyQueue:
             
         if self.isQueueEmpty():
             return
-            
             
         while True:
             QueueIsEmpty = False
