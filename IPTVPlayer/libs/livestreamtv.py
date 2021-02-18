@@ -24,7 +24,7 @@ class LiveStreamTvApi(CBaseHostClass):
         self.MAIN_URL = 'http://live-stream.tv/'
 
     def getChannelsList(self, cItem):
-        printDBG("LiveStreamTvApi.getChannelsList cItem[%s]" % cItem )
+        printDBG("LiveStreamTvApi.getChannelsList cItem[%s]" % cItem)
         channelsList = []
         sts, data = self.cm.getPage(self.MAIN_URL)
         if not sts:

@@ -47,7 +47,7 @@ class OpenSubtitles(CBaseSubProviderClass):
         self.languages = []
         
         self.dInfo = params['discover_info']
-        self.searchTypes = [{'title':_('Search Movies and TV Series')}, {'title':_('Search only in Movies'), 'search_only_movies':'on'}, {'title':_('Search only in TV Series'), 'search_only_tv_series':'on'} ]
+        self.searchTypes = [{'title':_('Search Movies and TV Series')}, {'title':_('Search only in Movies'), 'search_only_movies':'on'}, {'title':_('Search only in TV Series'), 'search_only_tv_series':'on'}]
         self.episodesCache = {}
         self.logedIn = None
         self.searchURL = ""
@@ -473,7 +473,7 @@ class OpenSubtitles(CBaseSubProviderClass):
         name     = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
         
-        printDBG( "handleService: name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: name[%s], category[%s] " % (name, category))
         self.currList = []
         
     #MAIN MENU

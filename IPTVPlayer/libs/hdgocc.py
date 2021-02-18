@@ -54,7 +54,7 @@ class HdgoccParser():
         params = copy.deepcopy(self.defaultParams)
         params['header']['Referer'] = refUrl
         params['with_metadata'] = True
-        sts, data = self.cm.getPage( pageUrl, params)
+        sts, data = self.cm.getPage(pageUrl, params)
         if not sts:
             return []
         
@@ -89,7 +89,7 @@ class HdgoccParser():
         params = copy.deepcopy(self.defaultParams)
         params['header']['Referer'] = refUrl
         params['with_metadata'] = True
-        sts, data = self.cm.getPage( seasonUrl, params)
+        sts, data = self.cm.getPage(seasonUrl, params)
         if not sts:
             return []
         

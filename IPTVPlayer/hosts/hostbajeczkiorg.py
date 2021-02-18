@@ -31,7 +31,7 @@ class BajeczkiOrg(CBaseHostClass):
         self.DEFAULT_ICON_URL = self.getFullIconUrl('/wp-content/uploads/1397134512_5b47d5c61cb3523b0ff67e3168ded910-1-640x360.jpg')
         self.HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0', 'DNT':'1', 'Accept': 'text/html'}
         self.AJAX_HEADER = dict(self.HEADER)
-        self.AJAX_HEADER.update( {'X-Requested-With': 'XMLHttpRequest'} )
+        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest'})
         self.defaultParams = {'with_metadata':True, 'header':self.HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         self.cacheLinks = {}
     
@@ -44,7 +44,7 @@ class BajeczkiOrg(CBaseHostClass):
         MAIN_CAT_TAB = [{'category':'categories',      'title': 'Wszystkie bajki',    'url':self.getFullUrl('/all-categories/')},
                         {'category':'list_items',      'title': 'Ostatnio dodane',    'url':self.getFullUrl('/?s=')},
                         {'category': 'search',          'title': _('Search'), 'search_item': True, },
-                        {'category': 'search_history',  'title': _('Search history'),             }]
+                        {'category': 'search_history',  'title': _('Search history'),}]
         self.listsTab(MAIN_CAT_TAB, cItem)
     
     def listCategories(self, cItem, nextCategory):
@@ -83,12 +83,12 @@ class BajeczkiOrg(CBaseHostClass):
         for idx in range(1, len(data), 1):
             item = data[idx]
 
-            url = self.getFullUrl( ph.search(item, ph.A_HREF_URI_RE)[1] )
+            url = self.getFullUrl(ph.search(item, ph.A_HREF_URI_RE)[1])
             if url == '':
                 continue
-            icon = self.getFullUrl( ph.search(item, ph.IMAGE_SRC_URI_RE)[1] )
+            icon = self.getFullUrl(ph.search(item, ph.IMAGE_SRC_URI_RE)[1])
             item = item.split('</h2>', 1)
-            title = ph.clean_html( item[0] )
+            title = ph.clean_html(item[0])
 
             desc = []
             tmp = descObj.split(item[-1])
@@ -201,7 +201,7 @@ class BajeczkiOrg(CBaseHostClass):
         category = self.currItem.get("category", '')
         mode     = self.currItem.get("mode", '')
         
-        printDBG( "handleService: >> name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: >> name[%s], category[%s] " % (name, category))
         self.currList = []
         
     #MAIN MENU

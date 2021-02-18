@@ -133,7 +133,7 @@ class TvnVod(CBaseHostClass):
         return "Android4"
         
     def getBaseUrl(self, pl):
-        url = self.platforms[pl]['base_url'] + '/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (self.platforms[pl]['platform'], self.platforms[pl]['terminal'],  self.platforms[pl]['authKey'], self.platforms[pl]['api'] )
+        url = self.platforms[pl]['base_url'] + '/?platform=%s&terminal=%s&format=json&authKey=%s&v=%s&' % (self.platforms[pl]['platform'], self.platforms[pl]['terminal'],  self.platforms[pl]['authKey'], self.platforms[pl]['api'])
         if pl not in ['Android', 'Android2', 'Panasonic']:
             url += 'showContentContractor=free%2Csamsung%2Cstandard&'
         return url 
@@ -197,7 +197,7 @@ class TvnVod(CBaseHostClass):
         expire = 3600000L + int(time.time()*1000) - 946684800000L
         unencryptedToken = "name=%s&expire=%s\0" % (url, expire)
         pkcs5_pad = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
-        pkcs5_unpad = lambda s : s[0:-ord(s[-1])]
+        pkcs5_unpad = lambda s: s[0:-ord(s[-1])]
         unencryptedToken = pkcs5_pad(unencryptedToken)
         tvncrypt = aes_cbc.AES_CBC(binascii.unhexlify(key), padding=base.noPadding(), keySize=16)
         encryptedToken = tvncrypt.encrypt(unencryptedToken, iv=binascii.unhexlify(salt))
@@ -227,7 +227,7 @@ class TvnVod(CBaseHostClass):
         
         try:
             url = self.getBaseUrl(pl) + urlQuery
-            sts, data = self.cm.getPage(url, { 'header': self.getHttpHeader(pl) })
+            sts, data = self.cm.getPage(url, {'header': self.getHttpHeader(pl)})
             data = json_loads(data)
             
             if 'success' != data['status']:
@@ -310,7 +310,7 @@ class TvnVod(CBaseHostClass):
                     # get icon
                     icon = self._getIconUrl(item)
                 
-                    params = { 'id': id,
+                    params = {'id': id,
                                'previd': cItem.get('id', ''),
                                'title': title,
                                'desc': desc,
@@ -331,7 +331,7 @@ class TvnVod(CBaseHostClass):
             
             if showSeasons:
                 for season in seasons:
-                    params = { 'id': cItem['id'],
+                    params = {'id': cItem['id'],
                                'previd': cItem.get('id', ''),
                                'title': self._getJItemStr(season, 'name', ''),
                                'desc': '',
@@ -351,7 +351,7 @@ class TvnVod(CBaseHostClass):
     def listSearchResult(self, cItem, pattern, searchType):
         printDBG("TvnVod.listSearchResult pattern[%s], searchType[%s]" % (pattern, searchType))
         params = dict(cItem)
-        params.update({ 'id': 0,
+        params.update({'id': 0,
                        'title': '',
                        'desc': '',
                        'icon': '',
@@ -385,11 +385,11 @@ class TvnVod(CBaseHostClass):
             elif 'Panasonic' in pl:
                 videoUrl = url
             else:
-                sts, data  = self.cm.getPage(url, { 'header': self.getHttpHeader(pl) })
+                sts, data  = self.cm.getPage(url, {'header': self.getHttpHeader(pl)})
                 if sts and data.startswith('http'):
                     videoUrl =  data.encode('utf-8')
         urlTab = []
-        videoUrl = strwithmeta(videoUrl, { 'header': self.getHttpHeader(pl) })
+        videoUrl = strwithmeta(videoUrl, {'header': self.getHttpHeader(pl)})
         if self.cm.isValidUrl(videoUrl):
             urlTab.append({'name':'direct', 'url':videoUrl})
         return urlTab
@@ -398,7 +398,7 @@ class TvnVod(CBaseHostClass):
         return self.getLinks(cItem['id'])
     
     def getLinks(self, id):
-        printDBG("TvnVod.getLinks cItem.id[%r]" % id )
+        printDBG("TvnVod.getLinks cItem.id[%r]" % id)
         videoUrls = []
         
         for pl in ['Panasonic', 'Samsung', 'Android2']:#, 'Android4']: #'Android', ''Samsung', 
@@ -408,7 +408,7 @@ class TvnVod(CBaseHostClass):
                 url = 'm=getItem&id=%s&android23video=1&deviceType=Tablet&os=4.1.1&playlistType=&connectionType=WIFI&deviceScreenWidth=1920&deviceScreenHeight=1080&appVersion=3.3.4&manufacturer=unknown&model=androVMTablet' % id
             url = self.getBaseUrl(pl) + url
             
-            sts, data = self.cm.getPage(url, { 'header': self.getHttpHeader(pl) })
+            sts, data = self.cm.getPage(url, {'header': self.getHttpHeader(pl)})
             if not sts:
                 continue
             try:
@@ -438,7 +438,7 @@ class TvnVod(CBaseHostClass):
                                 videoUrls.append({'name':qualityName, 'profile_name':qualityName, 'url':url, 'need_resolve':1})
                     if  1 < len(videoUrls):
                         max_bitrate = int(config.plugins.iptvplayer.TVNDefaultformat.value)
-                        def __getLinkQuality( itemLink ):
+                        def __getLinkQuality(itemLink):
                             return int(TvnVod.QUALITIES_TABLE.get(itemLink['profile_name'], 9999))
                         videoUrls = CSelOneLink(videoUrls, __getLinkQuality, max_bitrate).getSortedLinks()
                         if config.plugins.iptvplayer.TVNUseDF.value:
@@ -467,7 +467,7 @@ class TvnVod(CBaseHostClass):
 
         name     = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        printDBG( "TvnVod.handleService: ---------> name[%s], category[%s] " % (name, category) )
+        printDBG("TvnVod.handleService: ---------> name[%s], category[%s] " % (name, category))
         self.currList = []
         
     #MAIN MENU

@@ -47,7 +47,7 @@ class ITV(CBaseHostClass):
         self.MAIN_URL = 'https://www.itv.com/'
         self.HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Origin':self.getMainUrl()}
         self.AJAX_HEADER = dict(self.HEADER)
-        self.AJAX_HEADER.update( {'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'} )
+        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
         
         self.cacheShows    = {}
         self.cacheShowsKeys = []
@@ -270,7 +270,7 @@ class ITV(CBaseHostClass):
             except Exception:
                 printExc()
         
-        def __getLinkQuality( itemLink ):
+        def __getLinkQuality(itemLink):
             try:
                 return int(itemLink['bitrate'])
             except Exception:
@@ -291,7 +291,7 @@ class ITV(CBaseHostClass):
         category = self.currItem.get("category", '')
         mode     = self.currItem.get("mode", '')
         
-        printDBG( "handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category))
         self.currList = []
         
     #MAIN MENU

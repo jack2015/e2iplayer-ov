@@ -86,7 +86,7 @@ class YoutubeComProvider(CBaseSubProviderClass):
         fileName = self._getFileName(title, lang, subId, imdbid)
         fileName = GetSubtitlesDir(fileName)
         
-        tmpFile = GetTmpDir( self.TMP_FILE_NAME )
+        tmpFile = GetTmpDir(self.TMP_FILE_NAME)
         
         urlParams = dict(self.defaultParams)
         sts, data = self.cm.getPage(cItem['url'], urlParams)
@@ -162,7 +162,7 @@ class YoutubeComProvider(CBaseSubProviderClass):
         name     = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
         
-        printDBG( "handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category))
         self.currList = []
         
     #MAIN MENU

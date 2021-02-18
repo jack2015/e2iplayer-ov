@@ -27,15 +27,15 @@ class AlltubeTV(CBaseHostClass):
     SRCH_URL    = MAIN_URL + 'szukaj'
     DEFAULT_ICON_URL = 'http://alltube.pl/static/main/newlogoall.png'
     #{'category':'latest_added',       'title': _('Latest added'),  'url':MAIN_URL,                   'icon':DEFAULT_ICON},
-    MAIN_CAT_TAB = [{'category': 'genres_movies',      'title': _('Movies'),        'url': MAIN_URL+'filmy-online/',   },
+    MAIN_CAT_TAB = [{'category': 'genres_movies',      'title': _('Movies'),        'url': MAIN_URL+'filmy-online/',},
                     {'category': 'cat_series',         'title': _('Series'),        'url': MAIN_URL+'seriale-online/', },
-                    {'category': 'list_movies',        'title': _('Junior'),        'url': MAIN_URL+'dla-dzieci/',     },
+                    {'category': 'list_movies',        'title': _('Junior'),        'url': MAIN_URL+'dla-dzieci/',},
                     {'category': 'search',             'title': _('Search'), 'search_item': True, },
-                    {'category': 'search_history',     'title': _('Search history'), } ]
+                    {'category': 'search_history',     'title': _('Search history'), }]
                       
     SERIES_CAT_TAB = [{'category': 'list_series_list', 'title': _('List'),                       'url': MAIN_URL+'seriale-online/', },
                       {'category': 'list_series_abc',  'title': _('ABC'),                        'url': MAIN_URL+'seriale-online/', },
-                      {'category': 'list_series',      'title': _('All'), 'letter': 'all',        'url': MAIN_URL+'seriale-online/', } ]
+                      {'category': 'list_series',      'title': _('All'), 'letter': 'all',        'url': MAIN_URL+'seriale-online/', }]
  
     def __init__(self):
         CBaseHostClass.__init__(self, {'history':'AlltubeTV', 'cookie':'alltubetv.cookie'})
@@ -136,7 +136,7 @@ class AlltubeTV(CBaseHostClass):
                 desc = item.split('<p>')[-1]
             
             params = dict(cItem)
-            params.update( {'good_for_fav': True, 'title': self.cleanHtmlStr( title ), 'url':self.getFullUrl(url), 'desc': self.cleanHtmlStr( desc ), 'icon':self.getFullUrl(icon)} )
+            params.update({'good_for_fav': True, 'title': self.cleanHtmlStr(title), 'url':self.getFullUrl(url), 'desc': self.cleanHtmlStr(desc), 'icon':self.getFullUrl(icon)})
             if category != 'video': #or '/serial/' in params['url']:
                 params['category'] = category
                 self.addDir(params)
@@ -145,7 +145,7 @@ class AlltubeTV(CBaseHostClass):
             
         if nextPage:
             params = dict(cItem)
-            params.update( {'title':_('Next page'), 'page':page+1} )
+            params.update({'title':_('Next page'), 'page':page+1})
             self.addDir(params)
     
     def fillFilterCache(self, url):
@@ -199,7 +199,7 @@ class AlltubeTV(CBaseHostClass):
             if letter not in self.seriesCache:
                 self.seriesCache[letter] = []
                 self.seriesLetters.append({'title':letter,  'letter':letter})
-            self.seriesCache[letter].append({'good_for_fav':True, 'title': self.cleanHtmlStr( title ), 'url':self.getFullUrl(url)})
+            self.seriesCache[letter].append({'good_for_fav':True, 'title': self.cleanHtmlStr(title), 'url':self.getFullUrl(url)})
         for idx in range(len(self.seriesLetters)):
             letter = self.seriesLetters[idx]['letter']
             self.seriesLetters[idx]['title'] = letter + ' [%d]' % len(self.seriesCache[letter]) 
@@ -243,7 +243,7 @@ class AlltubeTV(CBaseHostClass):
             url    = self.cm.ph.getSearchGroups(item, 'href="([^"]+?)"')[0]
             icon   = ''
             params = dict(cItem)
-            params.update( {'title': self.cleanHtmlStr( item ), 'url':self.getFullUrl(url), 'desc': '', 'icon':self.getFullUrl(icon)} )
+            params.update({'title': self.cleanHtmlStr(item), 'url':self.getFullUrl(url), 'desc': '', 'icon':self.getFullUrl(icon)})
             params['category'] = category
             self.addDir(params)
             
@@ -264,14 +264,14 @@ class AlltubeTV(CBaseHostClass):
                 if sts:
                     data = tmp 
         
-        seriesTitle =  self.cleanHtmlStr( self.cm.ph.getDataBeetwenMarkers(data, '<div class="col-xs-12 col-sm-9">', '</h3>', False)[1] )
+        seriesTitle =  self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(data, '<div class="col-xs-12 col-sm-9">', '</h3>', False)[1])
         if '' == seriesTitle:
             seriesTitle = cItem['title']    
         
         desc = self.cm.ph.getDataBeetwenMarkers(data, '<div class="custome-panel clearfix">', '</div>', False)[1]
         icon = self.cm.ph.getSearchGroups(desc, 'src="([^"]+?)"')[0]
-        desc = self.cleanHtmlStr( desc )
-        icon = self.getFullUrl( icon )
+        desc = self.cleanHtmlStr(desc)
+        icon = self.getFullUrl(icon)
         
         if '' == icon:
             icon = cItem.get('icon', '')
@@ -281,8 +281,8 @@ class AlltubeTV(CBaseHostClass):
         data = self.cm.ph.getDataBeetwenMarkers(data, 'ta odcin', '<script>', False)[1]
         data = self.cm.ph.getAllItemsBeetwenMarkers(data, '<h3 class="headline">', '</div>')
         for season in data:
-            seasonTitle = self.cleanHtmlStr( self.cm.ph.getDataBeetwenMarkers(season, '<h3', '</h3>')[1] )
-            episodes = re.compile('<li[^>]*?class="episode"[^>]*?><a[^>]*?href="([^"]+?)">([^<]+?)</a>').findall( season )
+            seasonTitle = self.cleanHtmlStr(self.cm.ph.getDataBeetwenMarkers(season, '<h3', '</h3>')[1])
+            episodes = re.compile('<li[^>]*?class="episode"[^>]*?><a[^>]*?href="([^"]+?)">([^<]+?)</a>').findall(season)
             sort = True
             episodesList = []
             for item in episodes:
@@ -295,7 +295,7 @@ class AlltubeTV(CBaseHostClass):
                     season  = 0
                     episode = 0
                     sort    = False
-                episodesList.append( {'good_for_fav': True, 'title': seriesTitle + ': ' + self.cleanHtmlStr( item[1] ), 'url':self.getFullUrl(item[0]), 'desc':  desc, 'icon':icon, 'season':season, 'episode':episode})
+                episodesList.append({'good_for_fav': True, 'title': seriesTitle + ': ' + self.cleanHtmlStr(item[1]), 'url':self.getFullUrl(item[0]), 'desc':  desc, 'icon':icon, 'season':season, 'episode':episode})
             if sort:
                 episodesList.sort(key=lambda item: item['season']*1000 + item['episode'])#, reverse=True)
                 #episodesList.reverse()
@@ -364,7 +364,7 @@ class AlltubeTV(CBaseHostClass):
                 desc = item.split('<p>')[-1]
             
             params = dict(cItem)
-            params.update({'good_for_fav': True, 'title':self.cleanHtmlStr( title ), 'url':self.getFullUrl( url ), 'icon':self.getFullUrl( icon ), 'desc':self.cleanHtmlStr( desc )})
+            params.update({'good_for_fav': True, 'title':self.cleanHtmlStr(title), 'url':self.getFullUrl(url), 'icon':self.getFullUrl(icon), 'desc':self.cleanHtmlStr(desc)})
             if searchType == 'series':
                 params['category'] = 'list_seasons'
                 self.addDir(params)
@@ -422,7 +422,7 @@ class AlltubeTV(CBaseHostClass):
                 tmp = base64.b64decode(tmp).replace('\r', '')
                 _myFun = compile(tmp, '', 'exec')
                 vGlobals = {"__builtins__": None, 'len': len, 'list': list, 'ord':ord, 'range':range}
-                vLocals = { 'zaraza': '' }
+                vLocals = {'zaraza': ''}
                 exec _myFun in vGlobals, vLocals
                 self._myFun = vLocals['zaraza']
             except Exception:
@@ -474,7 +474,7 @@ class AlltubeTV(CBaseHostClass):
 
         name     = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        printDBG( "handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category))
         self.currList = []
         
         self.cm.clearCookie(self.COOKIE_FILE, ['PHPSESSID', '__cfduid', 'cf_clearance'])

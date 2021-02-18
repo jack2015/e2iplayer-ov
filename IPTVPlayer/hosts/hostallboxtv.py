@@ -52,7 +52,7 @@ class AllBoxTV(CBaseHostClass):
         self.DEFAULT_ICON_URL = 'https://allbox.tv/static/img/seriale_brak_foto.jpg?v=1'
         self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Origin':self.getMainUrl()}
         self.AJAX_HEADER = dict(self.HTTP_HEADER)
-        self.AJAX_HEADER.update( {'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'} )
+        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
         
         self.cacheSearch = {}
         self.cacheEpisodes = {}
@@ -65,8 +65,8 @@ class AllBoxTV(CBaseHostClass):
         self.cacheLinks    = {}
         self.defaultParams = {'header':self.HTTP_HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': self.COOKIE_FILE}
         
-        self.MAIN_CAT_TAB = [{'category':'list_filters',       'title': _('Movies'),          'url':self.getFullUrl('/filmy-online') },
-                             {'category':'list_items',         'title': _('Premieres'),       'url':self.getFullUrl('/premiery') },
+        self.MAIN_CAT_TAB = [{'category':'list_filters',       'title': _('Movies'),          'url':self.getFullUrl('/filmy-online')},
+                             {'category':'list_items',         'title': _('Premieres'),       'url':self.getFullUrl('/premiery')},
                              {'category':'list_series_az',     'title': _('TV series'),       'url':self.getFullUrl('/seriale-online')},
                              {'category':'list_cartoons_az',   'title': _('Cartoons'),        'url':self.getFullUrl('/bajki-online')},
                              {'category':'list_filters',       'title': _('Ranking'),         'url':self.getFullUrl('/filmy-online,wszystkie,top')},
@@ -123,10 +123,10 @@ class AllBoxTV(CBaseHostClass):
                 letter = self.cm.ph.getSearchGroups(item, '''cat\-([^'^"]+?)['"]''')[0]
                 if letter == '':
                     continue
-                url = self.getFullUrl( self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0] )
+                url = self.getFullUrl(self.cm.ph.getSearchGroups(item, '''href=['"]([^"^']+?)['"]''')[0])
                 if url == '':
                     continue
-                title = ph.clean_html( item )
+                title = ph.clean_html(item)
                 if letter not in cacheLetter:
                     cacheLetter.append(letter)
                     cacheByLetter[letter] = []
@@ -466,7 +466,7 @@ class AllBoxTV(CBaseHostClass):
                 if dataKey != '':
                     try:
                         dataKey = json_loads(self.base64Decode(dataKey[2:]))
-                        printDBG("++++++++++++++++++++++++++> %s" % dataKey )
+                        printDBG("++++++++++++++++++++++++++> %s" % dataKey)
                         params = dict(self.defaultParams)
                         params['header'] = dict(params['header'])
                         params['header']['Referer'] = baseUrl
@@ -568,7 +568,7 @@ class AllBoxTV(CBaseHostClass):
         category = self.currItem.get("category", '')
         mode     = self.currItem.get("mode", '')
         
-        printDBG( "handleService: |||| name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: |||| name[%s], category[%s] " % (name, category))
         self.currList = []
         
     #MAIN MENU

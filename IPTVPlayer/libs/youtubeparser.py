@@ -140,9 +140,9 @@ class YouTubeParser():
 
         for item in list:
             printDBG(">>>>>>>>>>>>>>>>>>>>>")
-            printDBG( item )
+            printDBG(item)
             printDBG("<<<<<<<<<<<<<<<<<<<<<")
-            if -1 < formats.find( item['ext'] ):
+            if -1 < formats.find(item['ext']):
                 if 'yes' == item['m3u8']:
                     format = re.search('([0-9]+?)p$', item['format'])
                     if format != None:
@@ -336,7 +336,7 @@ class YouTubeParser():
             except:
                 pass
         
-            return {'type': 'video', 'category': 'video', 'title': title, 'url': url, 'icon': icon , 'time': time, 'desc': desc}
+            return {'type': 'video', 'category': 'video', 'title': title, 'url': url, 'icon': icon, 'time': time, 'desc': desc}
         else:
             return {}
         
@@ -354,7 +354,7 @@ class YouTubeParser():
             except:
                 desc = ""
                 
-            return {'type': 'category', 'category': 'channel', 'title': title, 'url': url, 'icon': icon, 'time': '' ,'desc': desc}
+            return {'type': 'category', 'category': 'channel', 'title': title, 'url': url, 'icon': icon, 'time': '','desc': desc}
 
         else:
             return {}
@@ -374,7 +374,7 @@ class YouTubeParser():
                 desc = desc + "\n" + by
             except:
                 pass
-            return {'type': 'category', 'category': 'playlist', 'title': title, 'url': url, 'icon': icon, 'time': '' ,'desc': desc}
+            return {'type': 'category', 'category': 'playlist', 'title': title, 'url': url, 'icon': icon, 'time': '','desc': desc}
         else:
             return {}
     
@@ -396,9 +396,9 @@ class YouTubeParser():
                     return {}
 
             if '/channel/' in url:
-                return {'type': 'category', 'category': 'channel', 'title': title, 'url': url, 'icon': icon, 'time': '' ,'desc': ''}
+                return {'type': 'category', 'category': 'channel', 'title': title, 'url': url, 'icon': icon, 'time': '','desc': ''}
             else:
-                return {'type': 'feed', 'category': cat, 'title': title, 'url': url, 'icon': icon, 'time': '' ,'desc': ''}
+                return {'type': 'feed', 'category': cat, 'title': title, 'url': url, 'icon': icon, 'time': '','desc': ''}
                 
         except:
             printExc()
@@ -564,7 +564,7 @@ class YouTubeParser():
     ########################################################
         
     def getVideosFromChannelList(self, url, category, page, cItem):
-        printDBG('YouTubeParser.getVideosFromChannelList page[%s]' % (page) )
+        printDBG('YouTubeParser.getVideosFromChannelList page[%s]' % (page))
         currList = []
 
         try:
@@ -633,7 +633,7 @@ class YouTubeParser():
                     
                     urlNextPage = "https://www.youtube.com/browse_ajax?ctoken=%s&continuation=%s&itct=%s" % (ctoken, ctoken, ctit)
                     
-                    params = {'type':'more', 'category': category , 'title': label, 'page': str(int(page) + 1), 'url': urlNextPage}
+                    params = {'type':'more', 'category': category, 'title': label, 'page': str(int(page) + 1), 'url': urlNextPage}
                     printDBG(str(params))
                     currList.append(params)
                 
@@ -801,7 +801,7 @@ class YouTubeParser():
                     img   = item['thumbnail']
                     time  = item['length_seconds']
                     if '' != time:
-                        time = str( timedelta( seconds=int(time) ) )
+                        time = str(timedelta(seconds=int(time)))
                     if time.startswith("0:"):
                         time = time[2:]
                     desc  = item['description']

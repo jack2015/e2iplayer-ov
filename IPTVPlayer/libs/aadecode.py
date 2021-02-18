@@ -214,7 +214,7 @@ class AADecoder(object):
             
             if str_char == "":
                 print("no match :  ")
-                print( data + "\nout = " + out + "\n")
+                print(data + "\nout = " + out + "\n")
                 return False
             
             out += chr(int(str_char, radix))

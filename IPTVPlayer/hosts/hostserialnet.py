@@ -40,7 +40,7 @@ class SerialeNet(CBaseHostClass):
                          {'category':'last_update',     'title':'Ostatnio uzupełnione',      'url':self.getMainUrl()},
                          
                          {'category':'search',          'title':_('Search'), 'search_item':True},
-                         {'category':'search_history',  'title':_('Search history')} ]
+                         {'category':'search_history',  'title':_('Search history')}]
         self.seasonsCache = []
         
     def _getStr(self, v, default=''):
@@ -238,7 +238,7 @@ class SerialeNet(CBaseHostClass):
         if len(keywordList):
             series  = self._listsSeries(self.getMainUrl())
             for item in series:
-                txt = self.cm.ph.getNormalizeStr( (item['t1'] + ' ' +  item['t2']) ).upper()
+                txt = self.cm.ph.getNormalizeStr((item['t1'] + ' ' +  item['t2'])).upper()
                 txtTab = txt.split(' ')
                 matches = 0
                 for word in keywordList:
@@ -257,11 +257,11 @@ class SerialeNet(CBaseHostClass):
     
     def getLinksForVideo(self, cItem):
         videoUrlTab = []
-        baseUrl   = self.getFullUrl( cItem['url'] )
+        baseUrl   = self.getFullUrl(cItem['url'])
         try:
-            sts, data = self.cm.getPage( baseUrl )
+            sts, data = self.cm.getPage(baseUrl)
             verUrl = self.getFullUrl(self.cm.ph.getSearchGroups(data, '<iframe id="framep" class="radi" src="([^"]+?)"')[0])
-            sts, data = self.cm.getPage( verUrl )
+            sts, data = self.cm.getPage(verUrl)
             versions = []
             sts, data = self.cm.ph.getDataBeetwenMarkers(data, '<b>Wersja:</b>', '<script>', False)
             if sts:
@@ -271,13 +271,13 @@ class SerialeNet(CBaseHostClass):
                 for item in data:
                     name  = self.cm.ph.getSearchGroups(item, 'name="([^"]+?)"')[0]
                     value = self.cm.ph.getSearchGroups(item, 'value="([^"]+?)"')[0]
-                    versions.append({'title':value, 'url': verUrl + ('&wi=va&%s=%s' % (name, value) )})
+                    versions.append({'title':value, 'url': verUrl + ('&wi=va&%s=%s' % (name, value))})
             else:
                 versions.append({'title':'', 'url': verUrl + '&wi=va'})
             for item in versions:
                 try:
                     url = item['url']
-                    sts, data = self.cm.getPage( url )
+                    sts, data = self.cm.getPage(url)
                     
                     videoUrl = ''
                     if "url: escape('http" in data:
@@ -285,17 +285,17 @@ class SerialeNet(CBaseHostClass):
                         if match:
                             videoUrl = match.group(1)
                     elif "eval(function(p,a,c,k,e,d)" in data:
-                        printDBG( 'Host resolveUrl packed' )
+                        printDBG('Host resolveUrl packed')
                         match = re.search('eval\((.+?),0,{}\)\)', data, re.DOTALL)
                         if match:
                             videoUrl = self.decodeJS('eval(' + match.group(1) + ',0,{}))')
                     elif "var flm = '" in data:
-                        printDBG( 'Host resolveUrl var flm' )
+                        printDBG('Host resolveUrl var flm')
                         match = re.search("var flm = '([^']+?)';", data)
                         if match:
                             videoUrl = match.group(1)
                     elif 'primary: "html5"' in data:
-                        printDBG( 'Host resolveUrl html5' )
+                        printDBG('Host resolveUrl html5')
                         match = re.search('file: "([^"]+?)"', data)
                         if match:
                             videoUrl = match.group(1)
@@ -352,7 +352,7 @@ class SerialeNet(CBaseHostClass):
         CBaseHostClass.handleService(self, index, refresh, searchPattern, searchType)
         name     = self.currItem.get("name", None)
         category = self.currItem.get("category", '')
-        printDBG( "SerialeNet.handleService: ---------> name[%s], category[%s] " % (name, category) )
+        printDBG("SerialeNet.handleService: ---------> name[%s], category[%s] " % (name, category))
         searchPattern = self.currItem.get("search_pattern", searchPattern)
         self.currList = [] 
 

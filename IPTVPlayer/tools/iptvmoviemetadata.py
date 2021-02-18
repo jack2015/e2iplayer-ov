@@ -47,7 +47,7 @@ def localPrintDBG(txt):
     pass
 
 class IPTVMovieMetaDataHandler():
-    META_DATA      = {"host":"", "title":"", "file_path":"", "aspect_ratio":-1, "last_position":-1,"tracks":{"audio":-1, "video":-1, "subtitle":-1, "subtitles":{"idx":-1, "tracks":[]} } }
+    META_DATA      = {"host":"", "title":"", "file_path":"", "aspect_ratio":-1, "last_position":-1,"tracks":{"audio":-1, "video":-1, "subtitle":-1, "subtitles":{"idx":-1, "tracks":[]}}}
     SUBTITLE_TRACK = {"title":"", "id":"", "provider":"", "lang":"", "delay_ms":0, "path":""}
     EXTENSION = 'iptv'
     ENCODING  = 'utf-8'
@@ -60,9 +60,9 @@ class IPTVMovieMetaDataHandler():
         else:
             fileName = filePath.split('/')[-1]+'.' + self.EXTENSION
         
-        self.filePath = GetMovieMetaDataDir( RemoveDisallowedFilenameChars( fileName ) )
-        self.data = deepcopy( self.META_DATA )
-        self.data.update( {"host":host, "title":title, "file_path":filePath} )
+        self.filePath = GetMovieMetaDataDir(RemoveDisallowedFilenameChars(fileName))
+        self.data = deepcopy(self.META_DATA)
+        self.data.update({"host":host, "title":title, "file_path":filePath})
         self.isModified = False
         
     def load(self):
@@ -71,7 +71,7 @@ class IPTVMovieMetaDataHandler():
         try:
             try:
                 with codecs.open(self.filePath, 'r', self.ENCODING, 'replace') as fp:
-                    data = byteify( json.loads(fp.read()) )
+                    data = byteify(json.loads(fp.read()))
                 if data != {}:
                     sts = True
                     self.data.update(data)
@@ -162,7 +162,7 @@ class IPTVMovieMetaDataHandler():
         tracks = []
         try:
             for item in self.data['tracks']['subtitles']['tracks']:
-                track = deepcopy( self.SUBTITLE_TRACK )
+                track = deepcopy(self.SUBTITLE_TRACK)
                 track.update(item)
                 tracks.append(track)
         except Exception:
@@ -205,7 +205,7 @@ class IPTVMovieMetaDataHandler():
         idx = -1
         try:
             idx = self.data['tracks']['subtitles']['idx']
-            if idx >= len( self.getSubtitlesTracks() ):
+            if idx >= len(self.getSubtitlesTracks()):
                 idx = -1
         except Exception:
             printExc()
@@ -215,7 +215,7 @@ class IPTVMovieMetaDataHandler():
         localPrintDBG("IPTVMovieMetaDataHandler.setSubtitleIdx idx[%s]" % idx)
         sts = False
         try:
-            if idx < len( self.getSubtitlesTracks() ):
+            if idx < len(self.getSubtitlesTracks()):
                 self.data['tracks']['subtitles']['idx'] = idx
                 sts = True
         except Exception:
@@ -228,7 +228,7 @@ class IPTVMovieMetaDataHandler():
         localPrintDBG("IPTVMovieMetaDataHandler.addSubtitleTrack")
         idx = -1
         try:
-            track = deepcopy( self.SUBTITLE_TRACK )
+            track = deepcopy(self.SUBTITLE_TRACK)
             track.update(subtitlesTrack)
             localPrintDBG(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> track[%s]" % track)
             self.data['tracks']['subtitles']['tracks'].append(track)

@@ -88,7 +88,7 @@ class IPTVListComponentBase(GUIComponent, object):
     currentSelection = property(getCurrent)
 
 class IPTVMainNavigatorList(IPTVListComponentBase):
-    ICONS_FILESNAMES = {CDisplayListItem.TYPE_MARKER : 'MarkerItem.png', CDisplayListItem.TYPE_SUB_PROVIDER : 'CategoryItem.png', CDisplayListItem.TYPE_SUBTITLE : 'ArticleItem.png', CDisplayListItem.TYPE_CATEGORY : 'CategoryItem.png', CDisplayListItem.TYPE_MORE : 'MoreItem.png', CDisplayListItem.TYPE_VIDEO : 'VideoItem.png', CDisplayListItem.TYPE_AUDIO : 'AudioItem.png', CDisplayListItem.TYPE_SEARCH : 'SearchItem.png', CDisplayListItem.TYPE_ARTICLE : 'ArticleItem.png', CDisplayListItem.TYPE_PICTURE : 'PictureItem.png', CDisplayListItem.TYPE_DATA : 'DataItem.png'}
+    ICONS_FILESNAMES = {CDisplayListItem.TYPE_MARKER: 'MarkerItem.png', CDisplayListItem.TYPE_SUB_PROVIDER: 'CategoryItem.png', CDisplayListItem.TYPE_SUBTITLE: 'ArticleItem.png', CDisplayListItem.TYPE_CATEGORY: 'CategoryItem.png', CDisplayListItem.TYPE_MORE: 'MoreItem.png', CDisplayListItem.TYPE_VIDEO: 'VideoItem.png', CDisplayListItem.TYPE_AUDIO: 'AudioItem.png', CDisplayListItem.TYPE_SEARCH: 'SearchItem.png', CDisplayListItem.TYPE_ARTICLE: 'ArticleItem.png', CDisplayListItem.TYPE_PICTURE: 'PictureItem.png', CDisplayListItem.TYPE_DATA: 'DataItem.png'}
     def __init__(self):
         IPTVListComponentBase.__init__(self)
         
@@ -107,7 +107,7 @@ class IPTVMainNavigatorList(IPTVListComponentBase):
     
     def _nullPIX(self):
         for key in self.ICONS_FILESNAMES:
-            self.dictPIX[ key ] = None
+            self.dictPIX[key] = None
 
     def onCreate(self):
         self._nullPIX()
@@ -125,13 +125,13 @@ class IPTVMainNavigatorList(IPTVListComponentBase):
     def buildEntry(self, item):
         width  = self.l.getItemSize().width()
         height = self.l.getItemSize().height()
-        res = [ None ]
+        res = [None]
         res.append((eListboxPythonMultiContent.TYPE_TEXT, 45, 0, width-45, height, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.getDisplayTitle(), item.getTextColor()))
         res.append((eListboxPythonMultiContent.TYPE_PIXMAP_ALPHABLEND, 3, 1, 40, 40, self.dictPIX.get(item.type, None)))  
         return res
         
 class IPTVRadioButtonList(IPTVMainNavigatorList):
-    ICONS_FILESNAMES = {'on' : 'radio_button_on.png', 'off' : 'radio_button_off.png'}
+    ICONS_FILESNAMES = {'on': 'radio_button_on.png', 'off': 'radio_button_off.png'}
     def __init__(self):
         IPTVMainNavigatorList.__init__(self)
             
@@ -139,7 +139,7 @@ class IPTVRadioButtonList(IPTVMainNavigatorList):
         width  = self.l.getItemSize().width()
         height = self.l.getItemSize().height()
         pixmap_y = (height - 16) / 2
-        res = [ None ]
+        res = [None]
         if None == item.type:
             res.append((eListboxPythonMultiContent.TYPE_TEXT, 5, 0, width-5, height, 1, RT_HALIGN_LEFT|RT_VALIGN_CENTER, item.name))
         else:

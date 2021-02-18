@@ -76,10 +76,10 @@ class RtlMostHU(CBaseHostClass):
         CBaseHostClass.__init__(self, {'history':'rtlmost.hu', 'cookie':'rtlmosthu.cookie'})
 
         self.SEARCH_TYPES = [
-            ( _("Program"), "Program" ),
-            ( _("Video"), "Video" ),
-            ( _("Preview"),  "Preview" ),
-            ( _("Playlist"), "Playlist")
+            (_("Program"), "Program"),
+            (_("Video"), "Video"),
+            (_("Preview"),  "Preview"),
+            (_("Playlist"), "Playlist")
         ]
 
         self.DEFAULT_ICON_URL = 'https://dl.dropboxusercontent.com/s/bfdyotdpo66cide/rtlmostlogo.png?dl=0'
@@ -89,7 +89,7 @@ class RtlMostHU(CBaseHostClass):
             'eJwdxkEKwCAMBdEb+aELF72MWI21oChJVHr7SjfzJqt2OYEeTH1iLLQ8k7G9+Nckxj+YB7aaGldB'
             'tTe30d2iC0I8n0AC1pKH23W1ieIDaJggkw=='))
         self.API_HEADER = dict(self.HEADER)
-        self.API_HEADER.update( {'x-customer-name': 'rtlhu'} )
+        self.API_HEADER.update({'x-customer-name': 'rtlhu'})
         self.MENU_URL = self.API_URL+zlib.decompress(base64.b64decode(
             'eJxLy89JSS0qts/JzM0ssa2uVctPSytOBbEAjDgKZQ=='))
         self.PROGRAMS_URL = self.API_URL+zlib.decompress(base64.b64decode(
@@ -129,7 +129,7 @@ class RtlMostHU(CBaseHostClass):
             'nvBR+SDbQSL4Sli6oai4mMVIjZXdVGkz8GqrJSyVC6vniz4mYZbDTL6IQCuUzfJPec1gPAcKpQTv'
             'Ag7uzKC2XugHkZ+sfpTWEhlYHBRBnt1O+bE4F2V5/XuQ9GLJ4oaJdcDqMNk2dcA4JElYixTSaB3F'
             'uxTeF2ZLTA=='))
-        self.queryParams = {'header': self.HEADER, 'raw_post_data': True }
+        self.queryParams = {'header': self.HEADER, 'raw_post_data': True}
         self.apiParams = {'header':self.API_HEADER}
         self.loginParams = {'header':self.HEADER}
         self.loggedIn = False
@@ -178,14 +178,14 @@ class RtlMostHU(CBaseHostClass):
                 self.addDir(params)
         except Exception:
             printExc()
-        MAIN_CAT_TAB = [{'category':'search',         'title': _('Search'),       'search_item':True       },
-                        {'category': 'search_history', 'title': _('Search history'),                        }]
+        MAIN_CAT_TAB = [{'category':'search',         'title': _('Search'),       'search_item':True},
+                        {'category': 'search_history', 'title': _('Search history'),}]
         self.listsTab(MAIN_CAT_TAB, cItem)
 
     def listPrograms(self, cItem):
         printDBG("RtlMostHU.listPrograms")
         url = cItem['url']
-        sts, data = self.cm.getPage(self.PROGRAMS_URL.format( url, 100, 0), self.apiParams)
+        sts, data = self.cm.getPage(self.PROGRAMS_URL.format(url, 100, 0), self.apiParams)
         if not sts:
             return
         try:
@@ -206,7 +206,7 @@ class RtlMostHU(CBaseHostClass):
     def listPlaylist(self, cItem):
         printDBG("RtlMostHU.listPlaylist")
         url = cItem['url']
-        sts, data = self.cm.getPage(self.VIDEO_URL.format( url ), self.apiParams)
+        sts, data = self.cm.getPage(self.VIDEO_URL.format(url), self.apiParams)
         if not sts:
             return
         try:
@@ -230,7 +230,7 @@ class RtlMostHU(CBaseHostClass):
     def listEpisodes(self, cItem, subcat):
         printDBG("RtlMostHU.listEpisodes")
         url = cItem['url']
-        sts, data = self.cm.getPage(self.EPISODES_URL.format( url, subcat, 100, 0), self.apiParams)
+        sts, data = self.cm.getPage(self.EPISODES_URL.format(url, subcat, 100, 0), self.apiParams)
         if not sts:
             return
         try:
@@ -270,7 +270,7 @@ class RtlMostHU(CBaseHostClass):
     def listSubcategories(self, cItem):
         printDBG("RtlMostHU.listSubcategories")
         url = cItem['url']
-        sts, data = self.cm.getPage(self.SUBCATS_URL.format( url), self.apiParams)
+        sts, data = self.cm.getPage(self.SUBCATS_URL.format(url), self.apiParams)
         if not sts:
             return
         try:
@@ -319,7 +319,7 @@ class RtlMostHU(CBaseHostClass):
             return
         page = cItem.get('page', 0)
         sts, data = self.cm.getPage(self.QUERY_URL.format(queryType), self.queryParams,
-          query.format( urllib.quote(searchPattern), page, 50 ))
+          query.format(urllib.quote(searchPattern), page, 50))
         if not sts:
             return
         try:
@@ -360,7 +360,7 @@ class RtlMostHU(CBaseHostClass):
         videoUrls = []
         if not self.tryTologin():
             return videoUrls
-        sts, data = self.cm.getPage(self.VIDEO_URL.format( url), self.apiParams)
+        sts, data = self.cm.getPage(self.VIDEO_URL.format(url), self.apiParams)
 
         if not sts:
             return videoUrls
@@ -419,7 +419,7 @@ class RtlMostHU(CBaseHostClass):
 
         if '' == self.login.strip() or '' == self.password.strip():
             printDBG('tryTologin wrong login data')
-            self.sessionEx.open(MessageBox, _('The host %s requires registration. \nPlease fill your login and password in the host configuration. Available under blue button.') % self.getMainUrl(), type=MessageBox.TYPE_ERROR, timeout=10 )
+            self.sessionEx.open(MessageBox, _('The host %s requires registration. \nPlease fill your login and password in the host configuration. Available under blue button.') % self.getMainUrl(), type=MessageBox.TYPE_ERROR, timeout=10)
             return False
 
         try:
@@ -464,7 +464,7 @@ class RtlMostHU(CBaseHostClass):
                 data = json_loads(data)
                 needLogin = data['errorCode'] != 0
             if needLogin:
-                sts, data = self.cm.getPage(self.LOGIN_URL.format( self.login, self.password), self.loginParams)
+                sts, data = self.cm.getPage(self.LOGIN_URL.format(self.login, self.password), self.loginParams)
                 if not sts:
                     raise Exception('Can not Get Login page!')
                 data = json_loads(data)
@@ -492,7 +492,7 @@ class RtlMostHU(CBaseHostClass):
         category = self.currItem.get("category", '')
         mode     = self.currItem.get("mode", '')
 
-        printDBG( "handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category))
         self.currList = []
         if self.tryTologin():
     #MAIN MENU

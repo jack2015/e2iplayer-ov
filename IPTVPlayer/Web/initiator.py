@@ -29,7 +29,7 @@ def checkForFC():
 		return False
 	
 	try:
-		with open (myfileName, "r") as myfile:
+		with open(myfileName, "r") as myfile:
 			data = myfile.read()
 			myfile.close()
 		if data.find('fancontrol') > 0 and data.find('iptvplayer') < 0:
@@ -50,14 +50,14 @@ if os.path.exists(resolveFilename(SCOPE_PLUGINS, 'Extensions/OpenWebif/pluginsho
 		fcRoot = static.File(GetPluginDir('Web/'))
 		fcRoot.putChild("", redirectionPage())
 		try:
-			addExternalChild( ("fancontrol", fcRoot, "E2iPlayer", settings.WebInterfaceVersion) )
-			addExternalChild( ("iptvplayer", IPTVwebRoot, None, None) )
+			addExternalChild(("fancontrol", fcRoot, "E2iPlayer", settings.WebInterfaceVersion))
+			addExternalChild(("iptvplayer", IPTVwebRoot, None, None))
 		except Exception:
 			print("[E2iPlayer] exception registering Web interface in FC mode")
 	else: #user still can use IPTV web interface, but would need to mark URL manually depending on the openWebIf version
 		try:
-			addExternalChild( ("iptvplayer", IPTVwebRoot, "E2iPlayer", settings.WebInterfaceVersion) )
-			addExternalChild( ("e2iplayer", IPTVwebRoot, "E2iPlayer", settings.WebInterfaceVersion) )
+			addExternalChild(("iptvplayer", IPTVwebRoot, "E2iPlayer", settings.WebInterfaceVersion))
+			addExternalChild(("e2iplayer", IPTVwebRoot, "E2iPlayer", settings.WebInterfaceVersion))
 		except Exception:
 			print("[E2iPlayer] exception registering Web interface in NATIVE mode")
 else:

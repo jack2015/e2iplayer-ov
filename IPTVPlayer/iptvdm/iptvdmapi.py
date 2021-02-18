@@ -253,7 +253,7 @@ class IPTVDMApi():
             self.updateItemSTS(newItem)
             if downloader.getStatus() == DMHelper.STS.DOWNLOADING:
                 newItem.callback = boundFunction(self.cmdFinished, newItem.downloadIdx)
-                newItem.downloader.subscribeFor_Finish( newItem.callback )
+                newItem.downloader.subscribeFor_Finish(newItem.callback)
                 self.queueUD.append(newItem)
                 self.runWorkThread()
             else:
@@ -293,7 +293,7 @@ class IPTVDMApi():
         if DMHelper.DOWNLOAD_TYPE.INITIAL == item.tries:
            item.fileName = DMHelper.makeUnikalFileName(item.fileName, False, False)
 
-        printDBG("Downloading started downloadIdx[%s] File[%s] URL[%s]" % (item.downloadIdx, item.fileName, item.url) )
+        printDBG("Downloading started downloadIdx[%s] File[%s] URL[%s]" % (item.downloadIdx, item.fileName, item.url))
       
         listUDIdx = self.findIdxInQueueUD(item.downloadIdx)
         self.queueUD[listUDIdx].status      = DMHelper.STS.DOWNLOADING
@@ -302,7 +302,7 @@ class IPTVDMApi():
         url, downloaderParams = DMHelper.getDownloaderParamFromUrl(item.url)
         self.queueUD[listUDIdx].downloader = DownloaderCreator(url)
         self.queueUD[listUDIdx].callback   = boundFunction(self.cmdFinished, item.downloadIdx)
-        self.queueUD[listUDIdx].downloader.subscribeFor_Finish( self.queueUD[listUDIdx].callback )
+        self.queueUD[listUDIdx].downloader.subscribeFor_Finish(self.queueUD[listUDIdx].callback)
         self.queueUD[listUDIdx].downloader.start(url, item.fileName, downloaderParams)
    
     def cmdFinished(self, downloadIdx, retval=None):
@@ -321,7 +321,7 @@ class IPTVDMApi():
         self.queueUD[listUDIdx].callback   = None
         
         item = self.queueUD[listUDIdx]
-        printDBG("Downloading finished idx[%s] File[%s] URL[%s]" % (downloadIdx, item.fileName, item.url) )
+        printDBG("Downloading finished idx[%s] File[%s] URL[%s]" % (downloadIdx, item.fileName, item.url))
         
         item = self.queueUD[listUDIdx]
         # add processed item to self.queueAA
@@ -332,21 +332,21 @@ class IPTVDMApi():
         
     def findIdxInQueueDQ(self, downloadIdx):
         # function should be called from locked area
-        for listIdx in range( len(self.queueDQ) ):
+        for listIdx in range(len(self.queueDQ)):
             if self.queueDQ[listIdx].downloadIdx == downloadIdx:
                 return listIdx
         return -1
         
     def findIdxInQueueUD(self, downloadIdx):
         # function should be called from locked area
-        for listIdx in range( len(self.queueUD) ):
+        for listIdx in range(len(self.queueUD)):
             if self.queueUD[listIdx].downloadIdx == downloadIdx:
                 return listIdx
         return -1
         
     def findIdxInQueueAA(self, downloadIdx):
         # function should be called from locked area
-        for listIdx in range( len(self.queueAA) ):
+        for listIdx in range(len(self.queueAA)):
             if self.queueAA[listIdx].downloadIdx == downloadIdx:
                 return listIdx
         return -1
@@ -403,7 +403,7 @@ class IPTVDMApi():
     def updateDownloadItemsStatus(self):
         stsChanged = False 
         printDBG("updateDownloadItemsStatus")
-        for listUDIdx in range( len(self.queueUD) ):
+        for listUDIdx in range(len(self.queueUD)):
             if self.updateItemSTS(self.queueUD[listUDIdx]):
                 stsChanged = True
         if stsChanged:

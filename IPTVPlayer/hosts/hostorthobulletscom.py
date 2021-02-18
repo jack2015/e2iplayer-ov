@@ -55,7 +55,7 @@ class OrthoBullets(CBaseHostClass):
         self.USER_AGENT = 'Mozilla/5.0'
         self.HEADER = {'User-Agent': self.USER_AGENT, 'Accept': 'text/html'}
         self.AJAX_HEADER = dict(self.HEADER)
-        self.AJAX_HEADER.update( {'X-Requested-With':'XMLHttpRequest', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'} )
+        self.AJAX_HEADER.update({'X-Requested-With':'XMLHttpRequest', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'})
         
         self.MAIN_URL = 'https://www.orthobullets.com/'
         self.DEFAULT_ICON_URL = 'http://pic.accessify.com/thumbnails/777x423/o/orthobullets.com.png'
@@ -275,7 +275,7 @@ class OrthoBullets(CBaseHostClass):
         category = self.currItem.get("category", '')
         mode     = self.currItem.get("mode", '')
         
-        printDBG( "handleService: || name [%s], category [%s], mode [%s] " % (name, category, mode) )
+        printDBG("handleService: || name [%s], category [%s], mode [%s] " % (name, category, mode))
         
         self.currList = []
         

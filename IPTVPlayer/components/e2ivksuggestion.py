@@ -13,7 +13,7 @@ from enigma import eTimer
 class AutocompleteSearch:
 
     def __init__(self, provider, historyList=[]):
-        printDBG( "AS.__init__" )
+        printDBG("AS.__init__")
 
         self.lock = threading.Lock()
         self.event = threading.Event()
@@ -40,10 +40,10 @@ class AutocompleteSearch:
                 printExc()
 
     def __del__(self):
-        printDBG( "AS.__del__")
+        printDBG("AS.__del__")
 
     def term(self):
-        printDBG( "AS._terminate")
+        printDBG("AS._terminate")
         self.stop()
         self.provider = None
 

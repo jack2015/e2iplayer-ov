@@ -39,7 +39,7 @@ class eKinomaniak(CBaseHostClass):
         self.DEFAULT_ICON_URL = 'https://ekinomaniak.net/img/video.png'
         self.HTTP_HEADER = {'User-Agent': self.USER_AGENT, 'DNT':'1', 'Accept': 'text/html', 'Accept-Encoding':'gzip, deflate', 'Referer':self.getMainUrl(), 'Origin':self.getMainUrl()}
         self.AJAX_HEADER = dict(self.HTTP_HEADER)
-        self.AJAX_HEADER.update( {'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'} )
+        self.AJAX_HEADER.update({'X-Requested-With': 'XMLHttpRequest', 'Accept-Encoding':'gzip, deflate', 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8', 'Accept':'application/json, text/javascript, */*; q=0.01'})
 
         self.cacheMovieFilters = {'cats':[], 'sort':[], 'years':[], 'az':[]}        
         self.cacheLinks    = {}
@@ -81,7 +81,7 @@ class eKinomaniak(CBaseHostClass):
                 jscode = self.cm.ph.getDataBeetwenNodes(data, ('<script', '>'), ('</script', '>'), False)[1]
                 if 'eval' in jscode:
                     jscode = '%s\n%s' % (base64.b64decode('''dmFyIGlwdHZfY29va2llcz1bXSxkb2N1bWVudD17fTtPYmplY3QuZGVmaW5lUHJvcGVydHkoZG9jdW1lbnQsImNvb2tpZSIse2dldDpmdW5jdGlvbigpe3JldHVybiIifSxzZXQ6ZnVuY3Rpb24obyl7bz1vLnNwbGl0KCI7IiwxKVswXS5zcGxpdCgiPSIsMiksb2JqPXt9LG9ialtvWzBdXT1vWzFdLGlwdHZfY29va2llcy5wdXNoKG9iail9fSk7dmFyIHdpbmRvdz10aGlzLGxvY2F0aW9uPXt9O2xvY2F0aW9uLnJlbG9hZD1mdW5jdGlvbigpe3ByaW50KEpTT04uc3RyaW5naWZ5KGlwdHZfY29va2llcykpfTs='''), jscode)
-                    ret = js_execute( jscode )
+                    ret = js_execute(jscode)
                     if ret['sts'] and 0 == ret['code']:
                         try:
                             cookies = byteify(json_loads(ret['data'].strip()))
@@ -121,7 +121,7 @@ class eKinomaniak(CBaseHostClass):
     
     ###################################################
     def _fillMovieFilters(self):
-        self.cacheMovieFilters = { 'cats':[], 'sort':[], 'years':[], 'az':[]}
+        self.cacheMovieFilters = {'cats':[], 'sort':[], 'years':[], 'az':[]}
 
         sts, data = self.getPage(self.getFullUrl('/watch/movies/'))
         if not sts:
@@ -340,7 +340,7 @@ class eKinomaniak(CBaseHostClass):
         if desc  == '':
             desc  = cItem.get('desc', '')
 
-        return [{'title':self.cleanHtmlStr( title ), 'text': self.cleanHtmlStr( desc ), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
+        return [{'title':self.cleanHtmlStr(title), 'text': self.cleanHtmlStr(desc), 'images':[{'title':'', 'url':self.getFullUrl(icon)}], 'other_info':{'custom_items_list':itemsList}}]
         
     def handleService(self, index, refresh=0, searchPattern='', searchType=''):
         printDBG('handleService start')
@@ -351,7 +351,7 @@ class eKinomaniak(CBaseHostClass):
         category = self.currItem.get("category", '')
         mode     = self.currItem.get("mode", '')
         
-        printDBG( "handleService: |||| name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: |||| name[%s], category[%s] " % (name, category))
         self.cacheLinks = {}
         self.currList = []
         

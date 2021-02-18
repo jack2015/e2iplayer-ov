@@ -158,7 +158,7 @@ class DRDK(CBaseHostClass):
 
         name     = self.currItem.get("name", '')
         category = self.currItem.get("category", '')
-        printDBG( "handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category) )
+        printDBG("handleService: |||||||||||||||||||||||||||||||||||| name[%s], category[%s] " % (name, category))
         self.currList = []
         
     #MAIN MENU
@@ -254,7 +254,7 @@ class IPTVHost(CHostBase):
     def getSearchItemInx(self):
         try:
             list = self.host.getCurrList()
-            for i in range( len(list) ):
+            for i in range(len(list)):
                 if list[i]['category'] == 'search':
                     return i
         except Exception:
@@ -267,7 +267,7 @@ class IPTVHost(CHostBase):
             if 'history' == list[self.currIndex]['name']:
                 pattern = list[self.currIndex]['title']
                 search_type = list[self.currIndex]['search_type']
-                self.host.history.addHistoryItem( pattern, search_type)
+                self.host.history.addHistoryItem(pattern, search_type)
                 self.searchPattern = pattern
                 self.searchType = search_type
         except Exception:
