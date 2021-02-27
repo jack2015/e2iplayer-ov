@@ -33,7 +33,7 @@ def Plugins(**kwargs):
 		iconFile = "icons/iptvlogohd.png"
 	else:
 		iconFile = "icons/iptvlogo.png"
-	desc = _("Watch Videos Online")
+	desc = _("Special version for Open Vision")
 	list = []
 	if config.plugins.iptvplayer.plugin_autostart.value:
 		if config.plugins.iptvplayer.plugin_autostart_method.value == 'wizard':

@@ -607,6 +607,7 @@ class urlparser:
                        'premiumserver.club': self.pp.parserMSTREAMICU,
                        'mystream.streamango.to': self.pp.parserMSTREAMICU,
                        'embed.mystream.to': self.pp.parserMSTREAMICU,
+                       'dood.so': self.pp.parserDOOD,
                        'dood.to': self.pp.parserDOOD,
                        'dood.watch': self.pp.parserDOOD,
                        'doodstream.com': self.pp.parserDOOD,
@@ -13781,10 +13782,10 @@ class pageParser(CaptchaHelper):
 
         sts, data = self.cm.getPage(baseUrl, httpParams)
 
-        if sts:
-            printDBG("-----------------------")
-            printDBG(data)
-            printDBG("-----------------------")
+#        if sts:
+#            printDBG("-----------------------")
+#            printDBG(data)
+#            printDBG("-----------------------")
 
         subTracks = []
         #<track kind="captions" src="https://doodstream.com/srt/00705/s72n7d5hi6qc_Serbian.vtt" srclang="en" label="Serbian" default>
