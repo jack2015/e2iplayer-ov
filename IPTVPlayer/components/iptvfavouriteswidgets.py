@@ -163,7 +163,7 @@ class IPTVFavouritesMainWidget(Screen):
          <ePixmap position="5,9"   zPosition="4" size="30,30" pixmap="%s" transparent="1" alphatest="on" />
          <ePixmap position="335,9" zPosition="4" size="30,30" pixmap="%s" transparent="1" alphatest="on" />
          <ePixmap position="665,9" zPosition="4" size="30,30" pixmap="%s" transparent="1" alphatest="on" />
-         
+
          <widget name="label_red"     position="45,9"  size="300,27" zPosition="5" valign="center" halign="left" backgroundColor="black" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
          <widget name="label_green"   position="375,9" size="300,27" zPosition="5" valign="center" halign="left" backgroundColor="black" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />
          <widget name="label_yellow"  position="705,9" size="300,27" zPosition="5" valign="center" halign="left" backgroundColor="black" font="Regular;21" transparent="1" foregroundColor="white" shadowColor="black" shadowOffset="-1,-1" />

@@ -307,8 +307,8 @@ class iptv_execute(object):
     please use iptv_execute instead, this should be used as follow:
     ret = iptv_execute()("cmd")
     ret['sts'], ret['code'], ret['data']
-    
-    iptv_execute must be used outside from MainThread context, please see 
+
+    iptv_execute must be used outside from MainThread context, please see
     iptv_system class from iptvtools module which is dedicated to be
     used inside MainThread context
     '''

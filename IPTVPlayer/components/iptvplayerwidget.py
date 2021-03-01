@@ -93,7 +93,7 @@ class E2iPlayerWidget(Screen):
                             <widget name="statustext" position="15,148" zPosition="1" size="985,90" font="Regular;30" halign="center" valign="center" transparent="1" backgroundColor="#00000000" />
                             <widget name="list" position="5,115" zPosition="2" size="860,690" enableWrapAround="1" scrollbarMode="showOnDemand" transparent="1" backgroundColor="#00000000" />
                             <widget name="console" position="1020,310" zPosition="1" size="500,630" font="Regular;26" transparent="1" backgroundColor="#00000000" />
-                            <widget name="cover" zPosition="2" position="1020,80" size="244,280" alphatest="blend" />     
+                            <widget name="cover" zPosition="2" position="1020,80" size="244,280" alphatest="blend" />
                             <widget name="playerlogo" zPosition="4" position="1264,3" size="240,80" alphatest="blend" />
                             <widget name="sequencer" position="0,0" zPosition="6" size="1090,625" font="Regular;160" halign="center" valign="center" transparent="1" backgroundColor="#00000000" />
                             <widget name="spinner"   zPosition="2" position="463,200" size="16,16" transparent="1" alphatest="blend" />
@@ -122,7 +122,7 @@ class E2iPlayerWidget(Screen):
                             <widget name="playerlogo" zPosition="4" position="964,3" size="120,40" alphatest="blend" />
                             <ePixmap zPosition="4" position="5,395" size="1080,5" pixmap="%s" transparent="1" />
                             <widget name="sequencer" position="0,0" zPosition="6" size="1090,525" font="Regular;160" halign="center" valign="center" transparent="1" backgroundColor="#00000000" />
-                            
+
                             <widget name="spinner"   zPosition="2" position="463,200" size="16,16" transparent="1" alphatest="blend" />
                             <widget name="spinner_1" zPosition="1" position="463,200" size="16,16" transparent="1" alphatest="blend" />
                             <widget name="spinner_2" zPosition="1" position="479,200" size="16,16" transparent="1" alphatest="blend" />

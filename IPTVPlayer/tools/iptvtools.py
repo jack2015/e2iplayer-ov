@@ -243,10 +243,10 @@ class iptv_system:
     Calling os.system is not recommended, it may fail due to lack of memory,
     please use iptv_system instead, this should be used as follow:
     self.handle = iptv_system("cmd", callBackFun)
-    there is need to have reference to the obj created by iptv_system, 
+    there is need to have reference to the obj created by iptv_system,
     without reference to return obj behavior is undefined
-    
-    iptv_system must be used only inside MainThread context, please see 
+
+    iptv_system must be used only inside MainThread context, please see
     iptv_execute class from asynccall module which is dedicated to be
     used inside other threads
     '''

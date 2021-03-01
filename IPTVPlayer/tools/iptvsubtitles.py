@@ -127,7 +127,7 @@ class IPTVSubtitlesHandler:
 
     #def _preparPails(self, scope):
 
-    '''                      
+    '''
     def getSubtitles(self, currTimeMS):
         printDBG("OpenSubOrg.getSubtitles [%s]" % currTimeMS)
         time1 = time.time()

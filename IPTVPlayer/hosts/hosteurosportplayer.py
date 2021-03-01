@@ -466,15 +466,15 @@ class EuroSportPlayer(CBaseHostClass):
             page = cItem.get('page', 1)
             variables = {"index":"eurosport_global","preferredLanguages":["pl","en"],"uiLang":"pl","mediaRights":["GeoMediaRight"],"page":page,"pageSize":20,"q":cItem['f_query'],"type":["Video","Airing","EventPage"],"include_images":True}
             url = self.serverApiData['server_path']['search'] + '/persisted/query/core/sitesearch?variables=' + urllib.quote(json_dumps(variables, separators=(',', ':')))
-            
+
             sts, data = self.getJSPage(url)
             if not sts: return
-            
+
             data = json_loads(data)['data']['sitesearch']
             NOW = datetime.now()
             for item in data['hits']:
                 self._addItem(cItem, item['hit'], NOW)
-            
+
             if page*20 < data['meta']['hits']:
                 params = dict(cItem)
                 params.pop('priv_item', None)
@@ -584,7 +584,7 @@ class EuroSportPlayer(CBaseHostClass):
                       "type" : "site"
                     }
                   }
-                }                
+                }
                 '''
 
                 ''' example: wrong password

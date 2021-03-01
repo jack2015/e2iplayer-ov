@@ -242,13 +242,13 @@ class M3U8Downloader(BaseDownloader):
     def fixFragmentsList(self, newFragments):
         retList = []
         for idx in range(len(newFragments)):
-            if 0 == idx: 
+            if 0 == idx:
                 retList.append(newFragments[0])
                 continue
             if newFragments[idx] != newFragments[idx-1]:
                 retList.append(newFragments[idx])
         return retList
-        
+
     def mergeFragmentsList(self, newFragments):
         try:
             # merge fragments list
@@ -256,7 +256,7 @@ class M3U8Downloader(BaseDownloader):
             if 0 < len(self.fragmentList):
                 try: idx = newFragments.index(self.fragmentList[-1])
                 except Exception: printDBG('m3u8 update thread - last fragment from last list not available in new list!')
-                    
+
             if 0 <= idx:
                 if (idx+1) < len(newFragments):
                     self.fragmentList.extend(newFragments[idx+1:])

@@ -249,7 +249,7 @@ class Segment(BasePathMixin):
 
     `duration`
       duration attribute from EXTINF paramter
-    
+
     `date`
       program date from EXT-X-PROGRAM-DATE-TIME paramter
 

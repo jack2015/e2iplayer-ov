@@ -28,7 +28,7 @@
 >>> keepalive_handler = HTTPHandler()
 >>> opener = urllib2.build_opener(keepalive_handler)
 >>> urllib2.install_opener(opener)
->>> 
+>>>
 >>> fo = urllib2.urlopen('http://www.python.org')
 
 If a connection to a given host is requested, and all of the existing

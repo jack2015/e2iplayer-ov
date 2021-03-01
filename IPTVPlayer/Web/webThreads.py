@@ -51,7 +51,7 @@ class buildActiveHostsHTML(threading.Thread):
 		_async_raise(self.ident, exctype)
 
 	def terminate(self):
-		"""raises SystemExit in the context of the given thread, which should 
+		"""raises SystemExit in the context of the given thread, which should
 		cause the thread to exit silently (unless caught)"""
 		self.raise_exc(SystemExit)
 
@@ -106,7 +106,7 @@ class buildtempLogsHTML(threading.Thread):
 		_async_raise(self.ident, exctype)
 
 	def terminate(self):
-		"""raises SystemExit in the context of the given thread, which should 
+		"""raises SystemExit in the context of the given thread, which should
 		cause the thread to exit silently (unless caught)"""
 		self.raise_exc(SystemExit)
 
@@ -132,7 +132,7 @@ class buildConfigsHTML(threading.Thread):
 		_async_raise(self.ident, exctype)
 
 	def terminate(self):
-		"""raises SystemExit in the context of the given thread, which should 
+		"""raises SystemExit in the context of the given thread, which should
 		cause the thread to exit silently (unless caught)"""
 		self.raise_exc(SystemExit)
 	########################################################
@@ -260,7 +260,7 @@ class doUseHostAction(threading.Thread):
 		_async_raise(self.ident, exctype)
 
 	def terminate(self):
-		"""raises SystemExit in the context of the given thread, which should 
+		"""raises SystemExit in the context of the given thread, which should
 		cause the thread to exit silently (unless caught)"""
 		self.raise_exc(SystemExit)
 
@@ -361,7 +361,7 @@ class doGlobalSearch(threading.Thread):
 		_async_raise(self.ident, exctype)
 
 	def terminate(self):
-		"""raises SystemExit in the context of the given thread, which should 
+		"""raises SystemExit in the context of the given thread, which should
 		cause the thread to exit silently (unless caught)"""
 		self.raise_exc(SystemExit)
 

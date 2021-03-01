@@ -84,7 +84,7 @@ class E2iPlayerBufferingWidget(Screen):
          <widget name="console"    size="%d,%d"   position="%d,%d"  zPosition="5" valign="center" halign="center"  font="Regular;21" backgroundColor="black" transparent="1" />
          <widget name="icon"       size="%d,%d"   position="%d,%d"  zPosition="4" transparent="1" alphatest="blend" />
          <widget name="addinfo"    size="%d,%d"   position="%d,%d"  zPosition="5" valign="center" halign="center"  font="Regular;21" backgroundColor="black" transparent="1" />
-         
+
          <widget name="ok_button"        position="%d,%d"                     size="35,25"   zPosition="8" pixmap="%s" transparent="1" alphatest="blend" />
          <widget name="rec_button"       position="%d,%d"                     size="35,25"   zPosition="8" pixmap="%s" transparent="1" alphatest="blend" />
          <widget name="exit_button"      position="%d,%d"                     size="35,25"   zPosition="8" pixmap="%s" transparent="1" alphatest="blend" />
@@ -630,9 +630,9 @@ class E2iPlayerBufferingWidget(Screen):
         if not self.onStartCalled:
             self.onStartCalled = True
             self.onStart()
-    
-    
-    def onWindowHide(self): 
+
+
+    def onWindowHide(self):
         self.visible = False
     '''
 

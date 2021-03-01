@@ -13,7 +13,7 @@ __all__ = 'M3U8', 'Playlist', 'loads', 'load', 'parse'
 
 def inits(content, uri):
     '''
-    Given a string with a m3u8 content and uri from which 
+    Given a string with a m3u8 content and uri from which
     this content was downloaded returns a M3U8 object.
     Raises ValueError if invalid content
     '''

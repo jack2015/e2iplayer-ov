@@ -74,8 +74,8 @@ class BaseDownloader:
         return False
 
     def isWorkingCorrectly(self, callBackFun):
-        ''' Check if this downloader has all needed components 
-            and can be used for download, this method can be 
+        ''' Check if this downloader has all needed components
+            and can be used for download, this method can be
             called only from main thread
         '''
         sts = False

@@ -244,12 +244,12 @@ class StreamLiveTo(CBaseHostClass):
             httpParams = dict(self.defaultParams)
             httpParams['header'] = dict(self.HTTP_HEADER)
             httpParams['header']['Referer'] = videoUrl
-            
+
             _url_re = re.compile("http(s)?://(\w+\.)?(ilive.to|streamlive.to)/.*/(?P<channel>\d+)")
             channel = _url_re.match(videoUrl).group("channel")
-            
+
             sts, data = self.getPage('http://www.streamlive.to/view/%s' % channel, httpParams)
-            
+
             sts, data = self.getPage(videoUrl, self.defaultParams)
             if not sts: []
             '''

@@ -62,7 +62,7 @@ class ConfigBaseWidget(Screen, ConfigListScreen):
             <widget name="key_red"   position="10,10" zPosition="2" size="%d,35" valign="center" halign="left"   font="Regular;%d" transparent="1" foregroundColor="red" />
             <widget name="key_ok"    position="10,10" zPosition="2" size="%d,35" valign="center" halign="center" font="Regular;%d" transparent="1" foregroundColor="white" />
             <widget name="key_green" position="10,10" zPosition="2" size="%d,35" valign="center" halign="right"  font="Regular;%d" transparent="1" foregroundColor="green" />
-            
+
             <widget name="key_blue"    position="0,0" zPosition="2" size="%d,35" valign="center" halign="right"  font="Regular;%d" transparent="1" foregroundColor="green" />
             <widget name="key_yellow"  position="0,0" zPosition="2" size="%d,35" valign="center" halign="right"  font="Regular;%d" transparent="1" foregroundColor="green" />
         </screen>""" % (width, height,
