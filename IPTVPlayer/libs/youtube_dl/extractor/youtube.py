@@ -127,13 +127,13 @@ class CYTSignAlgoExtractor:
             code = []
             mainFunctionName = self._findMainFunctionName()
             if not mainFunctionName:
-                SetIPTVPlayerLastHostError(_('Encryption function name extraction failed!\nPlease report the problem to %s') % 'https://github.com/persianpros/e2iplayer/issues')
+                SetIPTVPlayerLastHostError(_('Encryption function name extraction failed!\nPlease report the problem to %s') % 'https://github.com/OpenVisionE2/e2iplayer-ov/issues')
                 return []
             printDBG("mainFunctionName >> %s" % mainFunctionName)
 
             mainFunction = self._findFunction(mainFunctionName)
             if not mainFunction:
-                SetIPTVPlayerLastHostError(_('Encryption function body extraction failed!\nPlease report the problem to %s') % 'https://github.com/persianpros/e2iplayer/issues')
+                SetIPTVPlayerLastHostError(_('Encryption function body extraction failed!\nPlease report the problem to %s') % 'https://github.com/OpenVisionE2/e2iplayer-ov/issues')
                 return []
             code.append(mainFunction)
 

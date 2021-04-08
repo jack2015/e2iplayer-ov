@@ -1220,7 +1220,7 @@ class common:
 
     def getUrllibSSLProtocolVersion(self, protocolName):
         if not isinstance(protocolName, basestring):
-            GetIPTVNotify().push('getUrllibSSLProtocolVersion error. Please report this problem to https://github.com/persianpros/e2iplayer/issues', 'error', 40)
+            GetIPTVNotify().push('getUrllibSSLProtocolVersion error. Please report this problem to https://github.com/OpenVisionE2/e2iplayer-ov/issues', 'error', 40)
             return protocolName
         if protocolName == 'TLSv1_2':
             return ssl.PROTOCOL_TLSv1_2
@@ -1230,7 +1230,7 @@ class common:
 
     def getPyCurlSSLProtocolVersion(self, protocolName):
         if not isinstance(protocolName, basestring):
-            GetIPTVNotify().push('getPyCurlSSLProtocolVersion error. Please report this problem to https://github.com/persianpros/e2iplayer/issues', 'error', 40)
+            GetIPTVNotify().push('getPyCurlSSLProtocolVersion error. Please report this problem to https://github.com/OpenVisionE2/e2iplayer-ov/issues', 'error', 40)
             return protocolName
         if protocolName == 'TLSv1_2':
             return pycurl.SSLVERSION_TLSv1_2
