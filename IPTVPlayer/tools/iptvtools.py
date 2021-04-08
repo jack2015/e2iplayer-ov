@@ -54,13 +54,6 @@ def GetUpdateServerUri(file='', serverNum=None):
     return uri
 
 
-def GetResourcesServerUri(file='', serverNum=None):
-    serverKey = GetServerKey(serverNum)
-    uri = SERVER_DOMAINS[serverKey] + 'resources/' + file
-    printDBG("GetResourcesServerUri -> %s" % uri)
-    return uri
-
-
 def UsePyCurl():
     return config.plugins.iptvplayer.usepycurl.value
 
