@@ -13827,11 +13827,11 @@ class pageParser(CaptchaHelper):
         printDBG("parserNINJASTREAMTO baseUrl [%s]" % baseUrl)
 
         httpParams = {
-            'header' : {
+            'header': {
                 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
                 'Accept': '*/*',
                 'Accept-Encoding': 'gzip',
-                'Referer' : baseUrl.meta.get('Referer', baseUrl)
+                'Referer': baseUrl.meta.get('Referer', baseUrl)
             }
         }
 
@@ -13931,16 +13931,16 @@ class pageParser(CaptchaHelper):
             return False
 
         if "eval(function(p,a,c,k,e,d)" in data:
-            printDBG( 'Host resolveUrl packed' )
+            printDBG('Host resolveUrl packed')
             packed = re.compile('>eval\(function\(p,a,c,k,e,d\)(.+?)</script>', re.DOTALL).findall(data)
             if packed:
                 data2 = packed[-1]
             else:
                 return ''
-            printDBG( 'Host pack: [%s]' % data2)
+            printDBG('Host pack: [%s]' % data2)
             try:
                 data = unpackJSPlayerParams(data2, TEAMCASTPL_decryptPlayerParams, 0, True, True)
-                printDBG( 'OK unpack: [%s]' % data)
+                printDBG('OK unpack: [%s]' % data)
             except Exception:
                 pass
 
