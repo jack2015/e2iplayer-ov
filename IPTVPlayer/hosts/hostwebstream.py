@@ -1105,7 +1105,7 @@ class HasBahCa(CBaseHostClass):
         _url = self.cm.ph.getSearchGroups(data, '''src=['"]([^"^']+?)['"]''')[0]
         if len(_url) and not _url.startswith('http'):
             _url = url + _url
-        sts,data = self.cm.getPage(_url)
+        sts, data = self.cm.getPage(_url)
         if not sts:
             return []
         printDBG("crackstreamsLink data[%r]" % data)

@@ -222,10 +222,10 @@ class cda(CBaseHostClass, CaptchaHelper):
 
             params = dict(cItem)
             if '/video' in url:
-                params.update({'title':title, 'url':url, 'icon':icon, 'desc':desc})
+                params.update({'title': title, 'url': url, 'icon': icon, 'desc': desc})
                 self.addVideo(params)
             elif '/folder/' in url:
-                params.update({'title':title, 'url':url, 'icon':icon, 'desc':desc, 'name':'dir', 'category':'list_folder_items'})
+                params.update({'title': title, 'url': url, 'icon': icon, 'desc': desc, 'name': 'dir', 'category': 'list_folder_items'})
                 self.addDir(params)
 
         if nextPage:

@@ -1604,7 +1604,7 @@ class pageParser(CaptchaHelper):
 
         #HEADER = {'User-Agent': 'Mozilla/5.0', 'Accept': 'text/html'}
 #        HTTP_HEADER = self.cm.getDefaultHeader(browser='chrome') #iphone_3_0
-        HTTP_HEADER = {"User-Agent":"Mozilla/5.0 (PlayStation 4 4.71) AppleWebKit/601.2 (KHTML, like Gecko)"}
+        HTTP_HEADER = {"User-Agent": "Mozilla/5.0 (PlayStation 4 4.71) AppleWebKit/601.2 (KHTML, like Gecko)"}
         defaultParams = {'header': HTTP_HEADER, 'use_cookie': True, 'load_cookie': True, 'save_cookie': True, 'cookiefile': COOKIE_FILE}
 
         def _decorateUrl(inUrl, host, referer):
@@ -13857,7 +13857,7 @@ class pageParser(CaptchaHelper):
         #http://superfastvideos.xyz/avi5.php
         #http://cryptodialynews.com/2021/name5.html
         
-        httpParams = {'header':{'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}, 'use_cookie':1, 'save_cookie':1,'load_cookie':1, 'cookiefile': GetCookieDir("TXNEWSNETWORK.cookie")}
+        httpParams = {'header': {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}, 'use_cookie': 1, 'save_cookie': 1, 'load_cookie': 1, 'cookiefile': GetCookieDir("TXNEWSNETWORK.cookie")}
         
         urlTabs = []
         
@@ -13949,7 +13949,7 @@ class pageParser(CaptchaHelper):
                 morocco = self.cm.ph.getSearchGroups(data, '''['"]([0-9a-zA-Z]{31})['"]''')[0]
             tmp = re.findall('''['"]([0-9a-z]{32})['"]''', data)
             for item in tmp:
-                post_data = {'morocco':morocco, 'mycountry':item}
+                post_data = {'morocco': morocco, 'mycountry': item}
                 sts, data = self.cm.getPage('https://userload.co/api/request/', urlParams, post_data)
                 if not sts:
                     return False
@@ -13958,10 +13958,10 @@ class pageParser(CaptchaHelper):
             data = data.splitlines()[0]
 
         urlTab = []
-        url = strwithmeta(data, {'Origin':"https://" + urlparser.getDomain(baseUrl), 'Referer':baseUrl})
+        url = strwithmeta(data, {'Origin': "https://" + urlparser.getDomain(baseUrl), 'Referer': baseUrl})
         if 'm3u8' in url:
             urlTab.extend(getDirectM3U8Playlist(url, checkExt=False, variantCheck=True, checkContent=True, sortWithMaxBitrate=99999999))
         else:
-            urlTab.append({'name':'mp4', 'url':url})
+            urlTab.append({'name': 'mp4', 'url': url})
 
         return urlTab
