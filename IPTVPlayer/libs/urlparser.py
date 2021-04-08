@@ -7050,10 +7050,12 @@ class pageParser(CaptchaHelper):
             return url
         
         sts, data = self.cm.getPage(baseUrl)
-        if not sts: return False
+        if not sts:
+            return False
         
         playerUrl = self.cm.ph.getSearchGroups(data, """['"]([^'^"]+?webcamera\.[^'^"]+?/player/[^'^"]+?)['"]""")[0]
-        if playerUrl == '': playerUrl = self.cm.ph.getSearchGroups(data, """['"]([^'^"]+?player\.webcamera\.[^'^"]+?)['"]""")[0]
+        if playerUrl == '':
+            playerUrl = self.cm.ph.getSearchGroups(data, """['"]([^'^"]+?player\.webcamera\.[^'^"]+?)['"]""")[0]
         playerUrl = _getFullUrl(playerUrl)
         if self.cm.isValidUrl(playerUrl):
             sts, tmp = self.cm.getPage(playerUrl)
@@ -13921,10 +13923,12 @@ class pageParser(CaptchaHelper):
 
         HTTP_HEADER = self.cm.getDefaultHeader(browser='chrome')
         referer = baseUrl.meta.get('Referer')
-        if referer: HTTP_HEADER['Referer'] = referer
+        if referer:
+            HTTP_HEADER['Referer'] = referer
         urlParams = {'header': HTTP_HEADER}
         sts, data = self.cm.getPage(baseUrl, urlParams)
-        if not sts: return False
+        if not sts:
+            return False
 
         if "eval(function(p,a,c,k,e,d)" in data:
             printDBG( 'Host resolveUrl packed' )
@@ -13937,16 +13941,20 @@ class pageParser(CaptchaHelper):
             try:
                 data = unpackJSPlayerParams(data2, TEAMCASTPL_decryptPlayerParams, 0, True, True)
                 printDBG( 'OK unpack: [%s]' % data)
-            except Exception: pass
+            except Exception:
+                pass
 
             morocco = self.cm.ph.getSearchGroups(data, '''['"](AO.+?Aa)['"]''')[0]
-            if morocco =='': morocco = self.cm.ph.getSearchGroups(data, '''['"]([0-9a-zA-Z]{31})['"]''')[0]
+            if morocco =='':
+                morocco = self.cm.ph.getSearchGroups(data, '''['"]([0-9a-zA-Z]{31})['"]''')[0]
             tmp = re.findall('''['"]([0-9a-z]{32})['"]''', data)
             for item in tmp:
                 post_data = {'morocco':morocco, 'mycountry':item}
                 sts, data = self.cm.getPage('https://userload.co/api/request/', urlParams, post_data)
-                if not sts: return False
-                if 'http' in data: break
+                if not sts:
+                    return False
+                if 'http' in data:
+                    break
             data = data.splitlines()[0]
 
         urlTab = []
