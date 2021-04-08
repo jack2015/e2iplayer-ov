@@ -783,8 +783,6 @@ class UpdateMainAppImpl(IUpdateObjectInterface):
                 else:
                     self.stepFinished(-1, _("Problem with parsing the server list."))
                 return
-            if config.plugins.iptvplayer.hiddenAllVersionInUpdate.value:
-                self.__addLastVersion(serversList) # get last version from gitlab.com only for developers
 
             if config.plugins.iptvplayer.gitlab_repo.value and config.plugins.iptvplayer.preferredupdateserver.value == '2':
                 serversList.append(self.gitlabList)
@@ -797,25 +795,22 @@ class UpdateMainAppImpl(IUpdateObjectInterface):
                 self.serversList.sort(cmp=ServerComparator, reverse=True)
                 for idx in range(len(serversList)):
                     server = serversList[idx]
-                    if not config.plugins.iptvplayer.hiddenAllVersionInUpdate.value:
-                        try:
-                            newVerNum = int(server['version'].replace('.', ''))
-                        except Exception:
-                            continue
-                        #printDBG("newVerNum[%s], currVerNum[%s]" % (newVerNum, currVerNum))
-                        if newVerNum < currVerNum and not config.plugins.iptvplayer.downgradePossible.value:
-                            continue
-                        if newVerNum == currVerNum and not self.allowTheSameVersion:
-                            continue
-                        if 'X.X' != server['pyver'] and pythonVer != server['pyver']:
-                            continue
-                        if config.plugins.iptvplayer.possibleUpdateType.value not in [server['packagetype'], 'all']: #"sourcecode", "precompiled"
-                            continue
+                    try:
+                        newVerNum = int(server['version'].replace('.', ''))
+                    except Exception:
+                        continue
+                    #printDBG("newVerNum[%s], currVerNum[%s]" % (newVerNum, currVerNum))
+                    if newVerNum < currVerNum:
+                        continue
+                    if newVerNum == currVerNum and not self.allowTheSameVersion:
+                        continue
+                    if 'X.X' != server['pyver'] and pythonVer != server['pyver']:
+                        continue
 
                     name = "| %s | python %s | %s | %s |" % (server['version'], server['pyver'], server['packagetype'], server['name'])
                     #printDBG("server list: " + name)
                     options.append((name, idx))
-                if 1 == len(options) and not config.plugins.iptvplayer.downgradePossible.value:
+                if 1 == len(options):
                     self.__selServerCallBack(options[0])
                 elif 0 < len(options):
                     self.session.openWithCallback(self.__selServerCallBack, ChoiceBox, title=_("Select update server"), list=options)
