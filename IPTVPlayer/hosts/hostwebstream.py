@@ -1102,9 +1102,9 @@ class HasBahCa(CBaseHostClass):
         if not sts:
             return []
         data = CParsingHelper.getDataBeetwenNodes(data, ('<iframe', '>', 'allowfullscreen'), ('</iframe', '>'))[1]
-        _url  = self.cm.ph.getSearchGroups(data, '''src=['"]([^"^']+?)['"]''')[0]
+        _url = self.cm.ph.getSearchGroups(data, '''src=['"]([^"^']+?)['"]''')[0]
         if len(_url) and not _url.startswith('http'):
-            _url = url+_url
+            _url = url + _url
         sts,data = self.cm.getPage(_url)
         if not sts:
             return []

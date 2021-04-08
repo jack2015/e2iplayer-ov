@@ -615,19 +615,19 @@ class urlparser:
                        'govod.tv': self.pp.parserWIIZTV,
                        'streamtape.com': self.pp.parserSTREAMTAPE,
                        'ninjastream.to': self.pp.parserNINJASTREAMTO,
-                       'cryptodialynews.com':  self.pp.parserTXNEWSNETWORK,
-                       'droonws.xyz':          self.pp.parserTXNEWSNETWORK,
-                       'litcun.net':           self.pp.parserTXNEWSNETWORK,
-                       'premiertvlive.com':    self.pp.parserTXNEWSNETWORK,
-                       'pumpnews.xyz':         self.pp.parserTXNEWSNETWORK,
-                       'superfastvideos.xyz':  self.pp.parserTXNEWSNETWORK,
-                       'supergoodtvlive.com':  self.pp.parserTXNEWSNETWORK,
-                       'talbol.net':           self.pp.parserTXNEWSNETWORK,
-                       'txnewsnetwork.net':    self.pp.parserTXNEWSNETWORK,
+                       'cryptodialynews.com': self.pp.parserTXNEWSNETWORK,
+                       'droonws.xyz': self.pp.parserTXNEWSNETWORK,
+                       'litcun.net': self.pp.parserTXNEWSNETWORK,
+                       'premiertvlive.com': self.pp.parserTXNEWSNETWORK,
+                       'pumpnews.xyz': self.pp.parserTXNEWSNETWORK,
+                       'superfastvideos.xyz': self.pp.parserTXNEWSNETWORK,
+                       'supergoodtvlive.com': self.pp.parserTXNEWSNETWORK,
+                       'talbol.net': self.pp.parserTXNEWSNETWORK,
+                       'txnewsnetwork.net': self.pp.parserTXNEWSNETWORK,
                        'lookhd.xyz': self.pp.parserTXNEWSNETWORK,
                        'highstream.tv': self.pp.parserCLIPWATCHINGCOM,
-                       'wolfstream.tv':        self.pp.parserCLIPWATCHINGCOM,
-                       'userload.co':          self.pp.parserUSERLOADCO,
+                       'wolfstream.tv': self.pp.parserCLIPWATCHINGCOM,
+                       'userload.co': self.pp.parserUSERLOADCO,
                     }
         return
 
@@ -3687,7 +3687,7 @@ class pageParser(CaptchaHelper):
 
     def parserCLIPWATCHINGCOM(self, baseUrl):
         printDBG("parserCLIPWATCHINGCOM baseUrl[%r]" % baseUrl)
-        urlTabs= []
+        urlTabs = []
         
         sts, data = self.cm.getPage(baseUrl)
         
@@ -3702,9 +3702,9 @@ class pageParser(CaptchaHelper):
             if 'sources' in data:
                 items = self.cm.ph.getDataBeetwenReMarkers(data, re.compile('''[\{\s]sources\s*[=:]\s*\['''), re.compile('''\]'''), False)[1].split('},')
                 for item in items:
-                    label   = self.cm.ph.getSearchGroups(item, 'label:[ ]*?"([^"]+?)"')[0]
-                    src     = self.cm.ph.getSearchGroups(item, 'file:[ ]*?"([^"]+?)"')[0]
-                    if  self.cm.isValidUrl(src):
+                    label = self.cm.ph.getSearchGroups(item, 'label:[ ]*?"([^"]+?)"')[0]
+                    src = self.cm.ph.getSearchGroups(item, 'file:[ ]*?"([^"]+?)"')[0]
+                    if self.cm.isValidUrl(src):
                         src = urlparser.decorateUrl(src, {'Referer': baseUrl})
                         if 'm3u8' in src:
                             params = getDirectM3U8Playlist(src, checkExt=True, variantCheck=True, checkContent=True, sortWithMaxBitrate=99999999)
@@ -13844,7 +13844,7 @@ class pageParser(CaptchaHelper):
                 data = json_loads(r)
                 hash = data.get('hash')
 
-                host = "".join([chr(ord(i)^50) for i in data.get('host')])
+                host = "".join([chr(ord(i) ^ 50) for i in data.get('host')])
                 url = '%s%s/index.m3u8' % (host, hash)
                 urlsTab.extend(getDirectM3U8Playlist(url, checkContent=True, sortWithMaxBitrate=999999999))
 
@@ -13859,7 +13859,7 @@ class pageParser(CaptchaHelper):
         
         httpParams = {'header':{'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36'}, 'use_cookie':1, 'save_cookie':1,'load_cookie':1, 'cookiefile': GetCookieDir("TXNEWSNETWORK.cookie")}
         
-        urlTabs= []
+        urlTabs = []
         
         sts, data = self.cm.getPage(baseUrl, httpParams)
         
@@ -13913,7 +13913,7 @@ class pageParser(CaptchaHelper):
                                 m3u_url = urlparser.decorateUrl(link3[0], {'Referer': link2[0]})
                                 tabs = getDirectM3U8Playlist(m3u_url, checkExt=False, variantCheck=False, checkContent=True, sortWithMaxBitrate=99999999)
                                 printDBG(str(tabs))
-                                if len(tabs)>0:
+                                if len(tabs) > 0:
                                     urlTabs.append(tabs[0])
         
         return urlTabs
@@ -13945,7 +13945,7 @@ class pageParser(CaptchaHelper):
                 pass
 
             morocco = self.cm.ph.getSearchGroups(data, '''['"](AO.+?Aa)['"]''')[0]
-            if morocco =='':
+            if morocco == '':
                 morocco = self.cm.ph.getSearchGroups(data, '''['"]([0-9a-zA-Z]{31})['"]''')[0]
             tmp = re.findall('''['"]([0-9a-z]{32})['"]''', data)
             for item in tmp:
