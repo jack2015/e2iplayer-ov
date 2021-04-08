@@ -13848,7 +13848,6 @@ class pageParser(CaptchaHelper):
                 url = '%s%s/index.m3u8' % (host, hash)
                 urlsTab.extend(getDirectM3U8Playlist(url, checkContent=True, sortWithMaxBitrate=999999999))
 
-
         return urlsTab
 
     def parserTXNEWSNETWORK(self, baseUrl):
