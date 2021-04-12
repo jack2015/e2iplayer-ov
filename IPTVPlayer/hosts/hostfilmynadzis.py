@@ -272,7 +272,7 @@ class FilmyNaDzis(CBaseHostClass):
         tmp = self.cm.ph.getAllItemsBeetwenMarkers(data, '<iframe', '>')
         if len(tmp):
             for item in tmp:
-                url  = self.cm.ph.getSearchGroups(item, '''src=['"]([^'^"]+?)['"]''')[0]
+                url = self.cm.ph.getSearchGroups(item, '''src=['"]([^'^"]+?)['"]''')[0]
                 urlTab.append({'name':self.up.getHostName(url), 'url':self.getFullUrl(url), 'need_resolve':1})
 
         if urlTab:
