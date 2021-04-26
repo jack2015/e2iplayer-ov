@@ -13842,7 +13842,8 @@ class pageParser(CaptchaHelper):
         sts, data = self.cm.getPage(baseUrl, httpParams)
         if sts:
             r = self.cm.ph.getSearchGroups(data, r'v-bind:[n|s]*stream="([^"]+?)"')[0].replace('&quot;', '"')
-            if not r: r = self.cm.ph.getSearchGroups(data, r'v-bind:[n|s]*file="([^"]+?)"')[0].replace('&quot;', '"')
+            if not r:
+                r = self.cm.ph.getSearchGroups(data, r'v-bind:[n|s]*file="([^"]+?)"')[0].replace('&quot;', '"')
             printDBG("parserNINJASTREAMTO r [%s]" % r)
             if r:
                 data = json_loads(r)
@@ -13974,16 +13975,19 @@ class pageParser(CaptchaHelper):
 
         HTTP_HEADER = self.cm.getDefaultHeader(browser='chrome')
         referer = baseUrl.meta.get('Referer')
-        if referer: HTTP_HEADER['Referer'] = referer
+        if referer:
+            HTTP_HEADER['Referer'] = referer
         urlParams = {'header': HTTP_HEADER}
         sts, data = self.cm.getPage(baseUrl, urlParams)
-        if not sts: return False
+        if not sts:
+            return False
 
         url = self.cm.getFullUrl(self.cm.ph.getSearchGroups(data, '''action=(\/free\/[^>]+?)>''')[0], baseUrl)
         urlParams['max_data_size'] = 0
         urlParams['no_redirection'] = True
         sts, data = self.cm.getPage(url, urlParams)
-        if not sts: return False
+        if not sts:
+            return False
 
         urlTab = []
         url = self.cm.meta.get('location', '')
