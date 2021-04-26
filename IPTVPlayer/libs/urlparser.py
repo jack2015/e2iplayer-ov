@@ -13849,7 +13849,7 @@ class pageParser(CaptchaHelper):
                 data = json_loads(r)
                 hash = data.get('hash')
 
-                host = "".join([chr(ord(i) ^ ord(str(idx%2+1))) for idx, i in enumerate(data.get('host'))])
+                host = "".join([chr(ord(i) ^ ord(str(idx % 2 + 1))) for idx, i in enumerate(data.get('host'))])
                 url = '%s%s/index.m3u8' % (host, hash)
                 urlsTab.extend(getDirectM3U8Playlist(url, checkContent=True, sortWithMaxBitrate=999999999))
 
