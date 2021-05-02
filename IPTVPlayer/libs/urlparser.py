@@ -13744,7 +13744,9 @@ class pageParser(CaptchaHelper):
             'use_cookie': True,
             'load_cookie': True,
             'save_cookie': True,
-            'cookiefile': GetCookieDir("dood.cookie")
+            'cookiefile': GetCookieDir("dood.cookie"),
+            'max_data_size': 0,
+            'no_redirection': True
         }
 
         urlsTab = []
@@ -13752,6 +13754,13 @@ class pageParser(CaptchaHelper):
         if '/d/' in baseUrl:
             baseUrl = baseUrl.replace('/d/', '/e/')
 
+        sts, data = self.cm.getPage(baseUrl, httpParams)
+
+        url = self.cm.meta.get('location', '')
+        if url != '':
+            baseUrl = url
+        del httpParams['max_data_size']
+        del httpParams['no_redirection']
         sts, data = self.cm.getPage(baseUrl, httpParams)
 
 #        if sts:
