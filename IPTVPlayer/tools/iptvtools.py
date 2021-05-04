@@ -29,7 +29,7 @@ import os
 import stat
 import codecs
 import datetime
-from boxbranding import getImageArch
+from Components.SystemInfo import BoxInfo
 
 SERVER_DOMAINS = {'vline': 'http://iptvplayer.vline.pl/', 'gitlab': 'http://zadmario.gitlab.io/'}
 SERVER_UPDATE_PATH = {'vline': 'download/update2/', 'gitlab': 'update2/'}
@@ -126,7 +126,7 @@ def GetNice(pid=None):
 
 
 def E2PrioFix(cmd, factor=2):
-    if getImageArch() != "sh4":
+    if BoxInfo.getItem("architecture") != "sh4":
         return 'nice -n %d %s' % (GetNice() + factor, cmd)
     else:
         return cmd

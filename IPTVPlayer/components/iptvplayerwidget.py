@@ -28,7 +28,9 @@ from Tools.BoundFunction import boundFunction
 from Tools.LoadPixmap import LoadPixmap
 from Tools.Directories import fileExists
 from enigma import getDesktop, eTimer
-from boxbranding import getImageArch
+from Components.SystemInfo import BoxInfo
+
+architecture = BoxInfo.getItem("architecture")
 ####################################################
 #                   IPTV components
 ####################################################
@@ -1729,7 +1731,7 @@ class E2iPlayerWidget(Screen):
                     gstAdditionalParams['show_iframe'] = config.plugins.iptvplayer.show_iframe.value
                     gstAdditionalParams['iframe_file_start'] = config.plugins.iptvplayer.iframe_file.value
                     gstAdditionalParams['iframe_file_end'] = config.plugins.iptvplayer.clear_iframe_file.value
-                    if getImageArch() == "sh4":
+                    if architecture == "sh4":
                         gstAdditionalParams['iframe_continue'] = True
                     else:
                         gstAdditionalParams['iframe_continue'] = False
@@ -1751,7 +1753,7 @@ class E2iPlayerWidget(Screen):
                             playerVal = 'gstplayer'
                             gstAdditionalParams['download-buffer-path'] = ''
                             gstAdditionalParams['ring-buffer-max-size'] = 0
-                            if getImageArch() == "sh4": # use default value, due to small amount of RAM
+                            if architecture == "sh4": # use default value, due to small amount of RAM
                                 #use the default value, due to small amount of RAM
                                 #in the future it will be configurable
                                 gstAdditionalParams['buffer-duration'] = -1
