@@ -13837,13 +13837,18 @@ class pageParser(CaptchaHelper):
     def parserNINJASTREAMTO(self, baseUrl):
         printDBG("parserNINJASTREAMTO baseUrl [%s]" % baseUrl)
 
+	COOKIE_FILE = GetCookieDir('ninjastream.cookie')
         httpParams = {
             'header': {
                 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36',
                 'Accept': '*/*',
                 'Accept-Encoding': 'gzip',
                 'Referer': baseUrl.meta.get('Referer', baseUrl)
-            }
+            },
+            'use_cookie': True,
+            'load_cookie': True,
+            'save_cookie': True,
+            'cookiefile': COOKIE_FILE
         }
 
         urlsTab = []
@@ -13854,13 +13859,16 @@ class pageParser(CaptchaHelper):
             if not r:
                 r = self.cm.ph.getSearchGroups(data, r'v-bind:[n|s]*file="([^"]+?)"')[0].replace('&quot;', '"')
             printDBG("parserNINJASTREAMTO r [%s]" % r)
+            httpParams['header']['X-Requested-With'] = 'XMLHttpRequest'
+            httpParams['header']['x-csrf-token'] = self.cm.ph.getSearchGroups(data, '''<[^>]+?csrf-token[^>]+?content=['"]([^'^"]+?)['"]''')[0]
+            httpParams['header']['x-xsrf-token'] = self.cm.getCookieItem(COOKIE_FILE, 'XSRF-TOKEN')
             if r:
                 data = json_loads(r)
-                hash = data.get('hash')
-
-                host = "".join([chr(ord(i) ^ ord(str(idx % 2 + 1))) for idx, i in enumerate(data.get('host'))])
-                url = '%s%s/index.m3u8' % (host, hash)
-                urlsTab.extend(getDirectM3U8Playlist(url, checkContent=True, sortWithMaxBitrate=999999999))
+                sts, data = self.cm.getPage('https://ninjastream.to/api/video/get', httpParams, {'id': data.get('hashid')})
+                if sts:
+                    data = json_loads(data)
+                    url = data['result']['playlist']
+                    urlsTab.extend(getDirectM3U8Playlist(url, checkContent=True, sortWithMaxBitrate=999999999))
 
         return urlsTab
 
