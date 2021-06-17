@@ -109,7 +109,7 @@ class WRealu24TV(CBaseHostClass):
             self.addVideo(params)
 
         if not data:
-            self.addMarker({'title':titleLive, 'desc':desc})
+            self.addMarker({'title': titleLive, 'desc': desc})
 
     def getLinksForVideo(self, cItem):
         printDBG("WRealu24TV.getLinksForVideo [%s]" % cItem)
