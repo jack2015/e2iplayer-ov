@@ -7,7 +7,7 @@
 
     Michael is a 64-bit MIC, with a design strength of 20 bits.
 
-    Copyright © (c) 2002 by Paul A. Lambert
+    Copyright Â© (c) 2002 by Paul A. Lambert
     Read LICENSE.txt for license information.
 """
 from struct import pack, unpack

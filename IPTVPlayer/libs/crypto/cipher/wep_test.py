@@ -6,7 +6,7 @@ from __future__ import print_function
 
     Tests for wep encryption
 
-    Copyright © (c) 2002 by Paul A. Lambert
+    Copyright Â© (c) 2002 by Paul A. Lambert
     Read LICENSE.txt for license information.
 
     2002-11-05

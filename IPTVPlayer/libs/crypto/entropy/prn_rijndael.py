@@ -6,7 +6,7 @@
     The algorithm is based on Section 13.4 of:
     "AES Proposal: Rijndael", Joan Daemen, Vincent Rijmen
 
-    Copyright © (c) 2002 by Paul A. Lambert
+    Copyright Â© (c) 2002 by Paul A. Lambert
     Read LICENSE.txt for license information.
 """
 
@@ -52,7 +52,7 @@ class PRN_Rijndael:
     def getSomeBytes(self):
         """ Psuedo random bytes are generated 16 bytes at a time.
             The state is updated by applying Rijndael using the Cipher
-            Key. The first 128 bits of the state are output as a “pseudorandom number”.
+            Key. The first 128 bits of the state are output as a Â“pseudorandom numberÂ”.
         """
         self.__state = self.__algorithm.encrypt(self.__state)
         return self.__state[:16]

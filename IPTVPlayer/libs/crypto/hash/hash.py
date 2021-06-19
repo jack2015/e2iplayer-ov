@@ -3,7 +3,7 @@
 """   crypto.cipher.hash
       Base class for cryptographic hash algorithms
       An alternate interface (no 'new').
-      Copyright © (c) 2002 by Paul A. Lambert.
+      Copyright Â© (c) 2002 by Paul A. Lambert.
 """
 from binascii import b2a_hex
 

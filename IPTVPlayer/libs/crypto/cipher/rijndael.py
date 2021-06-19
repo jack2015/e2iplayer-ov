@@ -8,7 +8,7 @@
     match FIPS specification for readability.  It is not implemented
     for performance.
 
-    Copyright © (c) 2002 by Paul A. Lambert
+    Copyright Â© (c) 2002 by Paul A. Lambert
     Read LICENSE.txt for license information.
 
     2002-06-01
@@ -47,7 +47,7 @@ class Rijndael(BlockCipher):
         """ Encrypt a block, plainTextBlock must be a array of bytes [Nb by 4] """
         self.state = self._toBlock(plainTextBlock)
         AddRoundKey(self, self.__expandedKey[0:self.Nb])
-        for round in range(1, self.Nr):          #for round = 1 step 1 to Nr–1
+        for round in range(1, self.Nr):          #for round = 1 step 1 to NrÂ–1
             SubBytes(self)
             ShiftRows(self)
             MixColumns(self)
