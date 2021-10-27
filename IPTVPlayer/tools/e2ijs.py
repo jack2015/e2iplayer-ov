@@ -24,7 +24,7 @@ def duktape_execute(cmd_params):
     noDuk = False
     cmd = GetDukPath()
     if cmd != '':
-        cmd += ' ' + cmd_params + ' 2> /dev/null'
+        cmd += ' ' + cmd_params
         printDBG("duktape_execute cmd[%s]" % cmd)
         ret = iptv_execute()(cmd)
 

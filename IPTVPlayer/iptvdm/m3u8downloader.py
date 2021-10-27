@@ -167,7 +167,7 @@ class M3U8Downloader(BaseDownloader):
                 self.M3U8ListData = ''
                 m3u8Url = self._addTimeStampToUrl(self.m3u8Url)
                 printDBG(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> [%s]" % m3u8Url)
-                cmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' --tries=0 --timeout=%d ' % self._getTimeout()) + '"' + m3u8Url + '" -O - 2> /dev/null'
+                cmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' --tries=0 --timeout=%d ' % self._getTimeout()) + '"' + m3u8Url + '" -O '
                 printDBG("m3u8 _updateM3U8Finished download cmd[%s]" % cmd)
                 self.M3U8Updater.execute(E2PrioFix(cmd))
                 return
@@ -275,7 +275,7 @@ class M3U8Downloader(BaseDownloader):
         ##############################################################################
         self.downloadType = self.DOWNLOAD_TYPE.M3U8
         m3u8Url = self._addTimeStampToUrl(self.m3u8Url)
-        cmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' --tries=0 --timeout=%d ' % self._getTimeout()) + '"' + m3u8Url + '" -O - 2> /dev/null'
+        cmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' --tries=0 --timeout=%d ' % self._getTimeout()) + '"' + m3u8Url + '" -O '
         if wait > 0:
             cmd = (' sleep %s && ' % wait) + cmd
         printDBG("Download cmd[%s]" % cmd)

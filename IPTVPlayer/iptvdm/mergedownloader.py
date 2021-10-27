@@ -120,7 +120,7 @@ class MergeDownloader(BaseDownloader):
         info = ""
         retries = 0
 
-        cmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' %s -t %d ' % (info, retries)) + '"' + url + '" -O "' + filePath + '" > /dev/null'
+        cmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' %s -t %d ' % (info, retries)) + '"' + url + '" -O "' + filePath + '" '
         printDBG("doStartDownload cmd[%s]" % cmd)
 
         self.console = eConsoleAppContainer()
@@ -137,7 +137,7 @@ class MergeDownloader(BaseDownloader):
         cmd = DMHelper.GET_FFMPEG_PATH() + ' '
         for item in self.multi['files']:
             cmd += ' -i "{0}" '.format(item)
-        cmd += ' -map 0:0 -map 1:0 -vcodec copy -acodec copy "{0}" >/dev/null 2>&1 '.format(self.filePath)
+        cmd += ' -map 0:0 -map 1:0 -vcodec copy -acodec copy "{0}" '.format(self.filePath)
         printDBG("doStartPostProcess cmd[%s]" % cmd)
         self.console = eConsoleAppContainer()
         self.console_appClosed_conn = eConnectCallback(self.console.appClosed, self._cmdFinished)

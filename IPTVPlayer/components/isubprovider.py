@@ -532,7 +532,7 @@ class CBaseSubProviderClass:
 
         # if archive is valid then upack it
         if errorCode == 0:
-            cmd = "unzip -o '{0}' -d '{1}' 2>/dev/null".format(tmpFile, tmpDIR)
+            cmd = "unzip -o '{0}' -d '{1}'".format(tmpFile, tmpDIR)
             ret = self.iptv_execute(cmd)
             if not ret['sts'] or 0 != ret['code']:
                 errorCode = ret['code']
@@ -559,7 +559,7 @@ class CBaseSubProviderClass:
         if tmpFile.endswith('.zip'):
             return self.unpackZipArchive(tmpFile, tmpDIR)
         elif tmpFile.endswith('.rar'):
-            cmd = "unrar e -o+ -y '{0}' '{1}' 2>/dev/null".format(tmpFile, tmpDIR)
+            cmd = "unrar e -o+ -y '{0}' '{1}'".format(tmpFile, tmpDIR)
             printDBG("cmd[%s]" % cmd)
             ret = self.iptv_execute(cmd)
             if not ret['sts'] or 0 != ret['code']:

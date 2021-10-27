@@ -338,7 +338,7 @@ class Napisy24plProvider(CBaseSubProviderClass):
             rm(tmpFile)
             rm(tmpFileZip)
 
-        cmd = "unzip -po '{0}' -x Napisy24.pl.url > '{1}' 2>/dev/null".format(tmpFileZip, tmpFile)
+        cmd = "unzip -po '{0}' -x Napisy24.pl.url > '{1}' ".format(tmpFileZip, tmpFile)
         ret = self.iptv_execute(cmd)
         if not ret['sts'] or 0 != ret['code']:
             __cleanFiles()

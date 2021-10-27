@@ -154,7 +154,7 @@ class RtmpDownloader(BaseDownloader):
                     prevflashVer = item
                     continue
                 rtmpdump_url += ' --' + item
-        cmd = DMHelper.GET_RTMPDUMP_PATH() + " " + rtmpdump_url + ' --realtime -o "' + self.filePath + '" > /dev/null 2>&1'
+        cmd = DMHelper.GET_RTMPDUMP_PATH() + " " + rtmpdump_url + ' --realtime -o "' + self.filePath + '" '
         printDBG("rtmpdump cmd[%s]" % cmd)
 
         self.console = eConsoleAppContainer()

@@ -134,7 +134,7 @@ def getPageCF(url, params={}):
                 jstmp = '/tmp/cf_%s' % os.getpid()
                 with open(jstmp + '.js', 'w') as f:
                     f.write(jsdata)
-                cmd = '%s "%s" "%s.js" > %s 2> /dev/null' % (duktape, jsscriptPath + 'cf.byte', jstmp, jstmp)
+                cmd = '%s "%s" "%s.js" > %s ' % (duktape, jsscriptPath + 'cf.byte', jstmp, jstmp)
                 os.system(cmd)
                 with open(jstmp, 'r') as f:
                     decoded = f.read()
@@ -188,7 +188,7 @@ class Proxy(SimpleHTTPServer.SimpleHTTPRequestHandler):
             hash = scriptUrl[1:]
             with open(scriptUrl + '.js', 'w') as f:
                 f.write("tmp.open('', '%s')" % keyUrl)
-            cmd = '%s "%s.byte" "%s.js" > %s 2> /dev/null' % (duktape, scriptUrl, scriptUrl, scriptUrl)
+            cmd = '%s "%s.byte" "%s.js" > %s ' % (duktape, scriptUrl, scriptUrl, scriptUrl)
             os.system(cmd)
             with open(scriptUrl, 'r') as f:
                 keyUrl = f.read().strip()

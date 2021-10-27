@@ -69,7 +69,7 @@ class BuxyboxWgetDownloader(WgetDownloader):
             info_from = WgetDownloader.INFO.FROM_FILE
         self.infoFrom = info_from
 
-        cmd = 'wget ' + '"' + self.url + '" -O "' + self.filePath + '" > /dev/null'
+        cmd = 'wget ' + '"' + self.url + '" -O "' + self.filePath + '"'
         printDBG("Download cmd[%s]" % cmd)
 
         self.console = eConsoleAppContainer()

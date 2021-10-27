@@ -71,7 +71,7 @@ class IPTVSimpleAudioPlayer():
                     else:
                         cmd += (' "proxy=%s" ' % tmp)
         else:
-            cmd = 'exteplayer3 "%s"' % self.uri + " > /dev/null"
+            cmd = 'exteplayer3 "%s"' % self.uri
         self.console = eConsoleAppContainer()
         self.console_appClosed_conn = eConnectCallback(self.console.appClosed, self._playerFinished)
         printDBG("IPTVSimpleAudioPlayer.start cmd[%s]" % cmd)

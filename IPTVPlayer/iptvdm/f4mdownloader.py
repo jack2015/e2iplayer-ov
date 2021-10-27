@@ -97,7 +97,7 @@ class F4mDownloader(BaseDownloader):
 
         baseWgetCmd = DMHelper.getBaseWgetCmd(self.downloaderParams)
 
-        cmd = DMHelper.GET_F4M_PATH() + (" '%s'" % baseWgetCmd) + (' "%s"' % self.url) + (' "%s"' % self.filePath) + (' %s' % self.streamSelector) + ' > /dev/null'
+        cmd = DMHelper.GET_F4M_PATH() + (" '%s'" % baseWgetCmd) + (' "%s"' % self.url) + (' "%s"' % self.filePath) + (' %s' % self.streamSelector)
 
         printDBG("F4mDownloader::start cmd[%s]" % cmd)
 

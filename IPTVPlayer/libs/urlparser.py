@@ -5866,7 +5866,7 @@ class pageParser(CaptchaHelper):
                 return False
 
             baseWgetCmd = DMHelper.getBaseWgetCmd({})
-            cmd = DMHelper.GET_F4M_PATH() + (" '%s'" % baseWgetCmd) + (' "%s"' % videoUrl) + ' 2>&1 > /dev/null'
+            cmd = DMHelper.GET_F4M_PATH() + (" '%s'" % baseWgetCmd) + (' "%s"' % videoUrl)
 
             printDBG("parserUSTREAMTV cmd[%s" % cmd)
             data = iptv_execute()(cmd)

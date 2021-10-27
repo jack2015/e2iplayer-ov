@@ -1375,8 +1375,10 @@ class CMoviePlayerPerHost():
                 file.close()
                 activePlayer = {}
                 ret = json_loads(ret)
-                activePlayer['buffering'] = ret['buffering']
-                activePlayer['player'] = CFakeMoviePlayerOption(ret['player']['value'], ret['player']['text'])
+                if 'buffering' in ret:
+                    activePlayer['buffering'] = ret['buffering']
+                if 'player' in ret:
+                    activePlayer['player'] = CFakeMoviePlayerOption(ret['player']['value'], ret['player']['text'])
                 self.activePlayer = activePlayer
                 sts = True
         except Exception:
@@ -1391,8 +1393,10 @@ class CMoviePlayerPerHost():
                 os.remove(self.filePath)
             else:
                 data = {}
-                data['buffering'] = self.activePlayer['buffering']
-                data['player'] = {'value': self.activePlayer['player'].value, 'text': self.activePlayer['player'].getText()}
+                if 'buffering' in self.activePlayer:
+                    data['buffering'] = self.activePlayer['buffering']
+                if 'player' in self.activePlayer:
+                    data['player'] = {'value':self.activePlayer['player'].value, 'text':self.activePlayer['player'].getText()}
                 data = json_dumps(data).encode('utf-8')
                 file = codecs.open(self.filePath, 'w', 'utf-8', 'replace')
                 file.write(data)

@@ -75,7 +75,7 @@ class PwgetDownloader(BaseDownloader):
         self.outData = ''
         self.contentType = 'unknown'
 
-        cmd = "python " + DMHelper.GET_PWGET_PATH() + ' "' + self.url + '" "' + self.filePath + '" > /dev/null'
+        cmd = "python " + DMHelper.GET_PWGET_PATH() + ' "' + self.url + '" "' + self.filePath + '" '
         printDBG("Download cmd[%s]" % cmd)
 
         self.console = eConsoleAppContainer()

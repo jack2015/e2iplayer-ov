@@ -98,7 +98,7 @@ class HLSDownloader(BaseDownloader):
         else:
             url = self.url
 
-        cmd = DMHelper.getBaseHLSDLCmd(self.downloaderParams) + (' "%s"' % url) + addParams + (' -o "%s"' % self.filePath) + ' > /dev/null'
+        cmd = DMHelper.getBaseHLSDLCmd(self.downloaderParams) + (' "%s"' % url) + addParams + (' -o "%s"' % self.filePath)
 
         printDBG("HLSDownloader::start cmd[%s]" % cmd)
 

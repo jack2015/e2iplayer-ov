@@ -128,7 +128,7 @@ class WgetDownloader(BaseDownloader):
         if fileExists(self.filePath):
             rm(self.filePath)
 
-        self.downloadCmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' %s -t %d ' % (info, retries)) + '"' + self.url + '" -O "' + self.filePath + '" > /dev/null'
+        self.downloadCmd = DMHelper.getBaseWgetCmd(self.downloaderParams) + (' %s -t %d ' % (info, retries)) + '"' + self.url + '" -O "' + self.filePath + '" '
         printDBG("Download cmd[%s]" % self.downloadCmd)
 
         if self.downloaderParams.get('iptv_wget_continue', False):

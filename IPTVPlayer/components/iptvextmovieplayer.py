@@ -1976,7 +1976,6 @@ class IPTVExtMoviePlayer(Screen):
                                 cmd += (' "proxy=%s" "proxy-id=%s" "proxy-pw=%s" ' % (tmp.group(1) + tmp.group(4), tmp.group(2), tmp.group(3)))
                         else:
                             cmd += (' "proxy=%s" ' % tmp)
-            cmd += " > /dev/null"
         else:
             cmd = '/usr/bin/exteplayer3'
             tmpUri = strwithmeta(self.fileSRC)
@@ -2072,7 +2071,7 @@ class IPTVExtMoviePlayer(Screen):
             if self.extAdditionalParams.get('moov_atom_file', '') != '':
                  cmd += ' -F "%s" -S %s -O %s' % (self.extAdditionalParams['moov_atom_file'], self.extAdditionalParams['moov_atom_offset'] + self.extAdditionalParams['moov_atom_size'], self.extAdditionalParams['moov_atom_offset'])
 
-            cmd += (' "%s"' % videoUri) + " > /dev/null"
+            cmd += ' "%s"' % videoUri
 
         self.console = eConsoleAppContainer()
         self.console_appClosed_conn = eConnectCallback(self.console.appClosed, self.eplayer3Finished)
@@ -2301,15 +2300,16 @@ class IPTVExtMoviePlayer(Screen):
                 if not self.waitCloseFix['waiting']:
                     self.waitCloseFix['waiting'] = True
                     self.waitCloseFix['timer'].start(5000, True) # singleshot
-                try:
-                    socket_path = "/tmp/iptvplayer_extplayer_term_fd"
-                    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-                    sock.connect(socket_path)
-                    #sock.sendall("q")
-                except Exception:
-                    printExc()
-                finally:
-                    sock.close()
+                socket_path = "/tmp/iptvplayer_extplayer_term_fd"
+                if fileExists(socket_path):
+                    try:
+            	        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+              	        sock.connect(socket_path)
+                        #sock.sendall("q")
+                    except Exception:
+                        printExc()
+                    finally:
+                        sock.close()
                 self.consoleWrite("q\n")
             else:
                 printDBG("IPTVExtMoviePlayer.extPlayerSendCommand unknown command[%s]" % command)
