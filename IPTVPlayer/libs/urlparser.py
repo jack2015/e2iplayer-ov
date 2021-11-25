@@ -636,6 +636,7 @@ class urlparser:
                        'hexupload.net': self.pp.parserJAWCLOUDCO,
                        'showsport.xyz': self.pp.parserSHOWSPORTXYZ,
                        'assia.org': self.pp.parserASSIAORG,
+                       'assia2.com': self.pp.parserASSIAORG,
                        'freefeds.click': self.pp.parserASSIAORG,
                        'embedstream.me': self.pp.parserEMBEDSTREAMME,
                        'daddylive.me': self.pp.parserDADDYLIVE,
@@ -654,6 +655,7 @@ class urlparser:
                        'cloudemb.com': self.pp.parserSTREAMSB,
                        'sbplay.org': self.pp.parserSTREAMSB,
                        'sbvideo.net': self.pp.parserSTREAMSB,
+                       'watchsb.com': self.pp.parserSTREAMSB,
                     }
         return
 
