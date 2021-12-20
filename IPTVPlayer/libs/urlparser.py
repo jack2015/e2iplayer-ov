@@ -14981,4 +14981,3 @@ class pageParser(CaptchaHelper):
             red_url = re.findall("URL=([^\"]+)", data)[0]
 
         return urlparser().getVideoLinkExt(red_url)
-
