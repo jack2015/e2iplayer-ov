@@ -1,4 +1,4 @@
-e2iplayer [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+e2iplayer [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![e2iplayerov](https://github.com/OpenVisionE2/e2iplayer-ov/actions/workflows/e2iplayerov.yml/badge.svg)](https://github.com/OpenVisionE2/e2iplayer-ov/actions/workflows/e2iplayerov.yml) [![ovbot](https://github.com/OpenVisionE2/e2iplayer-ov/actions/workflows/ovbot.yml/badge.svg)](https://github.com/OpenVisionE2/e2iplayer-ov/actions/workflows/ovbot.yml)
 =========
 e2iplayer plugin for Open Vision
 
