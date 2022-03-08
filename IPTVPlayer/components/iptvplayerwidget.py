@@ -1951,7 +1951,7 @@ class E2iPlayerWidget(Screen):
         self.session.openWithCallback(self.enterPatternCallBack, virtualKeyboard, title=(_("Your search entry")), text=self.searchPattern)
 
     def enterPatternCallBack(self, callback=None):
-        if callback is not None and len(callback):
+        if callback != None and len(callback):
             self.searchPattern = callback
             CSearchHistoryHelper.saveLastPattern(self.searchPattern)
             self.requestListFromHost('ForSearch')

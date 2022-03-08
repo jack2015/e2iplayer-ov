@@ -219,7 +219,7 @@ class IPTVVirtualKeyBoardWithCaptcha(Screen):
         self.markSelectedKey()
 
     def markSelectedKey(self):
-        if self.previousSelectedKey is not None:
+        if self.previousSelectedKey != None:
             self.list[self.previousSelectedKey / 12] = self.list[self.previousSelectedKey / 12][:-1]
         width = self.key_sel.size().width()
         x = self.list[self.selectedKey / 12][self.selectedKey % 12 + 1][1]
