@@ -90,7 +90,7 @@ class M3U8(object):
         )
 
     def __init__(self, content=None, base_path=None, base_uri=None):
-        if content is not None:
+        if content != None:
             self.data = parser.parse(content)
         else:
             self.data = {}

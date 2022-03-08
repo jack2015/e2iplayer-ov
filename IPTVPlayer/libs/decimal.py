@@ -565,11 +565,11 @@ class Decimal(object):
             else:
                 self._sign = 0
             intpart = m.group('int')
-            if intpart is not None:
+            if intpart != None:
                 # finite number
                 fracpart = m.group('frac')
                 exp = int(m.group('exp') or '0')
-                if fracpart is not None:
+                if fracpart != None:
                     self._int = str((intpart + fracpart).lstrip('0') or '0')
                     self._exp = exp - len(fracpart)
                 else:
@@ -578,7 +578,7 @@ class Decimal(object):
                 self._is_special = False
             else:
                 diag = m.group('diag')
-                if diag is not None:
+                if diag != None:
                     # NaN
                     self._int = str(diag.lstrip('0'))
                     if m.group('signal'):
@@ -1978,7 +1978,7 @@ class Decimal(object):
         efficiently.  It is always exact.
         """
 
-        if modulo is not None:
+        if modulo != None:
             return self._power_modulo(other, modulo, context)
 
         other = _convert_other(other)
@@ -2092,7 +2092,7 @@ class Decimal(object):
         # try for an exact result with precision +1
         if ans is None:
             ans = self._power_exact(other, context.prec + 1)
-            if ans is not None and result_sign == 1:
+            if ans != None and result_sign == 1:
                 ans = _dec_from_triple(1, ans._int, ans._exp)
 
         # usual case: inexact result, x**y computed directly as exp(y*log(x))
@@ -3431,7 +3431,7 @@ class Context(object):
         if not isinstance(flags, dict):
             flags = dict([(s, s in flags) for s in _signals])
             del s
-        if traps is not None and not isinstance(traps, dict):
+        if traps != None and not isinstance(traps, dict):
             traps = dict([(s, s in traps) for s in _signals])
             del s
         for name, val in locals().items():

@@ -196,4 +196,4 @@ def normalize_attribute(attribute):
 
 
 def is_url(uri):
-    return re.match(r'https?://', uri) is not None
+    return re.match(r'https?://', uri) != None

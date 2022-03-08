@@ -417,7 +417,7 @@ class Body():
 				txt += '<td>%s</td></tr>\n' % formSUBMITtext(_(iName), ListType, 'style="color: #DBA901;background: none;border: none;text-decoration: underline"')
 			else:
 				txt += '<td>%s</td></tr>\n' % formMultipleSearchesSUBMITtext(settings.activeHost['SearchTypes'], ListType, 'style="color: #DBA901;background: none;border: none;text-decoration: underline"')
-		elif destinationURL is not None:
+		elif destinationURL != None:
 			txt += '<td><a href="%s" class = "lnkbtn">%s</a></td></tr>' % (destinationURL, _(iName))
 		else:
 			txt += '<td>%s</td></tr>' % formSUBMITvalue([(ListType, iIndex)], _(iName), 'style="color: #DBA901;background: none;border: none;text-decoration: underline"')

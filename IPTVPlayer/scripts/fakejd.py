@@ -272,7 +272,7 @@ class Myjdapi:
             params_request = {"apiVer": self._api_version, "url": path, "params": params_request, "rid": self._request_id}
             data = json.dumps(params_request).replace('"null"', "null").replace("'null'", "null")
             encrypted_data = self._encrypt(self._device_encryption_token, data)
-            if action is not None:
+            if action != None:
                 request_url = self._api_url + action + path
             else:
                 request_url = self._api_url + path
@@ -285,7 +285,7 @@ class Myjdapi:
             if http_method == "GET":
                 msg += query
             msg += "\n"
-            if data is not None:
+            if data != None:
                 msg += "DATA:\n" + data
             raise(MYJDException(msg))
         if action is None:
@@ -294,7 +294,7 @@ class Myjdapi:
             else:
                 response = self._decrypt(self._server_encryption_token, encrypted_response_text)
         else:
-            if params is not None:
+            if params != None:
                 response = self._decrypt(self._device_encryption_token, encrypted_response_text)
             else:
                 return {"data": response}

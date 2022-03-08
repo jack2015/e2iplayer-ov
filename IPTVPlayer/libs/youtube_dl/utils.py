@@ -182,7 +182,7 @@ def htmlentity_transform(entity):
         pass
 
     mobj = re.match(r'#(x?[0-9A-Fa-f]+)', entity)
-    if mobj is not None:
+    if mobj != None:
         numstr = mobj.group(1)
         if numstr.startswith(u'x'):
             base = 16
