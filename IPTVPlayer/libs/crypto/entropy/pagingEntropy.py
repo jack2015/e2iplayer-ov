@@ -18,7 +18,7 @@ import struct
 class PagingEntropyCollector:
     """ collect entropy from memory paging """
 
-    def __init__(self, memSize=500000000L):            #? how should this be picked?
+    def __init__(self, memSize=500000000):            #? how should this be picked?
         """ Initialize paging entropy collector,
             memSize must be larger than allocated memory """
         self.size = memSize

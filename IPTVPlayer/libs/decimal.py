@@ -1920,7 +1920,7 @@ class Decimal(object):
                 return None
 
             # compute nth root of xc using Newton's method
-            a = 1L << -(-_nbits(xc) // n) # initial estimate
+            a = 1 << -(-_nbits(xc) // n) # initial estimate
             while True:
                 q, r = divmod(xc, a**(n - 1))
                 if a <= q:
@@ -3493,7 +3493,7 @@ class Context(object):
 
         # Errors should only be risked on copies of the context
         # self._ignored_flags = []
-        raise error, explanation
+        raise error(explanation)
 
     def _ignore_all_flags(self):
         """Ignore all flags, if they are raised"""
@@ -4785,7 +4785,7 @@ def _rshift_nearest(x, shift):
     integer to x / 2**shift; use round-to-even in case of a tie.
 
     """
-    b, q = 1L << shift, x >> shift
+    b, q = 1 << shift, x >> shift
     return q + (2 * (x & (b - 1)) + (q & 1) > b)
 
 
