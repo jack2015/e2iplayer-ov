@@ -509,9 +509,9 @@ class Body():
 			for key in settings.GlobalSearchResults.keys():
 				_tempHeader = '<tr><td colspan="2" align="left" style="color: #00A9d1;background: none;border: none;font-size:24px;">%s</td></tr>' % key
 				_tempBody = ''
-	      			index = 0
+				index = 0
 				try:
-		      			for item in settings.GlobalSearchResults.get(key, None)[1]:
+					for item in settings.GlobalSearchResults.get(key, None)[1]:
 						Totest = removeSpecialChars(item.name + item.description).lower()
 						if Totest.find(settings.GlobalSearchQuery.lower()) != -1:
 							_tempBody += self.buildItemsListTable(item, index, allowedCategories=settings.GlobalSearchTypes,
