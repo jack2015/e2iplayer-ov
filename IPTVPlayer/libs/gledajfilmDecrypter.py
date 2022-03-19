@@ -182,7 +182,7 @@ class gledajfilmDecrypter:
 
 		self.addRoundKey(param1, param2)
 		reVal = self.unpackBytes(param1)
-		
+
 		return reVal
 
 	def byteSub(self, param1, param2):
