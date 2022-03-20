@@ -729,8 +729,8 @@ class YoutubeIE(object):
 
         if mobj:
             # return the first matching group
-            return next(g for g in mobj.groups() if g != None)
-        elif default != None:
+            return next(g for g in mobj.groups() if g is not None)
+        elif default is not None:
             return default
         elif fatal:
             printDBG('Unable to extract %s' % name)

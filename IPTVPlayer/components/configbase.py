@@ -157,7 +157,7 @@ class ConfigBaseWidget(Screen, ConfigListScreen):
         self["key_ok"].setText(_(labelText))
 
     def isOkActive(self):
-        if self["config"].getCurrent() != None:
+        if self["config"].getCurrent() is not None:
             currItem = self["config"].getCurrent()[1]
             if isinstance(currItem, ConfigText) or isinstance(currItem, ConfigPassword):
                 try:
@@ -170,7 +170,7 @@ class ConfigBaseWidget(Screen, ConfigListScreen):
         return False
 
     def isSelectableActive(self):
-        if self["config"].getCurrent() != None:
+        if self["config"].getCurrent() is not None:
             currItem = self["config"].getCurrent()[1]
             if currItem and isinstance(currItem, ConfigSelection) or isinstance(currItem, ConfigBoolean):
                 return True
@@ -317,19 +317,19 @@ class ConfigBaseWidget(Screen, ConfigListScreen):
         pass
 
     def keyUp(self):
-        if self["config"].instance != None:
+        if self["config"].instance is not None:
             self["config"].instance.moveSelection(self["config"].instance.moveUp)
 
     def keyDown(self):
-        if self["config"].instance != None:
+        if self["config"].instance is not None:
             self["config"].instance.moveSelection(self["config"].instance.moveDown)
 
     def keyPageUp(self):
-        if self["config"].instance != None:
+        if self["config"].instance is not None:
             self["config"].instance.moveSelection(self["config"].instance.pageUp)
 
     def keyPageDown(self):
-        if self["config"].instance != None:
+        if self["config"].instance is not None:
             self["config"].instance.moveSelection(self["config"].instance.pageDown)
 
     def keyHome(self):

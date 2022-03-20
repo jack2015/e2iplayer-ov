@@ -479,6 +479,6 @@ def create_connection(url, timeout=None, class_=WebSocket, **options):
                      fire_cont_frame=fire_cont_frame,
                      enable_multithread=enable_multithread,
                      skip_utf8_validation=skip_utf8_validation, **options)
-    websock.settimeout(timeout if timeout != None else getdefaulttimeout())
+    websock.settimeout(timeout if timeout is not None else getdefaulttimeout())
     websock.connect(url, **options)
     return websock

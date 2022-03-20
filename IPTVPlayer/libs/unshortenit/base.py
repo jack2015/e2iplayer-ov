@@ -357,7 +357,7 @@ class UnshortenIt(object):
                 sts, response = self.cm.getPage('http://sh.st/shortest-url/end-adsession', {'header': http_header}, payload)
 
                 resp_uri = json_loads(response[6:-2])['destinationUrl']
-                if resp_uri != None:
+                if resp_uri is not None:
                     uri = resp_uri
 
             return uri, 'OK'
@@ -442,7 +442,7 @@ class UnshortenIt(object):
                 sts, response = self.cm.getPage('http://viid.me/shortest-url/end-adsession', {'header': http_header}, payload)
 
                 resp_uri = json_loads(response[6:-2])['destinationUrl']
-                if resp_uri != None:
+                if resp_uri is not None:
                     uri = resp_uri
 
             return uri, 'OK'

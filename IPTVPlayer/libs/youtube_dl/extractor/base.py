@@ -67,7 +67,7 @@ class InfoExtractor():
         if mobj:
             if group is None:
                 # return the first matching group
-                return next(g for g in mobj.groups() if g != None)
+                return next(g for g in mobj.groups() if g is not None)
             else:
                 return mobj.group(group)
         elif default is not NO_DEFAULT:

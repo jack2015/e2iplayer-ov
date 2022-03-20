@@ -230,7 +230,7 @@ class VevoIE(InfoExtractor):
                 smil_url_m = self._search_regex(
                     r'url="([^"]+)"', smil_blocks[-1]['data'], 'SMIL URL',
                     default=None)
-                if smil_url_m != None:
+                if smil_url_m is not None:
                     smil_url = smil_url_m
             if smil_url:
                 smil_xml = self._download_webpage(
