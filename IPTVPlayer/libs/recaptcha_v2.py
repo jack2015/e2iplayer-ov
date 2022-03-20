@@ -81,7 +81,7 @@ class UnCaptchaReCaptcha:
 
             retArg = self.sessionEx.waitForFinishOpen(UnCaptchaReCaptchaWidget, imgFilePath=filePath, message=message, title="reCAPTCHA v2", additionalParams={'accep_label': accepLabel})
             printDBG('>>>>>>>> Captcha response[%s]' % (retArg))
-            if retArg != None and len(retArg) and retArg[0]:
+            if retArg is not None and len(retArg) and retArg[0]:
                 answer = retArg[0]
                 printDBG('>>>>>>>> Captcha answer[%s]' % (answer))
                 post_data = urllib.urlencode({'c': cval, 'response': answer}, doseq=True)

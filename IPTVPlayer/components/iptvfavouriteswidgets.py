@@ -408,7 +408,7 @@ class IPTVFavouritesMainWidget(Screen):
             self.displayList()
 
     def moveItem(self, key):
-        if self["list"].instance != None:
+        if self["list"].instance is not None:
             if self.duringMoving:
                 curIndex = self["list"].getCurrentIndex()
                 self["list"].instance.moveSelection(key)
@@ -424,19 +424,19 @@ class IPTVFavouritesMainWidget(Screen):
                 self["list"].instance.moveSelection(key)
 
     def keyUp(self):
-        if self["list"].instance != None:
+        if self["list"].instance is not None:
             self.moveItem(self["list"].instance.moveUp)
 
     def keyDown(self):
-        if self["list"].instance != None:
+        if self["list"].instance is not None:
             self.moveItem(self["list"].instance.moveDown)
 
     def keyLeft(self):
-        if self["list"].instance != None:
+        if self["list"].instance is not None:
             self.moveItem(self["list"].instance.pageUp)
 
     def keyRight(self):
-        if self["list"].instance != None:
+        if self["list"].instance is not None:
             self.moveItem(self["list"].instance.pageDown)
 
     def keyDrop(self):

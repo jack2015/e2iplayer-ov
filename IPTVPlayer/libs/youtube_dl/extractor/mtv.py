@@ -60,8 +60,8 @@ class MTVServicesInfoExtractor(InfoExtractor):
         return [{'url': url, 'ext': 'mp4'}]
 
     def _extract_video_formats(self, mdoc, mtvn_id):
-        if re.match(r'.*/(error_country_block\.swf|geoblock\.mp4)$', self.xmlGetText(mdoc, 'src')) != None:
-            if mtvn_id != None and self._MOBILE_TEMPLATE != None:
+        if re.match(r'.*/(error_country_block\.swf|geoblock\.mp4)$', self.xmlGetText(mdoc, 'src')) is not None:
+            if mtvn_id is not None and self._MOBILE_TEMPLATE is not None:
                 printDBG('The normal version is not available from your country, trying with the mobile version')
                 return self._extract_mobile_video_formats(mtvn_id)
             raise ExtractorError('This video is not available from your country.')

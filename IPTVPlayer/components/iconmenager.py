@@ -344,7 +344,7 @@ class IconMenager:
                 return False
         else:
             img_url = strwithmeta(img_url)
-            if img_url.meta.get('icon_resolver', None) != None:
+            if img_url.meta.get('icon_resolver', None) is not None:
                 try:
                     img_url = img_url.meta['icon_resolver'](self.cm, img_url)
                 except Exception:

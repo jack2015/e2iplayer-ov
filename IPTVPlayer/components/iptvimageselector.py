@@ -301,19 +301,19 @@ class IPTVMultipleImageSelectorWidget(Screen):
     def move_list_up(self):
         for i in range(self.iptv_col_num):
             item = self["col_%d" % i]
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.moveUp)
 
     def move_list_down(self):
         for i in range(self.iptv_col_num):
             item = self["col_%d" % i]
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.moveDown)
 
     def set_list_index(self):
         for i in range(self.iptv_col_num):
             item = self["col_%d" % i]
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelectionTo(self.row_index)
 
     def key_up(self):

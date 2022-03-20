@@ -828,11 +828,11 @@ class E2iVirtualKeyBoard(Screen):
             self.handleArrowKey(0, -1)
         elif self.focus in (self.FOCUS_LANGUAGES, self.FOCUS_SEARCH_HISTORY):
             item = self['left_list']
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.moveUp)
         elif self.focus == self.FOCUS_SUGGESTIONS:
             item = self['right_list']
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.moveUp)
         else:
             return 0
@@ -843,11 +843,11 @@ class E2iVirtualKeyBoard(Screen):
             self.handleArrowKey(0, 1)
         elif self.focus in (self.FOCUS_LANGUAGES, self.FOCUS_SEARCH_HISTORY):
             item = self['left_list']
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.moveDown)
         elif self.focus == self.FOCUS_SUGGESTIONS:
             item = self['right_list']
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.moveDown)
         else:
             return 0
@@ -880,7 +880,7 @@ class E2iVirtualKeyBoard(Screen):
                 self.handleArrowKey(-1, 0)
         elif self.focus == self.FOCUS_LANGUAGES:
             item = self['left_list']
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.pageUp)
         else:
             return 0
@@ -913,7 +913,7 @@ class E2iVirtualKeyBoard(Screen):
                 self.handleArrowKey(1, 0)
         elif self.focus == self.FOCUS_LANGUAGES:
             item = self['left_list']
-            if item.instance != None:
+            if item.instance is not None:
                 item.instance.moveSelection(item.instance.pageDown)
         else:
             return 0

@@ -75,7 +75,7 @@ class MultipartPostHandler(urllib2.BaseHandler):
 
     def http_request(self, request):
         data = request.get_data()
-        if data != None and not isinstance(data, str):
+        if data is not None and not isinstance(data, str):
             content_type, data = self.encode_multipart_formdata(data)
             request.add_unredirected_header('Content-Type', content_type)
             request.add_data(data)

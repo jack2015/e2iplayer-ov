@@ -79,7 +79,7 @@ class UnCaptchaReCaptcha:
             ret = 0
             retArg = self.sessionEx.waitForFinishOpen(IPTVMultipleInputBox, params)
             printDBG('>>>>>>>> Captcha response[%s]' % (retArg))
-            if retArg != None and len(retArg) and retArg[0]:
+            if retArg is not None and len(retArg) and retArg[0]:
                 recaptcha_response_field = retArg[0]
                 printDBG('>>>>>>>> Captcha recaptcha_response_field[%s]' % (recaptcha_response_field))
                 post_data = urllib.urlencode({'recaptcha_challenge_field': recaptcha_challenge_field, 'recaptcha_response_field': recaptcha_response_field, 'submit': accepLabel}, doseq=True)

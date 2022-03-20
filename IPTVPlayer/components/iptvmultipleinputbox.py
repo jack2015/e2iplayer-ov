@@ -69,7 +69,7 @@ class IPTVMultipleInputBox(Screen):
                 self["text_%d" % idx] = Label(item.get('title', ''))
             self["input_%d" % idx] = Input(**item['input'])
             self["border_%d" % idx] = Label("")
-            if item.get('useable_chars', None) != None:
+            if item.get('useable_chars', None) is not None:
                 self["input_%d" % idx].setUseableChars(item['useable_chars'])
 
             if 'icon_path' in item:
